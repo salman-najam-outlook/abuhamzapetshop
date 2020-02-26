@@ -20,6 +20,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CommonModule } from '@angular/common';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { SalesComponent } from './sales/sales.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { SalesComponent } from './sales/sales.component';
     NbInputModule,
     NbCardModule,
     NbButtonModule,
+    NgxBarcodeModule,
     NbActionsModule,
     NbUserModule,
     NbCheckboxModule,

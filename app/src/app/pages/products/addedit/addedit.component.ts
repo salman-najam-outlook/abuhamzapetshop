@@ -27,6 +27,7 @@ export class AddEditComponent implements OnInit {
   selectedSubCategoryId: number;
   selectedFourthCategoryId: number;
   source: LocalDataSource = new LocalDataSource();
+  value: string;
 
     // Toaster Setting Starts
     index = 1;
@@ -87,7 +88,9 @@ export class AddEditComponent implements OnInit {
   };
 
   constructor(private maintenanceService: MaintenanceService, private productService: ProductService,
-    private toastrService: NbToastrService) { }
+    private toastrService: NbToastrService) {
+      this.value = 'TempName'
+     }
 
   ngOnInit() {
     this.maintenanceService.getAllMainCategories().subscribe(
@@ -127,6 +130,10 @@ export class AddEditComponent implements OnInit {
     } else {
       event.confirm.reject();
     }
+  }
+
+  onChange(event) {
+    this.value = this.productAddEditForm.controls.barcode.value;
   }
 
   onMainCategorySelect(event): void {
@@ -239,6 +246,10 @@ export class AddEditComponent implements OnInit {
 
   onClear() {
     this.productAddEditForm.reset();
+  }
+
+  get values(): string[] {
+    return this.value.split('\n');
   }
   
   private showToast(type: NbComponentStatus, title: string, body: string) {

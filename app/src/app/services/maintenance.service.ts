@@ -9,6 +9,8 @@ import { MainCategory } from "../models/mainCategory.model";
 import { Category } from "../models/category.model";
 import { SubCategory } from "../models/subCategory.model";
 import { FourthSubCategory } from "../models/fourthSubCategory.model";
+import { PendingPayments } from '../models/pendingPayment.model';
+import { Payment } from '../models/payment.model';
 
 @Injectable({
   providedIn: "root"
@@ -93,6 +95,28 @@ export class MaintenanceService {
     return this.httpClient.post<Supplier>(
       "http://localhost:51110/api/suppliers/AddUpdateSupplier",
       supplier,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getPendingVouchersBySupplierID(supplierId: number): Observable<PendingPayments[]> {
+    return this.httpClient.get<PendingPayments[]>(
+      "http://localhost:51110/api/suppliers/GetAllSuppliersapi/vouchers/GetPendingVouchersBySupplierID/" + supplierId,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  paymentAgainstSupplier(payment: Payment): Observable<any> {
+    return this.httpClient.post<any>(
+      "http://localhost:51110/api/vouchers/pendingOrderPayment", payment,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")

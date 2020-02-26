@@ -33,11 +33,11 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <ngx-barcode [bc-value]="barcode" [bc-display-value]="true"></ngx-barcode>
+                            <ngx-barcode [bc-value]="bcValue" *ngFor="let bcValue of values" [bc-display-value]="true"></ngx-barcode>
                             <div class="form-group">
                                 <label for="barcode" class="label">Barcode</label>
                                 <input type="text" nbInput fullWidth autofocus id="barcode" placeholder="Barcode"
-                                    type="number" formControlName="barcode">
+                                 formControlName="barcode" [(ngModel)]="value">
                             </div>
                         </div>
                     </div>

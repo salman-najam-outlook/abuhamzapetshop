@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NgxBarcodeModule } from 'ngx-barcode';
+
 import {
   NbDatepickerModule,
   NbDialogModule,
@@ -23,7 +23,6 @@ import { CoreModule } from './@core/core.module';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgxBarcodeModule,
     ThemeModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),

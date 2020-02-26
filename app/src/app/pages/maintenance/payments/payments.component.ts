@@ -5,6 +5,7 @@ import { ProductService } from '../../../services/product.service';
 import { MaintenanceService } from '../../../services/maintenance.service';
 import { Supplier } from '../../../models/supplier.model';
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
+import { Payment } from '../../../models/payment.model';
 
 @Component({
     selector: 'ngx-payments',
@@ -17,6 +18,7 @@ export class PaymentsComponent implements OnInit {
     paymentForm: FormGroup;
     suppliers: Supplier[];
     selectedSupplier: number;
+    paymentModel: Payment;
 
     // Toaster Setting Starts
     index = 1;
@@ -34,27 +36,33 @@ export class PaymentsComponent implements OnInit {
             delete: false
         },
         columns: {
-            supplier: {
+            SupplierName: {
                 title: 'Supplier Name',
                 type: 'string',
             },
-            voucherNumber: {
+            vchNo: {
                 title: 'Voucher Number',
                 type: 'string',
             },
-            remainingAmount: {
+            totalAmount: {
                 title: 'Remaining Amount',
-                type: 'string',
+                type: 'number',
             },
-            amountToBePaid: {
+            pendingAmount: {
                 title: 'Amount To Be Paid',
+                type: 'number',
+            },
+            paidAmount: {
+                title: 'Paid Amount',
                 type: 'number',
             }
         },
     };
 
     constructor(private productService: ProductService, private maintenanceService: MaintenanceService,
-        private toastrService: NbToastrService) { }
+        private toastrService: NbToastrService) { 
+            
+        }
 
     ngOnInit() {
         this.paymentForm = new FormGroup({
@@ -80,10 +88,34 @@ export class PaymentsComponent implements OnInit {
     onSupplierSelect(event) {
         this.selectedSupplier = event;
         this.paymentForm.controls.supplier.setValue(event);
+        this.maintenanceService.getPendingVouchersBySupplierID(event).subscribe(
+            response => {
+                this.source.load(response);
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     onSubmit() {
-        console.log('submitted');
+        this.paymentModel = new Payment();
+        this.paymentModel.supplierId = this.paymentForm.controls.supplier.value;
+        this.paymentModel.voucherNumber = this.paymentForm.controls.voucherNumber.value;
+        this.paymentModel.amountPaid = this.paymentForm.controls.amountToBePaid.value;
+        this.maintenanceService.paymentAgainstSupplier(this.paymentModel).subscribe(
+            response => {
+                console.log(response);
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
+
+    onRowSelect(event) {
+        this.paymentForm.controls.voucherNumber.setValue(event.data.vchNo);
+        this.paymentForm.controls.remainingAmount.setValue(event.data.pendingAmount);
     }
 
     private showToast(type: NbComponentStatus, title: string, body: string) {
