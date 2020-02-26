@@ -12,18 +12,13 @@ namespace abuhamza.repository
     using System;
     using System.Collections.Generic;
     
-    public partial class tblProduct
+    public partial class tblDetailInvoice
     {
-        public int pro_id { get; set; }
+        public int detailInvoice_id { get; set; }
+        public Nullable<int> invoice_id { get; set; }
         public string barcode { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public Nullable<decimal> purchase_price { get; set; }
-        public Nullable<decimal> sell_price { get; set; }
-        public Nullable<long> quantity { get; set; }
-        public Nullable<int> fsubCat_id { get; set; }
-        public Nullable<int> subCat_id { get; set; }
-        public Nullable<int> cat_id { get; set; }
-        public Nullable<int> mainCat_id { get; set; }
+        public Nullable<int> quantity { get; set; }
+        public Nullable<decimal> sellPrice { get; set; }
+        public string voucherNo { get; set; }
     }
 }

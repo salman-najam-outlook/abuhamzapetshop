@@ -80,8 +80,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrderRepository.cs" />
     <Compile Include="SalaryRepository.cs" />
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetPendingVouchersBySupplierID_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubCategoryRepository.cs" />
     <Compile Include="SupplierRepository.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblAccount.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
@@ -92,6 +104,9 @@
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomer.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblDetailInvoice.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="tblDetailOrder.cs">
@@ -142,6 +157,7 @@
     <Compile Include="CustomerRepository.cs" />
     <Compile Include="TransactionRepository.cs" />
     <Compile Include="UserRepository.cs" />
+    <Compile Include="VoucherRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="AbuHamzaEntities.edmx">

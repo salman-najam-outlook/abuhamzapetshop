@@ -26,6 +26,8 @@ namespace abuhamza.repository
         public Nullable<int> sup_id { get; set; }
         public string status { get; set; }
         public string voucherNo { get; set; }
+        public Nullable<decimal> paidAmount { get; set; }
+        public string orderDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblDetailOrder> tblDetailOrders { get; set; }

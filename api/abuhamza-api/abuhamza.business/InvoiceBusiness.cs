@@ -58,42 +58,62 @@ namespace abuhamza.business
             return invoice;
         }
 
-        public async Task<string> AddUpdateInvoice(InvoiceDomainModel invoice)
+        public async Task<string> AddUpdateInvoice(SaleOrderDomainModel saleOrder)
         {
-            string status = "";
-            if (invoice.invoice_id > 0)
+            int condition = 0;
+            if (condition > 0)
             {
-                tblInvoice invoiceToUpdate = await invoiceRepository.SingleOrDefault(i => i.invoice_id == invoice.invoice_id);
-                if (invoiceToUpdate != null)
-                {
-                    invoiceToUpdate.invoice_id = invoice.invoice_id;
-                    invoiceToUpdate.date = invoice.date;
-                    invoiceToUpdate.totalQty = invoice.totalQty;
-                    invoiceToUpdate.totalAmount = invoice.totalAmount;
-                    invoiceToUpdate.AmountTendered = invoice.AmountTendered;
-                    invoiceToUpdate.change = invoice.change;
-                    invoiceToUpdate.user_id = invoice.user_id;
-                    invoiceToUpdate.tra_id = invoice.tra_id;
+                List<tblInvoice> uList = new List<tblInvoice>();
+                uList = await invoiceRepository.GetAll();
+            }
+            
+            string status = "";
+            int vrNo = 0;
+            int totalQty = 0;
+            string strVchNo = "";
+            
+            List<SingleProductDomainModel> singleProductList = new List<SingleProductDomainModel>();
+            singleProductList = saleOrder.singleProductList;
 
-                    await invoiceRepository.Update(invoiceToUpdate);
-                    status = "updated";
+            foreach (SingleProductDomainModel singleDetail in singleProductList)
+            {
+                totalQty = Convert.ToInt32(singleDetail.quantity) + totalQty;
+            }
+
+            int lastSaleOrderId = 0;
+
+            using (abuhamzapetstoreEntities db = new abuhamzapetstoreEntities())
+            {
+                try
+                {
+                    vrNo = (from c in db.tblvches
+                                       orderby c.vch_id descending
+                                       select c.vch_id).Take(1).SingleOrDefault();
+
+                    strVchNo = "0000" + (vrNo + 1);
+
+                    var result = db.stpSaleOrder(1, totalQty, saleOrder.subTotal,
+                        saleOrder.grandTotal, saleOrder.discount, saleOrder.tenderAmount, saleOrder.remainingCash,
+                        "Customer Name",1,saleOrder.grandTotal,strVchNo);
+
+                    lastSaleOrderId = (from c in db.tblInvoices
+                                   orderby c.invoice_id descending
+                                   select c.invoice_id).Take(1).SingleOrDefault();
+                    
+                    foreach (SingleProductDomainModel singleDetail in singleProductList)
+                    {
+                        result = db.stpSaleDetail(lastSaleOrderId, singleDetail.quantity, singleDetail.barcode,
+                            singleDetail.sellPrice, strVchNo);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    status = ex.Message;
                 }
             }
-            else
-            {
-                tblInvoice invoiceToAdd = new tblInvoice();
-                invoiceToAdd.invoice_id = invoice.invoice_id;
-                invoiceToAdd.date = invoice.date;
-                invoiceToAdd.totalQty = invoice.totalQty;
-                invoiceToAdd.totalAmount = invoice.totalAmount;
-                invoiceToAdd.AmountTendered = invoice.AmountTendered;
-                invoiceToAdd.change = invoice.change;
-                invoiceToAdd.user_id = invoice.user_id;
-                invoiceToAdd.tra_id = invoice.tra_id;
-
-                await invoiceRepository.Insert(invoiceToAdd);
-                status = "added";
-            }
+            status = "added";
+            
             return status;
         }
     }

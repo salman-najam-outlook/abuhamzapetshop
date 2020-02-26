@@ -57,11 +57,39 @@ namespace abuhamza_api.Controllers
         // This Api call will Add a new invoice in case if acc_id is equal to zero else update the invoice.
         [HttpPost]
         [Route("api/invoices/AddUpdateInvoice")]
-        public async Task<string> AddUpdateUser(InvoiceVM invoiceVM)
+        public async Task<string> AddUpdateInvoice(SaleOrderDomainModel saleOrder)
         {
-            InvoiceDomainModel invoiceDM = new InvoiceDomainModel();
-            AutoMapper.Mapper.Map(invoiceVM, invoiceDM);
-            return await invoiceBusiness.AddUpdateInvoice(invoiceDM);
+            SaleOrderDomainModel saleOrderDM = new SaleOrderDomainModel();
+            //AutoMapper.Mapper.Map(saleOrder, saleOrderDM);
+
+            //saleOrderDM.date = saleOrder.date;
+            //saleOrderDM.discount = saleOrder.discount;
+            //saleOrderDM.grandTotal = saleOrder.grandTotal;
+            //saleOrderDM.remainingCash = saleOrder.remainingCash;
+            //saleOrderDM.subTotal = saleOrder.subTotal;
+            //saleOrderDM.tenderAmount = saleOrder.tenderAmount;
+            //saleOrderDM.tax = saleOrder.tax;
+            //saleOrderDM.totalQty = saleOrder.totalQty;
+
+            //SingleProductDomainModel singleProductDM = new SingleProductDomainModel();
+
+            //List<SingleProduct> singleProductList = new List<SingleProduct>();
+            //singleProductList = saleOrder.singleProductList;
+
+            //foreach (SingleProduct singleDetail in singleProductList)
+            //{
+            //    singleProductDM.barcode = singleDetail.barcode;
+            //    singleProductDM.productName = singleDetail.productName;
+            //    singleProductDM.purchasePrice = singleDetail.purchasePrice;
+            //    singleProductDM.quantity = singleDetail.quantity;
+            //    singleProductDM.saleOrder_id = singleDetail.saleOrder_id;
+            //    singleProductDM.sellPrice = singleDetail.sellPrice;
+            //    singleProductDM.totalAmount = singleDetail.totalAmount;
+
+            //    saleOrderDM.singleProductList.Add(singleProductDM);
+            //}
+
+                return await invoiceBusiness.AddUpdateInvoice(saleOrder);
         }
     }
 }

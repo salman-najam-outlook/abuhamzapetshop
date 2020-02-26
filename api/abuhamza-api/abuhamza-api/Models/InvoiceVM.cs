@@ -1,4 +1,5 @@
-﻿using System;
+﻿using abuhamza.repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,6 @@ namespace abuhamza_api.Models
         public Nullable<int> user_id { get; set; }
         public Nullable<int> tra_id { get; set; }
 
-        //public virtual tblUser tblUser { get; set; }
+        public virtual tblUser tblUser { get; set; }
     }
 }

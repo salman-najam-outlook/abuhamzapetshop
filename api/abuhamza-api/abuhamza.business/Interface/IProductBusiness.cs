@@ -13,6 +13,7 @@ namespace abuhamza.business.Interface
         Task<List<tblProduct>> GetProducts();
         Task<string> DeleteProduct(int id);
         Task<ProductDomainModel> GetProductById(int id);
+        Task<ProductDomainModel> GetProductByBarcode(string barcode);
         Task<string> AddUpdateProduct(ProductDomainModel Product);
     }
 }

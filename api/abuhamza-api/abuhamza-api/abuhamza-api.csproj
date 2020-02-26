@@ -240,10 +240,12 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\VouchersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AutoMapperWebProfile.cs" />
+    <Compile Include="Models\abuHamzaPetModel.cs" />
     <Compile Include="Models\AccountToReturnVM.cs" />
     <Compile Include="Models\AccountVM.cs" />
     <Compile Include="Models\CategoryToReturnVM.cs" />
@@ -266,6 +268,8 @@
     <Compile Include="Models\PurchaseOrderVM.cs" />
     <Compile Include="Models\SalaryToReturnVM.cs" />
     <Compile Include="Models\SalaryVM.cs" />
+    <Compile Include="Models\SaleOrder.cs" />
+    <Compile Include="Models\SingleProduct.cs" />
     <Compile Include="Models\SubCategoryToReturnVM.cs" />
     <Compile Include="Models\SubCategoryVM.cs" />
     <Compile Include="Models\SupplierToReturnVM.cs" />
@@ -275,6 +279,9 @@
     <Compile Include="Models\UnityResolver.cs" />
     <Compile Include="Models\UserToReturnVM.cs" />
     <Compile Include="Models\UserVM.cs" />
+    <Compile Include="Models\VoucherModel.cs" />
+    <Compile Include="Models\VoucherToReturnVM.cs" />
+    <Compile Include="Models\VoucherVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

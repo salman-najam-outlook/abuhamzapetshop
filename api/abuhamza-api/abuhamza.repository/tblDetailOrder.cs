@@ -20,8 +20,8 @@ namespace abuhamza.repository
         public string barcode { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<decimal> purchasePrice { get; set; }
+        public string voucherNo { get; set; }
     
-        public virtual tblProduct tblProduct { get; set; }
         public virtual tblPurchaseOrder tblPurchaseOrder { get; set; }
     }
 }

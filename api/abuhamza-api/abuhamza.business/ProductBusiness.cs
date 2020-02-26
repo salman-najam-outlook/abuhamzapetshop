@@ -35,7 +35,7 @@ namespace abuhamza.business
             string status = "";
             if (id > 0)
             {
-                await productRepository.Delete(e => e.pro_id == id);
+                await productRepository.Delete(p => p.pro_id == id);
                 status = "deleted";
             }
             return status;
@@ -44,7 +44,7 @@ namespace abuhamza.business
         public async Task<ProductDomainModel> GetProductById(int id)
         {
             ProductDomainModel product = new ProductDomainModel();
-            var model = await productRepository.SingleOrDefault(e => e.pro_id == id);
+            var model = await productRepository.SingleOrDefault(p => p.pro_id == id);
             if (model != null)
             {
                 product.pro_id          = model.pro_id;
@@ -58,6 +58,27 @@ namespace abuhamza.business
                 product.mainCat_id      = model.mainCat_id;
                 product.cat_id          = model.cat_id;
                 product.subCat_id       = model.subCat_id;
+            }
+            return product;
+        }
+
+        public async Task<ProductDomainModel> GetProductByBarcode(string barcode)
+        {
+            ProductDomainModel product = new ProductDomainModel();
+            var model = await productRepository.SingleOrDefault(p => p.barcode == barcode);
+            if (model != null)
+            {
+                product.pro_id = model.pro_id;
+                product.name = model.name;
+                product.barcode = model.barcode;
+                product.description = model.description;
+                product.purchase_price = model.purchase_price;
+                product.sell_price = model.sell_price;
+                product.fsubCat_id = model.fsubCat_id;
+                product.quantity = model.quantity;
+                product.mainCat_id = model.mainCat_id;
+                product.cat_id = model.cat_id;
+                product.subCat_id = model.subCat_id;
             }
             return product;
         }

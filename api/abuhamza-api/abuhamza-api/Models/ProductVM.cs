@@ -1,4 +1,5 @@
-﻿using System;
+﻿using abuhamza.repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,8 +20,8 @@ namespace abuhamza_api.Models
         public Nullable<int> cat_id { get; set; }
         public Nullable<int> mainCat_id { get; set; }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<tblDetailOrder> tblDetailOrders { get; set; }
-        //public virtual tblSubCategory tblSubCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblDetailOrder> tblDetailOrders { get; set; }
+        public virtual tblSubCategory tblSubCategory { get; set; }
     }
 }

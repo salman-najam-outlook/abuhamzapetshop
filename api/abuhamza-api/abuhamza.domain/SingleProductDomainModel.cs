@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace abuhamza.domain
 {
-    public class DetailOrderDomainModel
+    public class SingleProductDomainModel
     {
-        public int detailOrder_id { get; set; }
-        public Nullable<int> order_id { get; set; }
-        public Nullable<int> pro_id { get; set; }
+        public Nullable<int> saleOrder_id { get; set; }
         public string barcode { get; set; }
+        public string productName { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<decimal> purchasePrice { get; set; }
-
+        public Nullable<decimal> sellPrice { get; set; }
+        public Nullable<decimal> totalAmount { get; set; }
     }
 }

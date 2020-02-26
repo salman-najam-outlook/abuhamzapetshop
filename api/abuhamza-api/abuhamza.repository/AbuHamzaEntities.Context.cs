@@ -12,6 +12,8 @@ namespace abuhamza.repository
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class abuhamzapetstoreEntities : DbContext
     {
@@ -25,14 +27,15 @@ namespace abuhamza.repository
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblAccount> tblAccounts { get; set; }
         public virtual DbSet<tblAccType> tblAccTypes { get; set; }
         public virtual DbSet<tblCategory> tblCategories { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
         public virtual DbSet<tblDetailOrder> tblDetailOrders { get; set; }
         public virtual DbSet<tblDetailTransaction> tblDetailTransactions { get; set; }
+        public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblForthSubCategory> tblForthSubCategories { get; set; }
-        public virtual DbSet<tblInvoice> tblInvoices { get; set; }
         public virtual DbSet<tblMainCategory> tblMainCategories { get; set; }
         public virtual DbSet<tblProduct> tblProducts { get; set; }
         public virtual DbSet<tblPurchaseOrder> tblPurchaseOrders { get; set; }
@@ -40,9 +43,254 @@ namespace abuhamza.repository
         public virtual DbSet<tblSubCategory> tblSubCategories { get; set; }
         public virtual DbSet<tblSupplier> tblSuppliers { get; set; }
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
-        public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblvch> tblvches { get; set; }
         public virtual DbSet<tblVchDetail> tblVchDetails { get; set; }
-        public virtual DbSet<tblEmployee> tblEmployees { get; set; }
+        public virtual DbSet<tblDetailInvoice> tblDetailInvoices { get; set; }
+        public virtual DbSet<tblInvoice> tblInvoices { get; set; }
+        public virtual DbSet<tblUser> tblUsers { get; set; }
+    
+        public virtual int stpDetailOrder(Nullable<int> orderId, Nullable<int> quatity, string barcode, Nullable<decimal> purchasePrice, string voucherNo)
+        {
+            var orderIdParameter = orderId.HasValue ?
+                new ObjectParameter("orderId", orderId) :
+                new ObjectParameter("orderId", typeof(int));
+    
+            var quatityParameter = quatity.HasValue ?
+                new ObjectParameter("quatity", quatity) :
+                new ObjectParameter("quatity", typeof(int));
+    
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("barcode", barcode) :
+                new ObjectParameter("barcode", typeof(string));
+    
+            var purchasePriceParameter = purchasePrice.HasValue ?
+                new ObjectParameter("purchasePrice", purchasePrice) :
+                new ObjectParameter("purchasePrice", typeof(decimal));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("voucherNo", voucherNo) :
+                new ObjectParameter("voucherNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpDetailOrder", orderIdParameter, quatityParameter, barcodeParameter, purchasePriceParameter, voucherNoParameter);
+        }
+    
+        public virtual int stpPurchaseOrder(Nullable<int> orderId, Nullable<decimal> totalAmount, Nullable<decimal> paidAmount, string orderDesc, Nullable<int> sup_id, Nullable<decimal> voucherAmount, string voucherNo)
+        {
+            var orderIdParameter = orderId.HasValue ?
+                new ObjectParameter("orderId", orderId) :
+                new ObjectParameter("orderId", typeof(int));
+    
+            var totalAmountParameter = totalAmount.HasValue ?
+                new ObjectParameter("TotalAmount", totalAmount) :
+                new ObjectParameter("TotalAmount", typeof(decimal));
+    
+            var paidAmountParameter = paidAmount.HasValue ?
+                new ObjectParameter("PaidAmount", paidAmount) :
+                new ObjectParameter("PaidAmount", typeof(decimal));
+    
+            var orderDescParameter = orderDesc != null ?
+                new ObjectParameter("orderDesc", orderDesc) :
+                new ObjectParameter("orderDesc", typeof(string));
+    
+            var sup_idParameter = sup_id.HasValue ?
+                new ObjectParameter("sup_id", sup_id) :
+                new ObjectParameter("sup_id", typeof(int));
+    
+            var voucherAmountParameter = voucherAmount.HasValue ?
+                new ObjectParameter("voucherAmount", voucherAmount) :
+                new ObjectParameter("voucherAmount", typeof(decimal));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("voucherNo", voucherNo) :
+                new ObjectParameter("voucherNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpPurchaseOrder", orderIdParameter, totalAmountParameter, paidAmountParameter, orderDescParameter, sup_idParameter, voucherAmountParameter, voucherNoParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<stpGetPendingVouchersBySupplierID_Result> stpGetPendingVouchersBySupplierID(Nullable<int> sup_Id)
+        {
+            var sup_IdParameter = sup_Id.HasValue ?
+                new ObjectParameter("sup_Id", sup_Id) :
+                new ObjectParameter("sup_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetPendingVouchersBySupplierID_Result>("stpGetPendingVouchersBySupplierID", sup_IdParameter);
+        }
+    
+        public virtual int stpSaleDetail(Nullable<int> invoiceId, Nullable<int> quatity, string barcode, Nullable<decimal> sellPrice, string voucherNo)
+        {
+            var invoiceIdParameter = invoiceId.HasValue ?
+                new ObjectParameter("invoiceId", invoiceId) :
+                new ObjectParameter("invoiceId", typeof(int));
+    
+            var quatityParameter = quatity.HasValue ?
+                new ObjectParameter("quatity", quatity) :
+                new ObjectParameter("quatity", typeof(int));
+    
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("barcode", barcode) :
+                new ObjectParameter("barcode", typeof(string));
+    
+            var sellPriceParameter = sellPrice.HasValue ?
+                new ObjectParameter("sellPrice", sellPrice) :
+                new ObjectParameter("sellPrice", typeof(decimal));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("voucherNo", voucherNo) :
+                new ObjectParameter("voucherNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpSaleDetail", invoiceIdParameter, quatityParameter, barcodeParameter, sellPriceParameter, voucherNoParameter);
+        }
+    
+        public virtual int stpSaleOrder(Nullable<int> orderId, Nullable<int> totalQty, Nullable<decimal> subTotal, Nullable<decimal> totalAmount, Nullable<decimal> discount, Nullable<decimal> tenderedAmount, Nullable<decimal> change, string customerName, Nullable<int> user_id, Nullable<decimal> voucherAmount, string voucherNo)
+        {
+            var orderIdParameter = orderId.HasValue ?
+                new ObjectParameter("orderId", orderId) :
+                new ObjectParameter("orderId", typeof(int));
+    
+            var totalQtyParameter = totalQty.HasValue ?
+                new ObjectParameter("totalQty", totalQty) :
+                new ObjectParameter("totalQty", typeof(int));
+    
+            var subTotalParameter = subTotal.HasValue ?
+                new ObjectParameter("subTotal", subTotal) :
+                new ObjectParameter("subTotal", typeof(decimal));
+    
+            var totalAmountParameter = totalAmount.HasValue ?
+                new ObjectParameter("totalAmount", totalAmount) :
+                new ObjectParameter("totalAmount", typeof(decimal));
+    
+            var discountParameter = discount.HasValue ?
+                new ObjectParameter("discount", discount) :
+                new ObjectParameter("discount", typeof(decimal));
+    
+            var tenderedAmountParameter = tenderedAmount.HasValue ?
+                new ObjectParameter("tenderedAmount", tenderedAmount) :
+                new ObjectParameter("tenderedAmount", typeof(decimal));
+    
+            var changeParameter = change.HasValue ?
+                new ObjectParameter("change", change) :
+                new ObjectParameter("change", typeof(decimal));
+    
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("customerName", customerName) :
+                new ObjectParameter("customerName", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            var voucherAmountParameter = voucherAmount.HasValue ?
+                new ObjectParameter("voucherAmount", voucherAmount) :
+                new ObjectParameter("voucherAmount", typeof(decimal));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("voucherNo", voucherNo) :
+                new ObjectParameter("voucherNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpSaleOrder", orderIdParameter, totalQtyParameter, subTotalParameter, totalAmountParameter, discountParameter, tenderedAmountParameter, changeParameter, customerNameParameter, user_idParameter, voucherAmountParameter, voucherNoParameter);
+        }
     }
 }

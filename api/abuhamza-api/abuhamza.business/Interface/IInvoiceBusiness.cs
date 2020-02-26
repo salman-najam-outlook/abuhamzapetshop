@@ -13,6 +13,6 @@ namespace abuhamza.business.Interface
         Task<List<tblInvoice>> GetInvoices();
         Task<string> DeleteInvoice(int id);
         Task<InvoiceDomainModel> GetInvoiceById(int id);
-        Task<string> AddUpdateInvoice(InvoiceDomainModel Invoice);
+        Task<string> AddUpdateInvoice(SaleOrderDomainModel Invoice);
     }
 }

@@ -77,6 +77,16 @@ namespace abuhamza_api.Infrastructure
             CreateMap<InvoiceDomainModel, InvoiceToReturnVM>();
             CreateMap<tblInvoice, InvoiceToReturnVM>();
             CreateMap<InvoiceVM, InvoiceDomainModel>();
+
+            CreateMap<VoucherDomainModel, VoucherToReturnVM>();
+            CreateMap<tblvch, VoucherToReturnVM>();
+            CreateMap<VoucherVM, VoucherDomainModel>();
+
+            CreateMap<SaleOrderDomainModel, SaleOrder>();
+            //CreateMap<tblInvoice, SaleOrder>();
+            CreateMap<SaleOrder, SaleOrderDomainModel>();
+
+            CreateMap<SingleProductDomainModel, SingleProduct>();
         }
 
         public static void Run()

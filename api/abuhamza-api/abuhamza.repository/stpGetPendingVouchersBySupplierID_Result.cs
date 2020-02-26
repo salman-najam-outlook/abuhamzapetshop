@@ -10,21 +10,17 @@
 namespace abuhamza.repository
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblInvoice
+    public partial class stpGetPendingVouchersBySupplierID_Result
     {
-        public int invoice_id { get; set; }
+        public int vch_id { get; set; }
+        public string vchNo { get; set; }
         public Nullable<System.DateTime> date { get; set; }
-        public Nullable<int> totalQty { get; set; }
-        public Nullable<decimal> discount { get; set; }
+        public Nullable<decimal> pendingAmount { get; set; }
+        public Nullable<decimal> paidAmount { get; set; }
         public Nullable<decimal> totalAmount { get; set; }
-        public Nullable<decimal> AmountTendered { get; set; }
-        public Nullable<decimal> change { get; set; }
-        public Nullable<int> user_id { get; set; }
-        public Nullable<int> tra_id { get; set; }
-        public Nullable<decimal> subTotal { get; set; }
-    
-        public virtual tblUser tblUser { get; set; }
+        public string status { get; set; }
+        public string vchType { get; set; }
+        public string SupplierName { get; set; }
     }
 }

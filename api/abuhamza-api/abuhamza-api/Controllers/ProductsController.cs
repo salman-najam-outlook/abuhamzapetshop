@@ -44,6 +44,18 @@ namespace abuhamza_api.Controllers
             return productToReturnVM;
         }
 
+        // api/products/GetProductById/11111
+        // This Api call will get single product from the database based on barcode
+        [HttpGet]
+        [Route("api/products/GetProductByBarcode/{barcode}")]
+        public async Task<ProductToReturnVM> GetProductByBarcode(string barcode)
+        {
+            ProductToReturnVM productToReturnVM = new ProductToReturnVM();
+            ProductDomainModel productDomainModel = await productBusiness.GetProductByBarcode(barcode);
+            AutoMapper.Mapper.Map(productDomainModel, productToReturnVM);
+            return productToReturnVM;
+        }
+
         // api/products/DeleteProduct/{id}
         // This Api call will delete one product by given emp_id
         [HttpDelete]

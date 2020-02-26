@@ -4,32 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f5ea731b63c54e3fb165d1a2f7afb071" Name="Diagram1">
+      <Diagram DiagramId="f5ea731b63c54e3fb165d1a2f7afb071" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.sysdiagram" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblAccount" Width="1.5" PointX="3" PointY="1.5" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblAccType" Width="1.5" PointX="0.75" PointY="1.75" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblCategory" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblCategory" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblCustomer" Width="1.5" PointX="2.75" PointY="9.75" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailOrder" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailOrder" Width="1.5" PointX="8" PointY="6" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailTransaction" Width="1.5" PointX="7.5" PointY="1.375" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblEmployee" Width="1.5" PointX="4.75" PointY="9.75" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblForthSubCategory" Width="1.5" PointX="6.75" PointY="9.75" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblInvoice" Width="1.5" PointX="8" PointY="6" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblMainCategory" Width="1.5" PointX="8.75" PointY="9.75" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblProduct" Width="1.5" PointX="0.75" PointY="9.625" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblPurchaseOrder" Width="1.5" PointX="0.75" PointY="6" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblSalary" Width="1.5" PointX="10.75" PointY="3.75" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblSubCategory" Width="1.5" PointX="10.75" PointY="6.75" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblSupplier" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblProduct" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblPurchaseOrder" Width="1.5" PointX="5.75" PointY="6" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblSalary" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblSubCategory" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblSupplier" Width="1.5" PointX="11.75" PointY="0.75" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblTransaction" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblUser" Width="1.5" PointX="5.75" PointY="6" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblvch" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblVchDetail" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblvch" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblVchDetail" Width="1.5" PointX="12.75" PointY="3.75" />
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblAccounts_tblAccTypes" />
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblTransaction_tblAccounts" />
-        <AssociationConnector Association="abuhamzapetstoreModel.FK_tblDetailOrder_tblProducts2" />
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblDetailOrder_tblPurchaseOrder2" />
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblDetailTransaction_tblTransaction2" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailInvoice" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblInvoice" Width="1.5" PointX="6" PointY="14" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblUser" Width="1.5" PointX="3.75" PointY="14.125" />
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblInvoice_tblUsers" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblEmployee" Width="1.5" PointX="3.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

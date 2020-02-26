@@ -53,10 +53,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrderDomainModel.cs" />
     <Compile Include="SalaryDomainModel.cs" />
+    <Compile Include="SaleOrderDomainModel.cs" />
+    <Compile Include="SingleProductDomainModel.cs" />
     <Compile Include="SubCategoryDomainModel.cs" />
     <Compile Include="SupplierDomainModel.cs" />
     <Compile Include="TransactionDomainModel.cs" />
     <Compile Include="UserDomainModel.cs" />
+    <Compile Include="VoucherDM.cs" />
+    <Compile Include="VoucherDomainModel.cs" />
+    <Compile Include="VoucherModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
