@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-sm-12">
+        <nb-card>
+            <nb-card-header>Add Product</nb-card-header>
+            <nb-card-body>
+                <form novalidate [formGroup]="productAddEditForm">
+                    <div>
+                        <label for="categories" class="label">Categories & Sub-categories</label>
+                    </div>
+                    <div class="row">
+                        <nb-select placeholder="Main Categories" [(selected)]="selectedMainCategoryId"
+                            class="position-select" (selectedChange)="onMainCategorySelect($event)"
+                            formControlName="mainCategoryId" status="primary">
+                            <nb-option *ngFor="let mainCategory of mainCategories" [(value)]="mainCategory.mainCat_id">
+                                {{ mainCategory.name }}</nb-option>
+                        </nb-select>
+                        <nb-select placeholder="Categories" [(selected)]="selectedCategoryId" class="position-select"
+                            (selectedChange)="onCategorySelect($event)" formControlName="categoryId" status="info">
+                            <nb-option *ngFor="let category of categories" [(value)]="category.cat_id">
+                                {{ category.name }}</nb-option>
+                        </nb-select>
+                        <nb-select placeholder="Sub Categories" [(selected)]="selectedSubCategoryId"
+                            class="position-select" (selectedChange)="onSubCategorySelect($event)"
+                            formControlName="subCategoryId" status="success">
+                            <nb-option *ngFor="let subCategory of subCategories" [(value)]="subCategory.subCat_id">
+                                {{ subCategory.name }}</nb-option>
+                        </nb-select>
+                        <nb-select placeholder="Fouth Category" [(selected)]="selectedFourthCategoryId"
+                            class="position-select" formControlName="fourthCategoryId" status="warning">
+                            <nb-option *ngFor="let fourthCategory of fourthCategories"
+                                [(value)]="fourthCategory.fsubCat_id">{{ fourthCategory.name }}</nb-option>
+                        </nb-select>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ngx-barcode [bc-value]="barcode" [bc-display-value]="true"></ngx-barcode>
+                            <div class="form-group">
+                                <label for="barcode" class="label">Barcode</label>
+                                <input type="text" nbInput fullWidth autofocus id="barcode" placeholder="Barcode"
+                                    type="number" formControlName="barcode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="productid" class="label">ID</label>
+                                <input type="text" nbInput fullWidth id="productid" placeholder="Product ID" disabled
+                                    formControlName="productId">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="name" class="label">Name</label>
+                                <input type="text" nbInput fullWidth id="name" placeholder="Name"
+                                    formControlName="name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="originalprice" class="label">Original Price</label>
+                                <input type="email" nbInput fullWidth id="originalprice" placeholder="Original Price"
+                                    type="number" formControlName="originalPrice">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="markupprice" class="label">Markup Price</label>
+                                <input type="text" nbInput fullWidth id="markupprice" placeholder="Markup Price"
+                                    type="number" formControlName="markupPrice">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea nbInput fullWidth placeholder="Description" formControlName="description"></textarea>
+                    </div>
+                    <button nbButton status="primary" hero type="submit" (click)="onSubmit()">Submit</button>
+                    <button nbButton status="danger" hero (click)="onClear()">Clear</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<nb-card>
+    <nb-card-header>
+        Products
+    </nb-card-header>
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+            (userRowSelect)="onRowSelect($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

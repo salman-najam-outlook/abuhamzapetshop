@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-sm-8">
+        <nb-card>
+            <nb-card-body>
+                <form>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="barcode" class="label">Barcode</label>
+                                <input type="text" nbInput fullWidth autofocus id="barcode" placeholder="Barcode">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <button (click)="onClick()">Get All</button>
+                        </div>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-body>
+                <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+                (createConfirm)="onCreateConfirm($event)" (editConfirm)="onConfirmEdit($event)">
+                </ng2-smart-table>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-sm-4">
+        <nb-card>
+            <nb-card-body>
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="tenderamount" class="label">Tender Amount</label>
+                                <input type="text" (input)="onTenderAmountEntered($event.target.value)" nbInput fullWidth id="tenderamount" placeholder="Tender Amount">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="subtotal" class="label">Sub Total</label>
+                                <input type="text" nbInput fullWidth id="subtotal" placeholder="Sub Total" disabled value={{subTotal}}>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="discount" class="label">Discount</label>
+                                <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth autofocus id="discount" placeholder="Discount" value={{discount}}>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="grandTotal" class="label">Grand Amount</label>
+                                <input type="text" nbInput fullWidth id="grandTotal" placeholder="Grand Total" value={{grandTotal}}>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="remainingcash" class="label">Remaining Cash</label>
+                                <input type="text" nbInput fullWidth id="remainingcash" placeholder="Remaining Cash" value={{remainingCash}}>
+                            </div>
+                        </div>
+                    </div>
+                    <button (click)="onSubmit()">Submit</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

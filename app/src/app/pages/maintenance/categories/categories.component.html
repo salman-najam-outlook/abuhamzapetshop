@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-md-12 col-lg-3 col-xxxl-3">
+    <nb-card class="list-card">
+      <nb-card-header>
+        <div class="float-left">Main Categories</div>
+        <div class="float-right"><button nbButton status="success" (click)="onAddEditMainCategory()" size="tiny"
+            outline>Ad</button></div>
+      </nb-card-header>
+      <nb-card-header>Selected: {{selectedMainCategory.name}}</nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item style="cursor: pointer" *ngFor="let mCategory of mainCategories">
+            <div (click)="onSelectMainCategory(mCategory)" class="float-left">
+              {{ mCategory.name }}
+            </div>
+            <div class="float-right">
+              <div class="buttons-row">
+                <button nbButton status="warning" (click)="onAddEditMainCategory(mCategory)" size="tiny" outline>
+                  ED
+                </button>
+                &nbsp;
+                <button nbButton status="danger" (click)="onDeleteMainCategory(mCategory)" size="tiny" outline>
+                  DL
+                </button>
+              </div>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-12 col-lg-3 col-xxxl-3">
+    <nb-card class="list-card">
+      <nb-card-header>
+        <div class="float-left">First Sub-Categories</div>
+        <div class="float-right"><button nbButton status="success" (click)="onaddEditCategory(selectedMainCategory.mainCat_id)" size="tiny"
+            outline>Ad</button></div>
+      </nb-card-header>
+      <nb-card-header>Selected: {{selectedCategory.name}}</nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item style="cursor: pointer" *ngFor="let category of categories">
+            <div (click)="onSelectCategory(category)" class="float-left">
+              {{ category.name }}
+            </div>
+            <div class="float-right">
+              <div class="buttons-row">
+                <button nbButton status="warning" (click)="onaddEditCategory(category.mainCat_id, category)" size="tiny" outline>
+                  ED
+                </button>
+                &nbsp;
+                <button nbButton status="danger" (click)="onDeleteCategory(category)" size="tiny" outline>
+                  DL
+                </button>
+              </div>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-12 col-lg-3 col-xxxl-3">
+    <nb-card class="list-card">
+      <nb-card-header>Second Sub-Categories</nb-card-header>
+      <nb-card-header>Selected: {{selectedSubCategory.name}}</nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item style="cursor: pointer" *ngFor="let sCategory of subCategories">
+            <div (click)="onSelectSubCategory(sCategory)" class="float-left">
+              {{ sCategory.name }}
+            </div>
+            <div class="float-right">
+              <div class="buttons-row">
+                <button nbButton status="warning" (click)="onEditSubCategory(sCategory)" size="tiny" outline>
+                  ED
+                </button>
+                &nbsp;
+                <button nbButton status="danger" (click)="onDeleteSubCategory(sCategory)" size="tiny" outline>
+                  DL
+                </button>
+              </div>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-12 col-lg-3 col-xxxl-3">
+    <nb-card class="list-card">
+      <nb-card-header>Third Sub-Categories</nb-card-header>
+      <nb-card-header>Selected: {{selectedSubSubCateory.name}}</nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item style="cursor: pointer" *ngFor="let sSCategory of subSubCategories">
+            <div class="float-left">
+              {{ sSCategory.name }}
+            </div>
+            <div class="float-right">
+              <div class="buttons-row">
+                <button nbButton status="warning" (click)="onEditSubCategory(sSCategory)" size="tiny" outline>
+                  ED
+                </button>
+                &nbsp;
+                <button nbButton status="danger" (click)="onDeleteSubCategory(sSCategory)" size="tiny" outline>
+                  DL
+                </button>
+              </div>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

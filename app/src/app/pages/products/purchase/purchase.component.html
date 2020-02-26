@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-sm-12">
+        <nb-card>
+            <nb-card-header>Purchase Product</nb-card-header>
+            <nb-card-body>
+                <form novalidate [formGroup]="purchaseProductForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="barcode" class="label">Barcode</label>
+                                <input type="text" nbInput fullWidth autofocus id="barcode" placeholder="Barcode"
+                                    formControlName="barcode">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="name" class="label">Name</label>
+                                <input type="text" nbInput fullWidth id="name" placeholder="Name"
+                                    formControlName="productName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="purchasePrice" class="label">Purchase Price</label>
+                                <input type="number" nbInput fullWidth id="purchasePrice" placeholder="Purchase Price"
+                                    formControlName="purchasePrice">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="quantity" class="label">Quantity</label>
+                                <input type="number" nbInput fullWidth id="quantity" placeholder="Quantity"
+                                    formControlName="quantity">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <textarea nbInput fullWidth placeholder="Description"
+                                    formControlName="description"></textarea>
+                            </div>
+                        </div>
+                        <nb-select placeholder="Select Supplier" [(selected)]="selectedSupplier" class="position-select"
+                            (selectedChange)="onSupplierSelect($event)" formControlName="supplier" status="primary">
+                            <nb-option *ngFor="let supplier of suppliers" [(value)]="supplier.sup_id">
+                                {{ supplier.name }}</nb-option>
+                        </nb-select>
+                    </div>
+
+                    <button nbButton status="primary" hero (click)="onAdd()" [disabled]="purchaseProductForm.invalid">Add</button>
+                    <button nbButton status="danger" hero (click)="onClear()">Clear</button>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="totalamount" class="label">Total Amount</label>
+                                <input nbInput fullWidth id="totalamount" placeholder="Total Amount" type="number" disabled style="color: red"
+                                    formControlName="totalAmount">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="paidamount" class="label">Paid Amount</label>
+                                <input nbInput fullWidth id="paidamount" placeholder="Paid Amount" type="number" style="color: blueviolet"
+                                    formControlName="paidAmount">
+                            </div>
+                        </div>
+                    </div>
+                    <button nbButton status="success" hero type="submit" (click)="onSubmit()" [disabled]="single.length === 0">Submit</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<nb-card>
+    <nb-card-header>
+        Products Purchased
+    </nb-card-header>
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+            (editConfirm)="onConfirmEdit($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

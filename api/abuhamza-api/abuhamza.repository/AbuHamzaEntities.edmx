@@ -1,0 +1,918 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="abuhamzapetstoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAccounts">
+          <Key>
+            <PropertyRef Name="acc_id" />
+          </Key>
+          <Property Name="acc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="AccType_id" Type="int" />
+          <Property Name="balance" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tblAccTypes">
+          <Key>
+            <PropertyRef Name="AccType_id" />
+          </Key>
+          <Property Name="AccType_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="mainCat_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="cus_id" />
+          </Key>
+          <Property Name="cus_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="contact" Type="varchar" MaxLength="15" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblDetailOrder">
+          <Key>
+            <PropertyRef Name="detailOrder_id" />
+          </Key>
+          <Property Name="detailOrder_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="pro_id" Type="int" />
+          <Property Name="barcode" Type="varchar(max)" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="purchasePrice" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tblDetailTransaction">
+          <Key>
+            <PropertyRef Name="detailTra_id" />
+          </Key>
+          <Property Name="detailTra_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="voucherNo" Type="varchar" MaxLength="15" />
+          <Property Name="pendingAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="paidAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="recievedAomunt" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="tra_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="NIC" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="200" />
+          <Property Name="contact" Type="varchar" MaxLength="15" />
+          <Property Name="salary" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblForthSubCategory">
+          <Key>
+            <PropertyRef Name="fsubCat_id" />
+          </Key>
+          <Property Name="fsubCat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="subCat_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tblInvoice">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="totalQty" Type="int" />
+          <Property Name="discount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="totalAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="AmountTendered" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="change" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="tra_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tblMainCategory">
+          <Key>
+            <PropertyRef Name="mainCat_id" />
+          </Key>
+          <Property Name="mainCat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="type" Type="varchar" MaxLength="50" />
+          <Property Name="unit" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tblProducts">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="barcode" Type="varchar(max)" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="purchase_price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="sell_price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="quantity" Type="bigint" />
+          <Property Name="fsubCat_id" Type="int" />
+          <Property Name="subCat_id" Type="int" />
+          <Property Name="cat_id" Type="int" />
+          <Property Name="mainCat_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tblPurchaseOrder">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="totalAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="sup_id" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="10" />
+          <Property Name="voucherNo" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="tblSalary">
+          <Key>
+            <PropertyRef Name="sal_id" />
+          </Key>
+          <Property Name="sal_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="emp_id" Type="int" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tblSubCategory">
+          <Key>
+            <PropertyRef Name="subCat_id" />
+          </Key>
+          <Property Name="subCat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="cat_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tblSupplier">
+          <Key>
+            <PropertyRef Name="sup_id" />
+          </Key>
+          <Property Name="sup_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="company" Type="varchar" MaxLength="20" />
+          <Property Name="contact" Type="varchar" MaxLength="15" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblTransaction">
+          <Key>
+            <PropertyRef Name="tra_id" />
+          </Key>
+          <Property Name="tra_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tra_type" Type="varchar" MaxLength="10" />
+          <Property Name="voucherNo" Type="varchar" MaxLength="15" />
+          <Property Name="acc_id" Type="int" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="totalAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="totalQty" Type="int" />
+          <Property Name="barcode" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="20" />
+          <Property Name="lastname" Type="varchar" MaxLength="20" />
+          <Property Name="username" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+          <Property Name="userRoll" Type="varchar" MaxLength="15" />
+          <Property Name="status" Type="varchar" MaxLength="10" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="contact" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="tblvch">
+          <Key>
+            <PropertyRef Name="vch_id" />
+          </Key>
+          <Property Name="vch_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vchNo" Type="varchar" MaxLength="15" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="pendingAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="paidAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="totalAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="status" Type="varchar" MaxLength="10" />
+          <Property Name="recievedAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="vchType" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tblVchDetail">
+          <Key>
+            <PropertyRef Name="vchDetail_id" />
+          </Key>
+          <Property Name="vchDetail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vchNo" Type="varchar" MaxLength="15" />
+          <Property Name="vchDetailNo" Type="varchar" MaxLength="15" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_tblAccounts_tblAccTypes">
+          <End Role="tblAccTypes" Type="Self.tblAccTypes" Multiplicity="0..1" />
+          <End Role="tblAccounts" Type="Self.tblAccounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccTypes">
+              <PropertyRef Name="AccType_id" />
+            </Principal>
+            <Dependent Role="tblAccounts">
+              <PropertyRef Name="AccType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDetailOrder_tblProducts2">
+          <End Role="tblProducts" Type="Self.tblProducts" Multiplicity="0..1" />
+          <End Role="tblDetailOrder" Type="Self.tblDetailOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProducts">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tblDetailOrder">
+              <PropertyRef Name="pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDetailOrder_tblPurchaseOrder2">
+          <End Role="tblPurchaseOrder" Type="Self.tblPurchaseOrder" Multiplicity="0..1" />
+          <End Role="tblDetailOrder" Type="Self.tblDetailOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPurchaseOrder">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="tblDetailOrder">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDetailTransaction_tblTransaction2">
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="0..1" />
+          <End Role="tblDetailTransaction" Type="Self.tblDetailTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="tra_id" />
+            </Principal>
+            <Dependent Role="tblDetailTransaction">
+              <PropertyRef Name="tra_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInvoice_tblUsers">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblInvoice" Type="Self.tblInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="tblInvoice">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblAccounts">
+          <End Role="tblAccounts" Type="Self.tblAccounts" Multiplicity="0..1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccounts">
+              <PropertyRef Name="acc_id" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="acc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="abuhamzapetstoreModelStoreContainer">
+          <EntitySet Name="tblAccounts" EntityType="Self.tblAccounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAccTypes" EntityType="Self.tblAccTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDetailOrder" EntityType="Self.tblDetailOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDetailTransaction" EntityType="Self.tblDetailTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblForthSubCategory" EntityType="Self.tblForthSubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInvoice" EntityType="Self.tblInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMainCategory" EntityType="Self.tblMainCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProducts" EntityType="Self.tblProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPurchaseOrder" EntityType="Self.tblPurchaseOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSalary" EntityType="Self.tblSalary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSubCategory" EntityType="Self.tblSubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSupplier" EntityType="Self.tblSupplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransaction" EntityType="Self.tblTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblvch" EntityType="Self.tblvch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblVchDetail" EntityType="Self.tblVchDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblAccounts_tblAccTypes" Association="Self.FK_tblAccounts_tblAccTypes">
+            <End Role="tblAccTypes" EntitySet="tblAccTypes" />
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDetailOrder_tblProducts2" Association="Self.FK_tblDetailOrder_tblProducts2">
+            <End Role="tblProducts" EntitySet="tblProducts" />
+            <End Role="tblDetailOrder" EntitySet="tblDetailOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDetailOrder_tblPurchaseOrder2" Association="Self.FK_tblDetailOrder_tblPurchaseOrder2">
+            <End Role="tblPurchaseOrder" EntitySet="tblPurchaseOrder" />
+            <End Role="tblDetailOrder" EntitySet="tblDetailOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDetailTransaction_tblTransaction2" Association="Self.FK_tblDetailTransaction_tblTransaction2">
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+            <End Role="tblDetailTransaction" EntitySet="tblDetailTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInvoice_tblUsers" Association="Self.FK_tblInvoice_tblUsers">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblInvoice" EntitySet="tblInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblAccounts" Association="Self.FK_tblTransaction_tblAccounts">
+            <End Role="tblAccounts" EntitySet="tblAccounts" />
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="abuhamzapetstoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="abuhamzapetstoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAccounts" EntityType="abuhamzapetstoreModel.tblAccount" />
+          <EntitySet Name="tblAccTypes" EntityType="abuhamzapetstoreModel.tblAccType" />
+          <EntitySet Name="tblCategories" EntityType="abuhamzapetstoreModel.tblCategory" />
+          <EntitySet Name="tblCustomers" EntityType="abuhamzapetstoreModel.tblCustomer" />
+          <EntitySet Name="tblDetailOrders" EntityType="abuhamzapetstoreModel.tblDetailOrder" />
+          <EntitySet Name="tblDetailTransactions" EntityType="abuhamzapetstoreModel.tblDetailTransaction" />
+          <EntitySet Name="tblForthSubCategories" EntityType="abuhamzapetstoreModel.tblForthSubCategory" />
+          <EntitySet Name="tblInvoices" EntityType="abuhamzapetstoreModel.tblInvoice" />
+          <EntitySet Name="tblMainCategories" EntityType="abuhamzapetstoreModel.tblMainCategory" />
+          <EntitySet Name="tblProducts" EntityType="abuhamzapetstoreModel.tblProduct" />
+          <EntitySet Name="tblPurchaseOrders" EntityType="abuhamzapetstoreModel.tblPurchaseOrder" />
+          <EntitySet Name="tblSalaries" EntityType="abuhamzapetstoreModel.tblSalary" />
+          <EntitySet Name="tblSubCategories" EntityType="abuhamzapetstoreModel.tblSubCategory" />
+          <EntitySet Name="tblSuppliers" EntityType="abuhamzapetstoreModel.tblSupplier" />
+          <EntitySet Name="tblTransactions" EntityType="abuhamzapetstoreModel.tblTransaction" />
+          <EntitySet Name="tblUsers" EntityType="abuhamzapetstoreModel.tblUser" />
+          <EntitySet Name="tblvches" EntityType="abuhamzapetstoreModel.tblvch" />
+          <EntitySet Name="tblVchDetails" EntityType="abuhamzapetstoreModel.tblVchDetail" />
+          <AssociationSet Name="FK_tblAccounts_tblAccTypes" Association="abuhamzapetstoreModel.FK_tblAccounts_tblAccTypes">
+            <End Role="tblAccType" EntitySet="tblAccTypes" />
+            <End Role="tblAccount" EntitySet="tblAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblAccounts" Association="abuhamzapetstoreModel.FK_tblTransaction_tblAccounts">
+            <End Role="tblAccount" EntitySet="tblAccounts" />
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDetailOrder_tblProducts2" Association="abuhamzapetstoreModel.FK_tblDetailOrder_tblProducts2">
+            <End Role="tblProduct" EntitySet="tblProducts" />
+            <End Role="tblDetailOrder" EntitySet="tblDetailOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDetailOrder_tblPurchaseOrder2" Association="abuhamzapetstoreModel.FK_tblDetailOrder_tblPurchaseOrder2">
+            <End Role="tblPurchaseOrder" EntitySet="tblPurchaseOrders" />
+            <End Role="tblDetailOrder" EntitySet="tblDetailOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDetailTransaction_tblTransaction2" Association="abuhamzapetstoreModel.FK_tblDetailTransaction_tblTransaction2">
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+            <End Role="tblDetailTransaction" EntitySet="tblDetailTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInvoice_tblUsers" Association="abuhamzapetstoreModel.FK_tblInvoice_tblUsers">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblInvoice" EntitySet="tblInvoices" />
+          </AssociationSet>
+          <EntitySet Name="tblEmployees" EntityType="abuhamzapetstoreModel.tblEmployee" />
+        </EntityContainer>
+        <EntityType Name="tblAccount">
+          <Key>
+            <PropertyRef Name="acc_id" />
+          </Key>
+          <Property Name="acc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AccType_id" Type="Int32" />
+          <Property Name="balance" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="tblAccType" Relationship="abuhamzapetstoreModel.FK_tblAccounts_tblAccTypes" FromRole="tblAccount" ToRole="tblAccType" />
+          <NavigationProperty Name="tblTransactions" Relationship="abuhamzapetstoreModel.FK_tblTransaction_tblAccounts" FromRole="tblAccount" ToRole="tblTransaction" />
+        </EntityType>
+        <EntityType Name="tblAccType">
+          <Key>
+            <PropertyRef Name="AccType_id" />
+          </Key>
+          <Property Name="AccType_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAccounts" Relationship="abuhamzapetstoreModel.FK_tblAccounts_tblAccTypes" FromRole="tblAccType" ToRole="tblAccount" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mainCat_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="cus_id" />
+          </Key>
+          <Property Name="cus_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblDetailOrder">
+          <Key>
+            <PropertyRef Name="detailOrder_id" />
+          </Key>
+          <Property Name="detailOrder_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="pro_id" Type="Int32" />
+          <Property Name="barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="purchasePrice" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="tblProduct" Relationship="abuhamzapetstoreModel.FK_tblDetailOrder_tblProducts2" FromRole="tblDetailOrder" ToRole="tblProduct" />
+          <NavigationProperty Name="tblPurchaseOrder" Relationship="abuhamzapetstoreModel.FK_tblDetailOrder_tblPurchaseOrder2" FromRole="tblDetailOrder" ToRole="tblPurchaseOrder" />
+        </EntityType>
+        <EntityType Name="tblDetailTransaction">
+          <Key>
+            <PropertyRef Name="detailTra_id" />
+          </Key>
+          <Property Name="detailTra_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="voucherNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="pendingAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="paidAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="recievedAomunt" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="tra_id" Type="Int32" />
+          <NavigationProperty Name="tblTransaction" Relationship="abuhamzapetstoreModel.FK_tblDetailTransaction_tblTransaction2" FromRole="tblDetailTransaction" ToRole="tblTransaction" />
+        </EntityType>
+        <EntityType Name="tblForthSubCategory">
+          <Key>
+            <PropertyRef Name="fsubCat_id" />
+          </Key>
+          <Property Name="fsubCat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="subCat_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblInvoice">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="totalQty" Type="Int32" />
+          <Property Name="discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="totalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="AmountTendered" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="change" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="tra_id" Type="Int32" />
+          <NavigationProperty Name="tblUser" Relationship="abuhamzapetstoreModel.FK_tblInvoice_tblUsers" FromRole="tblInvoice" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblMainCategory">
+          <Key>
+            <PropertyRef Name="mainCat_id" />
+          </Key>
+          <Property Name="mainCat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="unit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="barcode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="purchase_price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="sell_price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="quantity" Type="Int64" />
+          <Property Name="fsubCat_id" Type="Int32" />
+          <Property Name="subCat_id" Type="Int32" />
+          <Property Name="cat_id" Type="Int32" />
+          <Property Name="mainCat_id" Type="Int32" />
+          <NavigationProperty Name="tblDetailOrders" Relationship="abuhamzapetstoreModel.FK_tblDetailOrder_tblProducts2" FromRole="tblProduct" ToRole="tblDetailOrder" />
+        </EntityType>
+        <EntityType Name="tblPurchaseOrder">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="totalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="sup_id" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="voucherNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblDetailOrders" Relationship="abuhamzapetstoreModel.FK_tblDetailOrder_tblPurchaseOrder2" FromRole="tblPurchaseOrder" ToRole="tblDetailOrder" />
+        </EntityType>
+        <EntityType Name="tblSalary">
+          <Key>
+            <PropertyRef Name="sal_id" />
+          </Key>
+          <Property Name="sal_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="emp_id" Type="Int32" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tblSubCategory">
+          <Key>
+            <PropertyRef Name="subCat_id" />
+          </Key>
+          <Property Name="subCat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cat_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblSupplier">
+          <Key>
+            <PropertyRef Name="sup_id" />
+          </Key>
+          <Property Name="sup_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="company" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblTransaction">
+          <Key>
+            <PropertyRef Name="tra_id" />
+          </Key>
+          <Property Name="tra_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tra_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="voucherNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="acc_id" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="totalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="totalQty" Type="Int32" />
+          <Property Name="barcode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAccount" Relationship="abuhamzapetstoreModel.FK_tblTransaction_tblAccounts" FromRole="tblTransaction" ToRole="tblAccount" />
+          <NavigationProperty Name="tblDetailTransactions" Relationship="abuhamzapetstoreModel.FK_tblDetailTransaction_tblTransaction2" FromRole="tblTransaction" ToRole="tblDetailTransaction" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="userRoll" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblInvoices" Relationship="abuhamzapetstoreModel.FK_tblInvoice_tblUsers" FromRole="tblUser" ToRole="tblInvoice" />
+        </EntityType>
+        <EntityType Name="tblvch">
+          <Key>
+            <PropertyRef Name="vch_id" />
+          </Key>
+          <Property Name="vch_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vchNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="pendingAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="paidAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="totalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="recievedAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="vchType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblVchDetail">
+          <Key>
+            <PropertyRef Name="vchDetail_id" />
+          </Key>
+          <Property Name="vchDetail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vchNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="vchDetailNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_tblAccounts_tblAccTypes">
+          <End Type="abuhamzapetstoreModel.tblAccType" Role="tblAccType" Multiplicity="0..1" />
+          <End Type="abuhamzapetstoreModel.tblAccount" Role="tblAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccType">
+              <PropertyRef Name="AccType_id" />
+            </Principal>
+            <Dependent Role="tblAccount">
+              <PropertyRef Name="AccType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblAccounts">
+          <End Type="abuhamzapetstoreModel.tblAccount" Role="tblAccount" Multiplicity="0..1" />
+          <End Type="abuhamzapetstoreModel.tblTransaction" Role="tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="acc_id" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="acc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDetailOrder_tblProducts2">
+          <End Type="abuhamzapetstoreModel.tblProduct" Role="tblProduct" Multiplicity="0..1" />
+          <End Type="abuhamzapetstoreModel.tblDetailOrder" Role="tblDetailOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tblDetailOrder">
+              <PropertyRef Name="pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDetailOrder_tblPurchaseOrder2">
+          <End Type="abuhamzapetstoreModel.tblPurchaseOrder" Role="tblPurchaseOrder" Multiplicity="0..1" />
+          <End Type="abuhamzapetstoreModel.tblDetailOrder" Role="tblDetailOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPurchaseOrder">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="tblDetailOrder">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDetailTransaction_tblTransaction2">
+          <End Type="abuhamzapetstoreModel.tblTransaction" Role="tblTransaction" Multiplicity="0..1" />
+          <End Type="abuhamzapetstoreModel.tblDetailTransaction" Role="tblDetailTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="tra_id" />
+            </Principal>
+            <Dependent Role="tblDetailTransaction">
+              <PropertyRef Name="tra_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInvoice_tblUsers">
+          <End Type="abuhamzapetstoreModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="abuhamzapetstoreModel.tblInvoice" Role="tblInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="tblInvoice">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NIC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="salary" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="abuhamzapetstoreModelStoreContainer" CdmEntityContainer="abuhamzapetstoreEntities">
+          <EntitySetMapping Name="tblAccounts">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblAccount">
+              <MappingFragment StoreEntitySet="tblAccounts">
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="AccType_id" ColumnName="AccType_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccTypes">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblAccType">
+              <MappingFragment StoreEntitySet="tblAccTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccType_id" ColumnName="AccType_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCategories">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblCategory">
+              <MappingFragment StoreEntitySet="tblCategory">
+                <ScalarProperty Name="mainCat_id" ColumnName="mainCat_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCustomers">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblCustomer">
+              <MappingFragment StoreEntitySet="tblCustomer">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="cus_id" ColumnName="cus_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDetailOrders">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblDetailOrder">
+              <MappingFragment StoreEntitySet="tblDetailOrder">
+                <ScalarProperty Name="purchasePrice" ColumnName="purchasePrice" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="detailOrder_id" ColumnName="detailOrder_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDetailTransactions">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblDetailTransaction">
+              <MappingFragment StoreEntitySet="tblDetailTransaction">
+                <ScalarProperty Name="tra_id" ColumnName="tra_id" />
+                <ScalarProperty Name="recievedAomunt" ColumnName="recievedAomunt" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="voucherNo" ColumnName="voucherNo" />
+                <ScalarProperty Name="detailTra_id" ColumnName="detailTra_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblForthSubCategories">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblForthSubCategory">
+              <MappingFragment StoreEntitySet="tblForthSubCategory">
+                <ScalarProperty Name="subCat_id" ColumnName="subCat_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="fsubCat_id" ColumnName="fsubCat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInvoices">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblInvoice">
+              <MappingFragment StoreEntitySet="tblInvoice">
+                <ScalarProperty Name="tra_id" ColumnName="tra_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="change" ColumnName="change" />
+                <ScalarProperty Name="AmountTendered" ColumnName="AmountTendered" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="totalQty" ColumnName="totalQty" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMainCategories">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblMainCategory">
+              <MappingFragment StoreEntitySet="tblMainCategory">
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="mainCat_id" ColumnName="mainCat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProducts">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblProduct">
+              <MappingFragment StoreEntitySet="tblProducts">
+                <ScalarProperty Name="mainCat_id" ColumnName="mainCat_id" />
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="subCat_id" ColumnName="subCat_id" />
+                <ScalarProperty Name="fsubCat_id" ColumnName="fsubCat_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="sell_price" ColumnName="sell_price" />
+                <ScalarProperty Name="purchase_price" ColumnName="purchase_price" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPurchaseOrders">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblPurchaseOrder">
+              <MappingFragment StoreEntitySet="tblPurchaseOrder">
+                <ScalarProperty Name="voucherNo" ColumnName="voucherNo" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="sup_id" ColumnName="sup_id" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSalaries">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblSalary">
+              <MappingFragment StoreEntitySet="tblSalary">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="sal_id" ColumnName="sal_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSubCategories">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblSubCategory">
+              <MappingFragment StoreEntitySet="tblSubCategory">
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="subCat_id" ColumnName="subCat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSuppliers">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblSupplier">
+              <MappingFragment StoreEntitySet="tblSupplier">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="sup_id" ColumnName="sup_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransactions">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblTransaction">
+              <MappingFragment StoreEntitySet="tblTransaction">
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="totalQty" ColumnName="totalQty" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+                <ScalarProperty Name="voucherNo" ColumnName="voucherNo" />
+                <ScalarProperty Name="tra_type" ColumnName="tra_type" />
+                <ScalarProperty Name="tra_id" ColumnName="tra_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="userRoll" ColumnName="userRoll" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblvches">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblvch">
+              <MappingFragment StoreEntitySet="tblvch">
+                <ScalarProperty Name="vchType" ColumnName="vchType" />
+                <ScalarProperty Name="recievedAmount" ColumnName="recievedAmount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="vch_id" ColumnName="vch_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblVchDetails">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblVchDetail">
+              <MappingFragment StoreEntitySet="tblVchDetail">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="vchDetailNo" ColumnName="vchDetailNo" />
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="vchDetail_id" ColumnName="vchDetail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="NIC" ColumnName="NIC" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
