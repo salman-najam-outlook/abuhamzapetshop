@@ -58,14 +58,23 @@ namespace abuhamza_api.Controllers
             return voucherDomainModel;
         }
 
-        [HttpPost]
-        [Route("api/vouchers/pendingOrderPayment/{id}")]
-        public async Task<IEnumerable<VoucherDM>> pendingOrderPayment(int id)
+        // api/vouchers/GetAllPendingVouchers
+        // This Api call will get all pending vouchers
+        [HttpGet]
+        [Route("api/vouchers/GetAllPendingVouchers")]
+        public async Task<IEnumerable<VoucherDM>> GetAllPendingVouchers()
         {
-            //VoucherToReturnVM voucherToReturnVM = new VoucherToReturnVM();
-            IEnumerable<VoucherDM> voucherDomainModel = await voucherBusiness.GetPendingVouchersBySupplierID(id);
-            // AutoMapper.Mapper.Map(voucherDomainModel, voucherToReturnVM);
+            IEnumerable<VoucherDM> voucherDomainModel = await voucherBusiness.GetAllPendingVouchers();
             return voucherDomainModel;
+        }
+
+        [HttpPost]
+        [Route("api/vouchers/pendingOrderPayment/")]
+        public async Task<string> pendingOrderPayment(PaymentVoucher paymentVoucher)
+        {
+            PaymentVoucherDomainModel paymentVoucherDM = new PaymentVoucherDomainModel();
+            AutoMapper.Mapper.Map(paymentVoucher, paymentVoucherDM);
+            return await voucherBusiness.pendingOrderPayment(paymentVoucherDM);
         }
     }
 }

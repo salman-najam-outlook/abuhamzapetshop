@@ -27,15 +27,16 @@ namespace abuhamza.repository
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblAccount> tblAccounts { get; set; }
         public virtual DbSet<tblAccType> tblAccTypes { get; set; }
         public virtual DbSet<tblCategory> tblCategories { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
+        public virtual DbSet<tblDetailInvoice> tblDetailInvoices { get; set; }
         public virtual DbSet<tblDetailOrder> tblDetailOrders { get; set; }
         public virtual DbSet<tblDetailTransaction> tblDetailTransactions { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblForthSubCategory> tblForthSubCategories { get; set; }
+        public virtual DbSet<tblInvoice> tblInvoices { get; set; }
         public virtual DbSet<tblMainCategory> tblMainCategories { get; set; }
         public virtual DbSet<tblProduct> tblProducts { get; set; }
         public virtual DbSet<tblPurchaseOrder> tblPurchaseOrders { get; set; }
@@ -43,11 +44,9 @@ namespace abuhamza.repository
         public virtual DbSet<tblSubCategory> tblSubCategories { get; set; }
         public virtual DbSet<tblSupplier> tblSuppliers { get; set; }
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
+        public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblvch> tblvches { get; set; }
         public virtual DbSet<tblVchDetail> tblVchDetails { get; set; }
-        public virtual DbSet<tblDetailInvoice> tblDetailInvoices { get; set; }
-        public virtual DbSet<tblInvoice> tblInvoices { get; set; }
-        public virtual DbSet<tblUser> tblUsers { get; set; }
     
         public virtual int stpDetailOrder(Nullable<int> orderId, Nullable<int> quatity, string barcode, Nullable<decimal> purchasePrice, string voucherNo)
         {
@@ -74,7 +73,7 @@ namespace abuhamza.repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpDetailOrder", orderIdParameter, quatityParameter, barcodeParameter, purchasePriceParameter, voucherNoParameter);
         }
     
-        public virtual int stpPurchaseOrder(Nullable<int> orderId, Nullable<decimal> totalAmount, Nullable<decimal> paidAmount, string orderDesc, Nullable<int> sup_id, Nullable<decimal> voucherAmount, string voucherNo)
+        public virtual int stpPurchaseOrder(Nullable<int> orderId, Nullable<decimal> totalAmount, Nullable<decimal> paidAmount, string orderDesc, Nullable<int> sup_id, Nullable<decimal> voucherAmount, string voucherNo, Nullable<int> user_id)
         {
             var orderIdParameter = orderId.HasValue ?
                 new ObjectParameter("orderId", orderId) :
@@ -104,7 +103,11 @@ namespace abuhamza.repository
                 new ObjectParameter("voucherNo", voucherNo) :
                 new ObjectParameter("voucherNo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpPurchaseOrder", orderIdParameter, totalAmountParameter, paidAmountParameter, orderDescParameter, sup_idParameter, voucherAmountParameter, voucherNoParameter);
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpPurchaseOrder", orderIdParameter, totalAmountParameter, paidAmountParameter, orderDescParameter, sup_idParameter, voucherAmountParameter, voucherNoParameter, user_idParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -291,6 +294,57 @@ namespace abuhamza.repository
                 new ObjectParameter("voucherNo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpSaleOrder", orderIdParameter, totalQtyParameter, subTotalParameter, totalAmountParameter, discountParameter, tenderedAmountParameter, changeParameter, customerNameParameter, user_idParameter, voucherAmountParameter, voucherNoParameter);
+        }
+    
+        public virtual int stpPurchaseOrderPayment(Nullable<int> sup_id, Nullable<decimal> voucherAmount, Nullable<decimal> remainingAmount, string voucherNo)
+        {
+            var sup_idParameter = sup_id.HasValue ?
+                new ObjectParameter("sup_id", sup_id) :
+                new ObjectParameter("sup_id", typeof(int));
+    
+            var voucherAmountParameter = voucherAmount.HasValue ?
+                new ObjectParameter("voucherAmount", voucherAmount) :
+                new ObjectParameter("voucherAmount", typeof(decimal));
+    
+            var remainingAmountParameter = remainingAmount.HasValue ?
+                new ObjectParameter("remainingAmount", remainingAmount) :
+                new ObjectParameter("remainingAmount", typeof(decimal));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("voucherNo", voucherNo) :
+                new ObjectParameter("voucherNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpPurchaseOrderPayment", sup_idParameter, voucherAmountParameter, remainingAmountParameter, voucherNoParameter);
+        }
+    
+        public virtual int stpCashTransaction(Nullable<int> debitor_Acc_id, Nullable<int> creditor_Acc_id, Nullable<decimal> voucherAmount, string voucherNo, string desc)
+        {
+            var debitor_Acc_idParameter = debitor_Acc_id.HasValue ?
+                new ObjectParameter("debitor_Acc_id", debitor_Acc_id) :
+                new ObjectParameter("debitor_Acc_id", typeof(int));
+    
+            var creditor_Acc_idParameter = creditor_Acc_id.HasValue ?
+                new ObjectParameter("creditor_Acc_id", creditor_Acc_id) :
+                new ObjectParameter("creditor_Acc_id", typeof(int));
+    
+            var voucherAmountParameter = voucherAmount.HasValue ?
+                new ObjectParameter("voucherAmount", voucherAmount) :
+                new ObjectParameter("voucherAmount", typeof(decimal));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("voucherNo", voucherNo) :
+                new ObjectParameter("voucherNo", typeof(string));
+    
+            var descParameter = desc != null ?
+                new ObjectParameter("desc", desc) :
+                new ObjectParameter("desc", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpCashTransaction", debitor_Acc_idParameter, creditor_Acc_idParameter, voucherAmountParameter, voucherNoParameter, descParameter);
+        }
+    
+        public virtual ObjectResult<stpGetAllPendingVouchers_Result> stpGetAllPendingVouchers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetAllPendingVouchers_Result>("stpGetAllPendingVouchers");
         }
     }
 }

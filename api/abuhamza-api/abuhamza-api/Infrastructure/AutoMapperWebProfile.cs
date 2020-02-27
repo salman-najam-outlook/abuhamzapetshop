@@ -87,6 +87,12 @@ namespace abuhamza_api.Infrastructure
             CreateMap<SaleOrder, SaleOrderDomainModel>();
 
             CreateMap<SingleProductDomainModel, SingleProduct>();
+
+            CreateMap<PaymentVoucherDomainModel, PaymentVoucher>();
+            CreateMap<PaymentVoucher, PaymentVoucherDomainModel>();
+
+            CreateMap<CashTransactionDomainModel, CashTransaction>();
+            CreateMap<CashTransaction, CashTransactionDomainModel>();
         }
 
         public static void Run()

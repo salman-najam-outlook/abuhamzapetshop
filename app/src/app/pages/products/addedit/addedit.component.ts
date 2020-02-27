@@ -215,6 +215,7 @@ export class AddEditComponent implements OnInit {
   onRowSelect(event) {
     this.productService.getProductByProductId(event.data.pro_id).subscribe(
       (response) => {
+        this.value = response.barcode;
         this.productAddEditForm.controls.productId.setValue(response.pro_id);
         this.productAddEditForm.controls.barcode.setValue(response.barcode);
         this.productAddEditForm.controls.name.setValue(response.name);

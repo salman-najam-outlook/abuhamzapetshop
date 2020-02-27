@@ -10,9 +10,8 @@
 namespace abuhamza.repository
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblvch
+    public partial class stpGetAllPendingVouchers_Result
     {
         public int vch_id { get; set; }
         public string vchNo { get; set; }
@@ -21,8 +20,7 @@ namespace abuhamza.repository
         public Nullable<decimal> paidAmount { get; set; }
         public Nullable<decimal> totalAmount { get; set; }
         public string status { get; set; }
-        public Nullable<decimal> recievedAmount { get; set; }
         public string vchType { get; set; }
-        public string description { get; set; }
+        public string SupplierName { get; set; }
     }
 }

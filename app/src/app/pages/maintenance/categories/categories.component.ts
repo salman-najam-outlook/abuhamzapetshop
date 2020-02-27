@@ -7,6 +7,8 @@ import { FourthSubCategory } from '../../../models/fourthSubCategory.model';
 import { NbDialogService } from '@nebular/theme';
 import { MCategoriesAddEditComponent } from './mcategories-add-edit-model/mcategories-add-edit-model.component';
 import { CategoriesAddEditComponent } from './categories-add-edit-model/categories-add-edit-model.component';
+import { SubCategoriesAddEditComponent } from './subcategories-add-edit-model/subcategories-add-edit-model.component';
+import { FourthCategoriesAddEditComponent } from './fourthcategories-add-edit-model/fourthcategories-add-edit-model.component';
 @Component({
     selector: 'ngx-categories',
     templateUrl: 'categories.component.html',
@@ -45,6 +47,7 @@ export class CategoriesComponent implements OnInit {
         this.selectedMainCategory = mcategory;
         this.selectedCategory.name = 'None';
         this.selectedSubCategory.name = 'None';
+        this.selectedSubSubCateory.name = 'None';
         this.categories = [];
         this.subCategories = [];
         this.subSubCategories = [];
@@ -55,7 +58,7 @@ export class CategoriesComponent implements OnInit {
             (error) => {
                 console.log(error);
             }
-        )
+        );
     }
 
     onAddEditMainCategory(mcategory?: MainCategory) {
@@ -103,10 +106,6 @@ export class CategoriesComponent implements OnInit {
         );
     }
 
-    onAddCategory(category: Category) {
-        console.log('onAddCategory', category)
-    }
-
     onaddEditCategory(mCategoryId: number, category?: Category) {
         if (category === undefined) {
             this.modelTitle = 'Add Category'
@@ -147,27 +146,66 @@ export class CategoriesComponent implements OnInit {
             (error) => {
                 console.log(error);
             }
-        )
+        );
     }
 
-    onAddSubCategory(subCategory: SubCategory) {
-        console.log(subCategory);
+    onSelectFourthSubCategory(fourthSubCategory: FourthSubCategory) {
+        this.selectedSubSubCateory = fourthSubCategory;
     }
 
-    onEditSubCategory(subCategory: SubCategory) {
-        console.log(subCategory);
+    onAddEditSubCategory(categoryId: number, subCategory?: SubCategory) {
+        if (subCategory === undefined) {
+            this.modelTitle = 'Add SubCategory'
+        } else {
+            this.modelTitle = 'Edit ' + subCategory.name;
+        }
+        this.dialogService.open(SubCategoriesAddEditComponent, {
+            context: {
+                title: this.modelTitle,
+                cat_id: categoryId,
+                subCategory: subCategory
+            }
+        }).onClose.subscribe(response => {
+            this.maintenanceService.getAllSubCategoriesByCategoryId(categoryId).subscribe(
+                (response) => {
+                    this.subCategories = [];
+                    this.subSubCategories = [];
+                    this.subCategories = response;
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        });
     }
 
     onDeleteSubCategory(subCategory: SubCategory) {
         console.log(subCategory);
     }
 
-    onAddSubSubCategory(subCategory: SubCategory) {
-        console.log(subCategory);
-    }
-
-    onEditSubSubCategory(subCategory: SubCategory) {
-        console.log(subCategory);
+    onAddEditFourthSubCategory(subCategoryId: number, fourthSubCategory?: FourthSubCategory) {
+        if (fourthSubCategory === undefined) {
+            this.modelTitle = 'Add Fourth Sub Category'
+        } else {
+            this.modelTitle = 'Edit ' + fourthSubCategory.name;
+        }
+        this.dialogService.open(FourthCategoriesAddEditComponent, {
+            context: {
+                title: this.modelTitle,
+                subCat_id: subCategoryId,
+                fourthSubCategory: fourthSubCategory
+            }
+        }).onClose.subscribe(response => {
+            this.maintenanceService.getAllForthSubCategoriesByCategoryId(subCategoryId).subscribe(
+                (response) => {
+                    this.subSubCategories = [];
+                    this.subSubCategories = response;
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        });
     }
 
     onDeleteSubSubCategory(subCategory: SubCategory) {

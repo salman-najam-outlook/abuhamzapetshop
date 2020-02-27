@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,13 +70,6 @@ namespace abuhamza.business
                 tblPurchaseOrder purchaseOrderToUpdate = await purchaseOrderRepository.SingleOrDefault(s => s.order_id == purchaseOrder.order_id);
                 if (purchaseOrderToUpdate != null)
                 {
-                    purchaseOrderToUpdate.order_id = purchaseOrder.order_id;
-                    purchaseOrderToUpdate.date = purchaseOrder.date;
-                    purchaseOrderToUpdate.totalAmount = purchaseOrder.totalAmount;
-                    purchaseOrderToUpdate.status = purchaseOrder.status;
-                    purchaseOrderToUpdate.voucherNo = purchaseOrder.voucherNo;
-                    purchaseOrderToUpdate.sup_id = purchaseOrder.supplier;
-
                     await purchaseOrderRepository.Update(purchaseOrderToUpdate);
                     status = "updated";
                 }
@@ -84,32 +78,32 @@ namespace abuhamza.business
             {
                 List<DetailOrderDomainModel> detailOrder = new List<DetailOrderDomainModel>();
                 detailOrder = purchaseOrder.orderDetails;
-                
-                Guid obj = Guid.NewGuid();
-                string strVchNo = obj.ToString();
+                string strVchNo = "";
+                string strOrderDesc = "";
+                int vrNo = 0;
 
                 tblPurchaseOrder purchaseOrderToAdd = new tblPurchaseOrder();
 
-                //purchaseOrderToAdd.order_id = purchaseOrder.order_id;
-
-                //purchaseOrderToAdd.date         = purchaseOrder.date;
-                //purchaseOrderToAdd.totalAmount  = purchaseOrder.totalAmount;
-                //purchaseOrderToAdd.paidAmount   = purchaseOrder.paidAmount;
-                //purchaseOrderToAdd.orderDesc    = purchaseOrder.description;
-                //purchaseOrderToAdd.status       = "Completed";//purchaseOrder.status;
-                //purchaseOrderToAdd.voucherNo    = strVchNo;   //purchaseOrder.voucherNo;
-                //purchaseOrderToAdd.supplier       = 1;        //purchaseOrder.supplier;
-
-                //await purchaseOrderRepository.Insert(purchaseOrderToAdd);
                 int lastOrderId = 0;
 
                 using (abuhamzapetstoreEntities db = new abuhamzapetstoreEntities())
                 {
                     try
                     {
-                        
+                        vrNo = (from c in db.tblvches
+                                orderby c.vch_id descending
+                                select c.vch_id).Take(1).SingleOrDefault();
+
+                        strVchNo = "0000" + (vrNo + 1);
+
+                        strOrderDesc = purchaseOrder.description;
+                        if (purchaseOrder.description == null)
+                        {
+                            strOrderDesc = "";
+                        }
+
                         var result = db.stpPurchaseOrder(1, purchaseOrder.totalAmount, purchaseOrder.paidAmount,
-                            purchaseOrder.description, purchaseOrder.supplier, purchaseOrder.paidAmount, "000025");
+                            strOrderDesc, purchaseOrder.supplier, purchaseOrder.paidAmount, strVchNo,1);
 
                         lastOrderId = (from c in db.tblPurchaseOrders
                                                                orderby c.order_id descending
@@ -118,13 +112,6 @@ namespace abuhamza.business
                         tblDetailOrder detailOrderToAdd = new tblDetailOrder();
                         foreach (DetailOrderDomainModel singleDetail in detailOrder)
                         {
-                            //detailOrderToAdd.order_id = lastOrderId;
-                            //detailOrderToAdd.barcode = singleDetail.barcode;
-                            //detailOrderToAdd.quantity = singleDetail.quantity;
-                            //detailOrderToAdd.purchasePrice = singleDetail.purchasePrice;
-                            //detailOrderToAdd.voucherNo = strVchNo; //singleDetail.barcode;
-
-                            //await detailOrderRepository.Insert(detailOrderToAdd);
                             result = db.stpDetailOrder(lastOrderId, singleDetail.quantity, singleDetail.barcode,
                                 singleDetail.purchasePrice, strVchNo);
                         }
@@ -135,28 +122,7 @@ namespace abuhamza.business
                         status = ex.Message;
                     }
                 }
-
-              
-
-
-
                 status = "added";
-
-
-
-      //          using (MyDC TheDC = new MyDC())
-      //          {
-      //              foreach (MyObject TheObject in TheListOfMyObjects)
-      //              {
-      //                  DBTable TheTable = new DBTable();
-
-      //                  TheTable.Prop1 = TheObject.Prop1;
-      //.....
-      //TheDC.DBTables.InsertOnSubmit(TheTable);
-
-      //              }
-      //              TheDC.SubmitChanges();
-      //          }
             }
             return status;
         }

@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { MainCategory } from '../../../../models/mainCategory.model';
 import { MaintenanceService } from '../../../../services/maintenance.service';
 import { Category } from '../../../../models/category.model';
 
@@ -34,7 +33,6 @@ export class CategoriesAddEditComponent {
         console.log(error);
         this.ref.close();
       }
-    )
-
+    );
   }
 }

@@ -168,7 +168,6 @@ export class SalesComponent implements OnInit {
         // this.source.getAll().then(res => {
         //     console.log(res);
         // });
-        debugger;
         this.showUpdatedItem(event);
         // this.showUpdatedItem(event);
         // var total = this.single.map(this.amount).reduce(this.sum);

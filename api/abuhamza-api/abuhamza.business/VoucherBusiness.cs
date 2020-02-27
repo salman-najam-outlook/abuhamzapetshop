@@ -69,6 +69,42 @@ namespace abuhamza.business
             return suList;
         }
 
+        public async Task<List<VoucherDM>> GetAllPendingVouchers()
+        {
+            List<VoucherDM> suList = new List<VoucherDM>();
+
+            List<tblvch> upList = new List<tblvch>();
+            upList = await voucherRepository.GetAll(v => v.vch_id == 0);
+            string status = "";
+
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-P44VT9L\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlCommand cmd = new SqlCommand("stpGetAllPendingVouchers", conn))
+            {
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                adapt.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                adapt.Fill(dt);
+
+                suList = (from DataRow dr in dt.Rows
+                          select new VoucherDM()
+                          {
+                              vch_id = Convert.ToInt32(dr["vch_id"]),
+                              vchNo = dr["vchNo"].ToString(),
+                              date = Convert.ToDateTime(dr["date"]),
+                              pendingAmount = Convert.ToDecimal(dr["pendingAmount"]),
+                              paidAmount = Convert.ToDecimal(dr["paidAmount"]),
+                              totalAmount = Convert.ToDecimal(dr["totalAmount"]),
+                              status = dr["status"].ToString(),
+                              vchType = dr["vchType"].ToString(),
+                              SupplierName = dr["SupplierName"].ToString()
+                          }).ToList();
+            }
+            return suList;
+        }
+
         public async Task<string> DeleteVoucher(int id)
         {
             string status = "";
@@ -114,6 +150,32 @@ namespace abuhamza.business
               
                 await voucherRepository.Insert(voucherToAdd);
                 status = "added";
+            }
+            return status;
+        }
+
+        public async Task<string> pendingOrderPayment(PaymentVoucherDomainModel paymentVoucherDM)
+        {
+            string status = "";
+
+            int condition = 0;
+            if (condition > 0)
+            {
+                List<tblvch> uList = new List<tblvch>();
+                uList = await voucherRepository.GetAll();
+            }
+
+            using (abuhamzapetstoreEntities db = new abuhamzapetstoreEntities())
+            {
+                try
+                {
+                    var result = db.stpPurchaseOrderPayment(paymentVoucherDM.supplierId,paymentVoucherDM.amountPaid,
+                        paymentVoucherDM.remaingAmount,paymentVoucherDM.voucherNumber);
+                }
+                catch (Exception ex)
+                {
+                    status = ex.Message;
+                }
             }
             return status;
         }

@@ -248,6 +248,7 @@
     <Compile Include="Models\abuHamzaPetModel.cs" />
     <Compile Include="Models\AccountToReturnVM.cs" />
     <Compile Include="Models\AccountVM.cs" />
+    <Compile Include="Models\CashTransaction.cs" />
     <Compile Include="Models\CategoryToReturnVM.cs" />
     <Compile Include="Models\CategoryVM.cs" />
     <Compile Include="Models\CustomerToReturnVM.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="Models\InvoiceVM.cs" />
     <Compile Include="Models\MainCategoryToReturnVM.cs" />
     <Compile Include="Models\MainCategoryVM.cs" />
+    <Compile Include="Models\PaymentVoucher.cs" />
     <Compile Include="Models\ProductToReturnVM.cs" />
     <Compile Include="Models\ProductVM.cs" />
     <Compile Include="Models\PurchaseOrderToReturnVM.cs" />

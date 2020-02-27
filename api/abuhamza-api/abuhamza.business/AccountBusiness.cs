@@ -29,6 +29,14 @@ namespace abuhamza.business
             return uList;
         }
 
+        public async Task<List<tblAccount>> GetAllAccountsByTypeId(int id)
+        {
+            List<tblAccount> uList = new List<tblAccount>();
+            uList = await accountRepository.GetAll(a => a.AccType_id == id);
+
+            return uList;
+        }
+
         public async Task<string> DeleteAccount(int id)
         {
             string status = "";
@@ -77,6 +85,40 @@ namespace abuhamza.business
                 accountToAdd.balance = account.balance;
                 await accountRepository.Insert(accountToAdd);
                 status = "added";
+            }
+            return status;
+        }
+
+        public async Task<string> CashTransaction(CashTransactionDomainModel cashTransaction)
+        {
+            string status = "";
+            int vrNo = 0;
+            string strVchNo = "";
+
+            int condition = 0;
+            if (condition > 0)
+            {
+                List<tblAccount> uList = new List<tblAccount>();
+                uList = await accountRepository.GetAll();
+            }
+
+            using (abuhamzapetstoreEntities db = new abuhamzapetstoreEntities())
+            {
+                try
+                {
+                    vrNo = (from c in db.tblvches
+                            orderby c.vch_id descending
+                            select c.vch_id).Take(1).SingleOrDefault();
+
+                    strVchNo = "0000" + (vrNo + 1);
+
+                    var result = db.stpCashTransaction(cashTransaction.debitor_Account_Id,cashTransaction.creditor_Account_Id
+                        ,cashTransaction.voucherAmount,strVchNo,cashTransaction.description);
+                }
+                catch (Exception ex)
+                {
+                    status = ex.Message;
+                }
             }
             return status;
         }

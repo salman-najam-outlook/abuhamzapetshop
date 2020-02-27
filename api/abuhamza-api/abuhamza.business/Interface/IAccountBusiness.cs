@@ -11,8 +11,10 @@ namespace abuhamza.business.Interface
     public interface IAccountBusiness
     {
         Task<List<tblAccount>> GetAccounts();
+        Task<List<tblAccount>> GetAllAccountsByTypeId(int id); // GetAllAccountsByTypeId
         Task<string> DeleteAccount(int id);
         Task<AccountDomainModel> GetAccountById(int id);
         Task<string> AddUpdateAccount(AccountDomainModel Account);
+        Task<string> CashTransaction(CashTransactionDomainModel CashTransaction);
     }
 }

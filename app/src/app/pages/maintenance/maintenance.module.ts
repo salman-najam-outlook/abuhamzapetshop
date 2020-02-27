@@ -23,11 +23,15 @@ import { MCategoriesAddEditComponent } from './categories/mcategories-add-edit-m
 import { CategoriesAddEditComponent } from './categories/categories-add-edit-model/categories-add-edit-model.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SubCategoriesAddEditComponent } from './categories/subcategories-add-edit-model/subcategories-add-edit-model.component';
+import { FourthCategoriesAddEditComponent } from './categories/fourthcategories-add-edit-model/fourthcategories-add-edit-model.component';
 
 
 const ENTRY_COMPONENTS = [
   MCategoriesAddEditComponent,
-  CategoriesAddEditComponent
+  CategoriesAddEditComponent,
+  SubCategoriesAddEditComponent,
+  FourthCategoriesAddEditComponent
 ];
 
 @NgModule({
@@ -55,6 +59,8 @@ const ENTRY_COMPONENTS = [
     MaintenanceComponent,
     MCategoriesAddEditComponent,
     CategoriesAddEditComponent,
+    SubCategoriesAddEditComponent,
+    FourthCategoriesAddEditComponent,
     CategoriesComponent,
     PaymentsComponent
   ],

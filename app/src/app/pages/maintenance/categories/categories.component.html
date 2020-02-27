@@ -61,7 +61,11 @@
   </div>
   <div class="col-md-12 col-lg-3 col-xxxl-3">
     <nb-card class="list-card">
-      <nb-card-header>Second Sub-Categories</nb-card-header>
+      <nb-card-header>
+        <div class="float-left">Second Sub-Categories</div>
+        <div class="float-right"><button nbButton status="success" (click)="onAddEditSubCategory(selectedCategory.cat_id)" size="tiny"
+            outline>Ad</button></div>
+      </nb-card-header>
       <nb-card-header>Selected: {{selectedSubCategory.name}}</nb-card-header>
       <nb-card-body>
         <nb-list>
@@ -71,7 +75,7 @@
             </div>
             <div class="float-right">
               <div class="buttons-row">
-                <button nbButton status="warning" (click)="onEditSubCategory(sCategory)" size="tiny" outline>
+                <button nbButton status="warning" (click)="onAddEditSubCategory(sCategory.cat_id, sCategory)" size="tiny" outline>
                   ED
                 </button>
                 &nbsp;
@@ -87,17 +91,21 @@
   </div>
   <div class="col-md-12 col-lg-3 col-xxxl-3">
     <nb-card class="list-card">
-      <nb-card-header>Third Sub-Categories</nb-card-header>
+      <nb-card-header>
+        <div class="float-left">Third Sub-Categories</div>
+        <div class="float-right"><button nbButton status="success" (click)="onAddEditFourthSubCategory(selectedSubCategory.subCat_id)" size="tiny"
+            outline>Ad</button></div>
+      </nb-card-header>
       <nb-card-header>Selected: {{selectedSubSubCateory.name}}</nb-card-header>
       <nb-card-body>
         <nb-list>
           <nb-list-item style="cursor: pointer" *ngFor="let sSCategory of subSubCategories">
-            <div class="float-left">
+            <div (click)="onSelectFourthSubCategory(sSCategory)" class="float-left">
               {{ sSCategory.name }}
             </div>
             <div class="float-right">
               <div class="buttons-row">
-                <button nbButton status="warning" (click)="onEditSubCategory(sSCategory)" size="tiny" outline>
+                <button nbButton status="warning" (click)="onAddEditFourthSubCategory(sSCategory.subCat_id, sSCategory)" size="tiny" outline>
                   ED
                 </button>
                 &nbsp;

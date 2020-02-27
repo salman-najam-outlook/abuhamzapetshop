@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountDomainModel.cs" />
+    <Compile Include="CashTransactionDomainModel.cs" />
     <Compile Include="CategoryDomainModel.cs" />
     <Compile Include="CustomerDomainModel.cs" />
     <Compile Include="DetailOrderDomainModel.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="ForthSubCategoryDomainModel.cs" />
     <Compile Include="InvoiceDomainModel.cs" />
     <Compile Include="MainCategoryDomainModel.cs" />
+    <Compile Include="PaymentVoucherDomainModel.cs" />
     <Compile Include="ProductDomainModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrderDomainModel.cs" />
