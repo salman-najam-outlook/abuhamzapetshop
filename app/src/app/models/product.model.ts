@@ -10,4 +10,5 @@ export class Product {
   subCat_id: number;
   cat_id: number;
   mainCat_id: number;
+  totalAmount: number;
 }

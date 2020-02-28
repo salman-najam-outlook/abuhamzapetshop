@@ -4,8 +4,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { MaintenanceService } from '../../../services/maintenance.service';
 import { Supplier } from '../../../models/supplier.model';
-import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
+
 import { Payment } from '../../../models/payment.model';
+import { NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService, NbComponentStatus } from '@nebular/theme';
 
 @Component({
     selector: 'ngx-payments',

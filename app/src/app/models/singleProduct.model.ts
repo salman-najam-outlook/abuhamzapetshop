@@ -1,4 +1,5 @@
 export class SingleProduct {
+    pro_id: number = 0;
     barcode: string = '';
     productName: string = '';
     purchasePrice: number = 0;

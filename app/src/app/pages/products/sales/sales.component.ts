@@ -6,6 +6,7 @@ import { ProductService } from '../../../services/product.service';
 import { MaintenanceService } from '../../../services/maintenance.service';
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 import { SaleOrder } from '../../../models/saleOrder.model';
+import { Product } from '../../../models/product.model';
 
 @Component({
     selector: 'ngx-sales',
@@ -24,6 +25,7 @@ export class SalesComponent implements OnInit {
     remainingCash: number = 0;
     discount: number = 0;
     tenderAmount: number = 0;
+    product: Product;
 
     // Toaster Setting Starts
     index = 1;
@@ -35,11 +37,8 @@ export class SalesComponent implements OnInit {
     // Toaster Setting Ends
 
     settings = {
-        add: {
-            addButtonContent: '<i class="nb-plus"></i>',
-            createButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>',
-            confirmCreate: true
+        actions: {
+            add: false
         },
         edit: {
             editButtonContent: '<i class="nb-edit"></i>',
@@ -86,11 +85,13 @@ export class SalesComponent implements OnInit {
 
     ngOnInit() {
         this.saleOrderForm = new FormGroup({
+            barcode: new FormControl(''),
             tenderAmount: new FormControl(''),
             subTotal: new FormControl(''),
             discount: new FormControl(''),
             grandTotal: new FormControl('')
-        })
+        });
+        this.source.load(this.singleProductList);
     }
 
     onCreateConfirm(event): void {
@@ -119,6 +120,35 @@ export class SalesComponent implements OnInit {
         this.tenderAmount = tenderAmount;
     }
 
+    getProductByBarcode(barcode: string) {
+        this.productService.getProductByBarcode(barcode).subscribe(
+            response => {
+                this.singleProduct = new SingleProduct();
+                this.product = response;
+                this.singleProduct.barcode = response.barcode;
+                let updateItem = this.singleProductList.find(this.findIndexToUpdate, this.product.barcode);
+                if (updateItem !== undefined) {
+                    updateItem.quantity = updateItem.quantity + 1;
+                    updateItem.totalAmount = updateItem.sellPrice * updateItem.quantity;
+                    let index = this.singleProductList.indexOf(updateItem);
+                    this.singleProductList[index] = updateItem;
+                    this.subTotal = this.singleProductList.map(item => item.totalAmount).reduce((prev, next) => prev + next);
+                    this.source.load(this.singleProductList);
+                } else {
+                    this.singleProduct.productName = response.name;
+                    this.singleProduct.sellPrice = response.sell_price;
+                    this.singleProduct.quantity = this.product.quantity;
+                    this.singleProduct.quantity = 1;
+                    this.singleProduct.totalAmount = this.singleProduct.sellPrice * this.singleProduct.quantity;
+                    this.singleProductList.push(this.singleProduct);
+                    this.subTotal = this.singleProductList.map(item => item.totalAmount).reduce((prev, next) => prev + next);
+                    this.source.load(this.singleProductList);
+                }
+                this.subTotal = this.singleProductList.map(item => item.totalAmount).reduce((prev, next) => prev + next);
+                this.product = new Product();
+            }
+        );
+    }
 
     onDeleteConfirm(event): void {
         if (window.confirm('Are you sure you want to delete?')) {
@@ -165,14 +195,9 @@ export class SalesComponent implements OnInit {
 
     onConfirmEdit(event): void {
         event.confirm.resolve();
-        // this.source.getAll().then(res => {
-        //     console.log(res);
-        // });
         this.showUpdatedItem(event);
-        // this.showUpdatedItem(event);
-        // var total = this.single.map(this.amount).reduce(this.sum);
-        // this.purchaseProductForm.controls.totalAmount.setValue(total);
-        // this.source.load(this.single);
+        var total = this.singleProductList.map(this.amount).reduce(this.sum);
+        this.saleOrderForm.controls.totalAmount.setValue(total);
     }
 
     // Methods to find old object and replace it with your object starts
@@ -185,6 +210,7 @@ export class SalesComponent implements OnInit {
         this.grandTotal = this.subTotal;
         this.remainingCash = 0;
         this.discount = 0;
+        this.source.load(this.singleProductList);
     }
 
     findIndexToUpdate(newItem) {

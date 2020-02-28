@@ -7,11 +7,10 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="barcode" class="label">Barcode</label>
-                                <input type="text" nbInput fullWidth autofocus id="barcode" placeholder="Barcode">
+                                <input type="text" nbInput fullWidth ngxAutofocus #barcode placeholder="Barcode" (blur)="getProductByBarcode(barcode.value)">
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <button (click)="onClick()">Get All</button>
                         </div>
                     </div>
                 </form>
@@ -45,7 +44,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="discount" class="label">Discount</label>
-                                <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth autofocus id="discount" placeholder="Discount" value={{discount}}>
+                                <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth id="discount" placeholder="Discount" value={{discount}}>
                             </div>
                         </div>
                         <div class="col-sm-12">
@@ -61,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <button (click)="onSubmit()">Submit</button>
+                    <button nbButton status="warning" hero (click)="onSubmit()">Submit</button>
                 </form>
             </nb-card-body>
         </nb-card>

@@ -24,6 +24,17 @@ export class ProductService {
     );
   }
 
+  getProductByBarcode(barcode: string): Observable<Product>  {
+    return this.httpClient.get<Product>(
+      "http://localhost:51110/api/products/GetProductByBarcode/" + barcode,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
   addUpdateProduct(product: Product): Observable<string> {
     return this.httpClient.post<string>(
       "http://localhost:51110/api/products/AddUpdateProduct",

@@ -124,11 +124,10 @@ export class EmployeesComponent implements OnInit {
     this.employee.salary = event.newData.salary;
     this.employee.date = event.newData.date;
     this.employee.contact = event.newData.contact;
-    console.log(event.newData);
-    console.log(this.employee);
     this.maintenanceService
       .addUpdateEmployee(this.employee)
-      .subscribe(response => {
+      .subscribe(
+        response => {
         this.maintenanceService.getAllEmployees().subscribe(
           response => {
             this.source.load(response);
@@ -137,6 +136,9 @@ export class EmployeesComponent implements OnInit {
             console.log(error);
           }
         );
+      },
+      error => {
+        // alert
       });
   }
 }

@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
   // Toaster Setting Ends
-  
+
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -63,7 +63,7 @@ export class UsersComponent implements OnInit {
     }
   };
 
-  constructor(private maintenanceService: MaintenanceService, private toastrService: NbToastrService) {}
+  constructor(private maintenanceService: MaintenanceService, private toastrService: NbToastrService) { }
 
   ngOnInit() {
     this.maintenanceService.getAllUsers().subscribe(
@@ -111,18 +111,21 @@ export class UsersComponent implements OnInit {
     this.user.status = "active";
     this.user.userRoll = "emp";
     this.user.password = "pass123";
-    this.maintenanceService.addUpdateUser(this.user).subscribe(response => {
-      this.showToast('success', 'Success!', 'New User has been added successfully!');
-      this.maintenanceService.getAllUsers().subscribe(
-        response => {
-          this.source.load(response);
-          this.showToast('danger', 'Error!', 'An error occured while fetching all Users!');
-        },
-        error => {
-          this.showToast('danger', 'Error!', 'An error occured while updating User!');
-        }
-      );
-    });
+    this.maintenanceService.addUpdateUser(this.user).subscribe(
+      response => {
+        this.showToast('success', 'Success!', 'New User has been added successfully!');
+        this.maintenanceService.getAllUsers().subscribe(
+          response => {
+            this.source.load(response);
+          },
+          error => {
+            this.showToast('danger', 'Error!', 'An error occured while fetching User!');
+          }
+        );
+      },
+      error => {
+        this.showToast('danger', 'Error!', 'An error occured while adding a new User!');
+      });
   }
 
   onConfirmEdit(event): void {
@@ -160,6 +163,6 @@ export class UsersComponent implements OnInit {
       preventDuplicates: this.preventDuplicates,
     };
     const titleContent = title ? `${title}` : '';
-    this.toastrService.show(body,`${titleContent}`, config);
+    this.toastrService.show(body, `${titleContent}`, config);
   }
 }

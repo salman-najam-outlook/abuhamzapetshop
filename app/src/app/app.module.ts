@@ -15,9 +15,10 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { CoreModule } from './@core/core.module';
+import { AutofocusDirective } from './autofocus.directive';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AutofocusDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -32,7 +33,7 @@ import { CoreModule } from './@core/core.module';
     NbToastrModule.forRoot(),
     CoreModule.forRoot(),
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
