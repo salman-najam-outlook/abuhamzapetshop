@@ -208,6 +208,13 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <Property Name="email" Type="varchar" MaxLength="20" />
           <Property Name="contact" Type="varchar" MaxLength="15" />
         </EntityType>
+        <EntityType Name="tblUserType">
+          <Key>
+            <PropertyRef Name="userType_id" />
+          </Key>
+          <Property Name="userType_id" Type="int" Nullable="false" />
+          <Property Name="userType_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tblvch">
           <Key>
             <PropertyRef Name="vch_id" />
@@ -293,6 +300,11 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CheckChildCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mainCat_id" Type="int" Mode="In" />
+          <Parameter Name="cat_id" Type="int" Mode="In" />
+          <Parameter Name="subCat_id" Type="int" Mode="In" />
+        </Function>
         <Function Name="stpCashTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="debitor_Acc_id" Type="int" Mode="In" />
           <Parameter Name="creditor_Acc_id" Type="int" Mode="In" />
@@ -366,6 +378,7 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <EntitySet Name="tblSupplier" EntityType="Self.tblSupplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransaction" EntityType="Self.tblTransaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserType" EntityType="Self.tblUserType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblvch" EntityType="Self.tblvch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblVchDetail" EntityType="Self.tblVchDetail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_tblAccounts_tblAccTypes" Association="Self.FK_tblAccounts_tblAccTypes">
@@ -464,20 +477,6 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
             <Parameter Name="voucherAmount" Mode="In" Type="Decimal" />
             <Parameter Name="voucherNo" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="stpPurchaseOrderPayment">
-            <Parameter Name="sup_id" Mode="In" Type="Int32" />
-            <Parameter Name="voucherAmount" Mode="In" Type="Decimal" />
-            <Parameter Name="remainingAmount" Mode="In" Type="Decimal" />
-            <Parameter Name="voucherNo" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="stpCashTransaction">
-            <Parameter Name="debitor_Acc_id" Mode="In" Type="Int32" />
-            <Parameter Name="creditor_Acc_id" Mode="In" Type="Int32" />
-            <Parameter Name="voucherAmount" Mode="In" Type="Decimal" />
-            <Parameter Name="voucherNo" Mode="In" Type="String" />
-            <Parameter Name="desc" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="stpGetAllPendingVouchers" ReturnType="Collection(abuhamzapetstoreModel.stpGetAllPendingVouchers_Result)" />
           <EntitySet Name="tblAccounts" EntityType="abuhamzapetstoreModel.tblAccount" />
           <EntitySet Name="tblAccTypes" EntityType="abuhamzapetstoreModel.tblAccType" />
           <EntitySet Name="tblCategories" EntityType="abuhamzapetstoreModel.tblCategory" />
@@ -518,6 +517,26 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblInvoice" EntitySet="tblInvoices" />
           </AssociationSet>
+          <FunctionImport Name="stpPurchaseOrderPayment">
+            <Parameter Name="sup_id" Mode="In" Type="Int32" />
+            <Parameter Name="voucherAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="remainingAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="voucherNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stpCashTransaction">
+            <Parameter Name="debitor_Acc_id" Mode="In" Type="Int32" />
+            <Parameter Name="creditor_Acc_id" Mode="In" Type="Int32" />
+            <Parameter Name="voucherAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="voucherNo" Mode="In" Type="String" />
+            <Parameter Name="desc" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="stpGetAllPendingVouchers" ReturnType="Collection(abuhamzapetstoreModel.stpGetAllPendingVouchers_Result)" />
+          <FunctionImport Name="CheckChildCategory" ReturnType="Collection(Int32)">
+            <Parameter Name="mainCat_id" Mode="In" Type="Int32" />
+            <Parameter Name="cat_id" Mode="In" Type="Int32" />
+            <Parameter Name="subCat_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tblUserTypes" EntityType="abuhamzapetstoreModel.tblUserType" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -531,17 +550,6 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="stpGetPendingVouchersBySupplierID_Result">
-          <Property Type="Int32" Name="vch_id" Nullable="false" />
-          <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
-          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="pendingAmount" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="paidAmount" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="String" Name="status" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="SupplierName" Nullable="true" MaxLength="20" />
-        </ComplexType>
-        <ComplexType Name="stpGetAllPendingVouchers_Result">
           <Property Type="Int32" Name="vch_id" Nullable="false" />
           <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
@@ -843,6 +851,24 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="stpGetAllPendingVouchers_Result">
+          <Property Type="Int32" Name="vch_id" Nullable="false" />
+          <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="pendingAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="paidAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="SupplierName" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <EntityType Name="tblUserType">
+          <Key>
+            <PropertyRef Name="userType_id" />
+          </Key>
+          <Property Name="userType_id" Type="Int32" Nullable="false" />
+          <Property Name="userType_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -868,23 +894,6 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="stpSaleDetail" FunctionName="abuhamzapetstoreModel.Store.stpSaleDetail" />
           <FunctionImportMapping FunctionImportName="stpSaleOrder" FunctionName="abuhamzapetstoreModel.Store.stpSaleOrder" />
-          <FunctionImportMapping FunctionImportName="stpPurchaseOrderPayment" FunctionName="abuhamzapetstoreModel.Store.stpPurchaseOrderPayment" />
-          <FunctionImportMapping FunctionImportName="stpCashTransaction" FunctionName="abuhamzapetstoreModel.Store.stpCashTransaction" />
-          <FunctionImportMapping FunctionImportName="stpGetAllPendingVouchers" FunctionName="abuhamzapetstoreModel.Store.stpGetAllPendingVouchers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetAllPendingVouchers_Result">
-                <ScalarProperty Name="vch_id" ColumnName="vch_id" />
-                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
-                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
-                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="vchType" ColumnName="vchType" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="tblAccounts">
             <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblAccount">
               <MappingFragment StoreEntitySet="tblAccounts">
@@ -1123,6 +1132,32 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
                 <ScalarProperty Name="vchDetailNo" ColumnName="vchDetailNo" />
                 <ScalarProperty Name="vchNo" ColumnName="vchNo" />
                 <ScalarProperty Name="vchDetail_id" ColumnName="vchDetail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="stpPurchaseOrderPayment" FunctionName="abuhamzapetstoreModel.Store.stpPurchaseOrderPayment" />
+          <FunctionImportMapping FunctionImportName="stpCashTransaction" FunctionName="abuhamzapetstoreModel.Store.stpCashTransaction" />
+          <FunctionImportMapping FunctionImportName="stpGetAllPendingVouchers" FunctionName="abuhamzapetstoreModel.Store.stpGetAllPendingVouchers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetAllPendingVouchers_Result">
+                <ScalarProperty Name="vch_id" ColumnName="vch_id" />
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="vchType" ColumnName="vchType" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CheckChildCategory" FunctionName="abuhamzapetstoreModel.Store.CheckChildCategory" />
+          <EntitySetMapping Name="tblUserTypes">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblUserType">
+              <MappingFragment StoreEntitySet="tblUserType">
+                <ScalarProperty Name="userType_Name" ColumnName="userType_Name" />
+                <ScalarProperty Name="userType_id" ColumnName="userType_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

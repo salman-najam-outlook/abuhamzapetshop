@@ -47,6 +47,7 @@ namespace abuhamza.repository
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblvch> tblvches { get; set; }
         public virtual DbSet<tblVchDetail> tblVchDetails { get; set; }
+        public virtual DbSet<tblUserType> tblUserTypes { get; set; }
     
         public virtual int stpDetailOrder(Nullable<int> orderId, Nullable<int> quatity, string barcode, Nullable<decimal> purchasePrice, string voucherNo)
         {
@@ -345,6 +346,23 @@ namespace abuhamza.repository
         public virtual ObjectResult<stpGetAllPendingVouchers_Result> stpGetAllPendingVouchers()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetAllPendingVouchers_Result>("stpGetAllPendingVouchers");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> CheckChildCategory(Nullable<int> mainCat_id, Nullable<int> cat_id, Nullable<int> subCat_id)
+        {
+            var mainCat_idParameter = mainCat_id.HasValue ?
+                new ObjectParameter("mainCat_id", mainCat_id) :
+                new ObjectParameter("mainCat_id", typeof(int));
+    
+            var cat_idParameter = cat_id.HasValue ?
+                new ObjectParameter("cat_id", cat_id) :
+                new ObjectParameter("cat_id", typeof(int));
+    
+            var subCat_idParameter = subCat_id.HasValue ?
+                new ObjectParameter("subCat_id", subCat_id) :
+                new ObjectParameter("subCat_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CheckChildCategory", mainCat_idParameter, cat_idParameter, subCat_idParameter);
         }
     }
 }

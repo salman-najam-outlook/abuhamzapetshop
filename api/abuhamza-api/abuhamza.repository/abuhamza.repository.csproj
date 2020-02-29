@@ -40,6 +40,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -148,6 +151,9 @@
     <Compile Include="tblUser.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblUserType.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblvch.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
@@ -169,9 +175,7 @@
     <None Include="AbuHamzaEntities.edmx.diagram">
       <DependentUpon>AbuHamzaEntities.edmx</DependentUpon>
     </None>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

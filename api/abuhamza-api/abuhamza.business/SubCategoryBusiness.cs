@@ -40,10 +40,32 @@ namespace abuhamza.business
         public async Task<string> DeleteSubCategory(int id)
         {
             string status = "";
+            int count = 0;
             if (id > 0)
             {
-                await subCategoryRepository.Delete(s => s.subCat_id == id);
-                status = "deleted";
+                using (abuhamzapetstoreEntities db = new abuhamzapetstoreEntities())
+                {
+                    try
+                    {
+                        count = (from c in db.tblForthSubCategories
+                                 where c.subCat_id == id
+                                 select 1).Take(1).SingleOrDefault();
+
+                        if (count == 0)
+                        {
+                            await subCategoryRepository.Delete(s => s.subCat_id == id);
+                            status = "Deleted";
+                        }
+                        else
+                        {
+                            status = "NotDelete";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = ex.Message;
+                    }
+                }
             }
             return status;
         }
