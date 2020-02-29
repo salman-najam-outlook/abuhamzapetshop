@@ -16,7 +16,7 @@ import { Payment } from '../models/payment.model';
   providedIn: "root"
 })
 export class MaintenanceService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   // For Users
   addUpdateUser(user: User) {
@@ -54,7 +54,6 @@ export class MaintenanceService {
   }
 
   // For Employees
-
   addUpdateEmployee(employee: Employee) {
     return this.httpClient.post<Employee>(
       "http://localhost:51110/api/employees/AddUpdateEmployee",
@@ -90,7 +89,6 @@ export class MaintenanceService {
   }
 
   // For Suppliers
-
   addUpdateSupplier(supplier: Supplier) {
     return this.httpClient.post<Supplier>(
       "http://localhost:51110/api/suppliers/AddUpdateSupplier",
@@ -105,7 +103,7 @@ export class MaintenanceService {
 
   getPendingVouchersBySupplierID(supplierId: number): Observable<PendingPayments[]> {
     return this.httpClient.get<PendingPayments[]>(
-      "http://localhost:51110/api/suppliers/GetAllSuppliersapi/vouchers/GetPendingVouchersBySupplierID/" + supplierId,
+      "http://localhost:51110/api/vouchers/GetPendingVouchersBySupplierID/" + supplierId,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -148,7 +146,6 @@ export class MaintenanceService {
   }
 
   // For Salaries
-
   addUpdateSalary(supplier: Salary) {
     return this.httpClient.post<Salary>(
       "http://localhost:51110/api/salaries/AddUpdateSalary",
@@ -184,7 +181,6 @@ export class MaintenanceService {
   }
 
   // Main Category
-
   addUpdateMainCategory(mainCategory: MainCategory) {
     return this.httpClient.post<MainCategory>(
       "http://localhost:51110/api/mainCategories/AddUpdateMainCategory",
@@ -220,7 +216,6 @@ export class MaintenanceService {
   }
 
   // Category
-
   addUpdateCategory(category: Category) {
     return this.httpClient.post<Category>(
       "http://localhost:51110/api/categories/AddUpdateCategory",
@@ -247,7 +242,7 @@ export class MaintenanceService {
   getAllCategoriesByMainCategoryId(id: number): Observable<Category[]> {
     return this.httpClient.get<Category[]>(
       "http://localhost:51110/api/categories/GetAllCategoriesByMainCategoryId/" +
-        id,
+      id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -268,7 +263,6 @@ export class MaintenanceService {
   }
 
   // Sub Category
-
   addUpdateSubCategory(subCategory: SubCategory) {
     return this.httpClient.post<SubCategory>(
       "http://localhost:51110/api/SubCategories/AddUpdateSubCategory",
@@ -295,7 +289,7 @@ export class MaintenanceService {
   getAllSubCategoriesByCategoryId(id: number): Observable<SubCategory[]> {
     return this.httpClient.get<SubCategory[]>(
       "http://localhost:51110/api/SubCategories/GetSubCategoriesByCategoryId/" +
-        id,
+      id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -316,7 +310,6 @@ export class MaintenanceService {
   }
 
   // Forth Sub Category
-
   addUpdateForthSubCategory(forthSubCategory: FourthSubCategory) {
     return this.httpClient.post<FourthSubCategory>(
       "http://localhost:51110/api/ForthSubCategories/AddUpdateForthSubCategory",
@@ -345,7 +338,7 @@ export class MaintenanceService {
   ): Observable<FourthSubCategory[]> {
     return this.httpClient.get<FourthSubCategory[]>(
       "http://localhost:51110/api/ForthSubCategories/GetForthSubCategoriesbySubCategoryid/" +
-        id,
+      id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -357,7 +350,7 @@ export class MaintenanceService {
   deleteForthSubCategory(id: number): Observable<string> {
     return this.httpClient.delete<string>(
       "http://localhost:51110/api/ForthSubCategories/DeleteForthSubCategory/" +
-        id,
+      id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
