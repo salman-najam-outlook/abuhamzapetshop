@@ -2,6 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
 import { MaintenanceService } from "../../../services/maintenance.service";
 import { Employee } from "../../../models/employee.model";
+import {
+  NbToastrService,
+  NbComponentStatus,
+  NbGlobalPosition,
+  NbGlobalPhysicalPosition
+} from "@nebular/theme";
 
 @Component({
   selector: "ngx-smart-table",
@@ -10,7 +16,19 @@ import { Employee } from "../../../models/employee.model";
 })
 export class EmployeesComponent implements OnInit {
   employee: Employee = new Employee();
-  constructor(private maintenanceService: MaintenanceService) {}
+  constructor(
+    private maintenanceService: MaintenanceService,
+    private toastrService: NbToastrService
+  ) {}
+
+  // Toaster Setting Starts
+  index = 1;
+  destroyByClick = true;
+  duration = 5000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = false;
+  // Toaster Setting Ends
 
   settings = {
     add: {
@@ -41,7 +59,7 @@ export class EmployeesComponent implements OnInit {
       address: {
         title: "Address",
         type: "string",
-        width: '25%'
+        width: "25%"
       },
       salary: {
         title: "Salary",
@@ -62,7 +80,11 @@ export class EmployeesComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        console.log(error);
+        this.showToast(
+          "danger",
+          "Error!",
+          "An error occured while fetching all Employees!"
+        );
       }
     );
   }
@@ -72,17 +94,30 @@ export class EmployeesComponent implements OnInit {
       event.confirm.resolve();
       this.maintenanceService.deleteEmployee(event.data.emp_id).subscribe(
         response => {
+          this.showToast(
+            "success",
+            "Success!",
+            "Targeted Employee has been deleted successfully!"
+          );
           this.maintenanceService.getAllEmployees().subscribe(
             response => {
               this.source.load(response);
             },
             error => {
-              console.log(error);
+              this.showToast(
+                "danger",
+                "Error!",
+                "An error occured while fetching all Employess!"
+              );
             }
           );
         },
         error => {
-          console.log(error);
+          this.showToast(
+            "danger",
+            "Error!",
+            "An error occured while deleting Employee!"
+          );
         }
       );
     } else {
@@ -101,18 +136,34 @@ export class EmployeesComponent implements OnInit {
     this.employee.contact = event.newData.contact;
     console.log(event.newData);
     console.log(this.employee);
-    this.maintenanceService
-      .addUpdateEmployee(this.employee)
-      .subscribe(response => {
+    this.maintenanceService.addUpdateEmployee(this.employee).subscribe(
+      response => {
+        this.showToast(
+          "success",
+          "Success!",
+          "New Employee has been added successfully!"
+        );
         this.maintenanceService.getAllEmployees().subscribe(
           response => {
             this.source.load(response);
           },
           error => {
-            console.log(error);
+            this.showToast(
+              "danger",
+              "Error!",
+              "An error occured while fetching all Employees!"
+            );
           }
         );
-      });
+      },
+      error => {
+        this.showToast(
+          "danger",
+          "Error!",
+          "An error occured while creating Employee!"
+        );
+      }
+    );
   }
 
   onConfirmEdit(event): void {
@@ -124,21 +175,47 @@ export class EmployeesComponent implements OnInit {
     this.employee.salary = event.newData.salary;
     this.employee.date = event.newData.date;
     this.employee.contact = event.newData.contact;
-    this.maintenanceService
-      .addUpdateEmployee(this.employee)
-      .subscribe(
-        response => {
+    console.log(event.newData);
+    console.log(this.employee);
+    this.maintenanceService.addUpdateEmployee(this.employee).subscribe(
+      response => {
+        this.showToast(
+          "success",
+          "Success!",
+          "Employee has been updated successfully!"
+        );
         this.maintenanceService.getAllEmployees().subscribe(
           response => {
             this.source.load(response);
           },
           error => {
-            console.log(error);
+            this.showToast(
+              "danger",
+              "Error!",
+              "An error occured while fetching all Employees!"
+            );
           }
         );
       },
       error => {
-        // alert
-      });
+        this.showToast(
+          "danger",
+          "Error!",
+          "An error occured while updating Employee!"
+        );
+      }
+    );
+  }
+  private showToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: this.destroyByClick,
+      duration: this.duration,
+      hasIcon: this.hasIcon,
+      position: this.position,
+      preventDuplicates: this.preventDuplicates
+    };
+    const titleContent = title ? `${title}` : "";
+    this.toastrService.show(body, `${titleContent}`, config);
   }
 }
