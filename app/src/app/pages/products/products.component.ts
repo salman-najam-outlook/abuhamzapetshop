@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-form-elements',
@@ -8,7 +7,4 @@ import { Router } from '@angular/router';
   `,
 })
 export class ProductsComponent {
-  constructor(private router: Router) {
-    this.router.navigate(['pages/products/sales']);
-  }
 }

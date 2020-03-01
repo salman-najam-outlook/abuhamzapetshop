@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using abuhamza.business.Interface;
@@ -67,5 +68,30 @@ namespace abuhamza_api.Controllers
             AutoMapper.Mapper.Map(userVM, userDM);
             return await userBusiness.AddUpdateUser(userDM);
         }
+
+        [HttpGet]
+        //[EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("api/users/GetUsersClaims")]
+        [Authorize]
+        public UserToReturnVM GetDonorClaims()
+        {
+            DateTime dobClaim = DateTime.Now;
+            var identityClaims = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identityClaims.Claims;
+
+            UserToReturnVM loggedInUser = new UserToReturnVM()
+            {
+                user_id = Convert.ToInt32(identityClaims.FindFirst("Userid").Value),
+                username = identityClaims.FindFirst("Username").Value,
+                firstname = identityClaims.FindFirst("Firstname").Value,
+                lastname = identityClaims.FindFirst("Lastname").Value,
+                email = identityClaims.FindFirst("Email").Value,
+                contact = identityClaims.FindFirst("Contact").Value,
+                userRoll = identityClaims.FindFirst("Userrole").Value,
+                status = identityClaims.FindFirst("Status").Value,
+            };
+            return loggedInUser;
+        }
+
     }
 }

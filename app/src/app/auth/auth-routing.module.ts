@@ -9,11 +9,11 @@ export const routes: Routes = [
       component: NbAuthComponent,
       children: [
         {
-          path: 'login',
+          path: '',
           component: NgxLoginComponent,
         },
       ],
-    },
+    }
   ];
 
 @NgModule({

@@ -29,8 +29,12 @@ namespace abuhamza_api
                         var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                         identity.AddClaim(new Claim("Userid", user.user_id.ToString()));
                         identity.AddClaim(new Claim("Username", user.username));
+                        identity.AddClaim(new Claim("Firstname", user.firstname));
+                        identity.AddClaim(new Claim("Lastname", user.lastname));
                         identity.AddClaim(new Claim("Email", user.email));
-                        identity.AddClaim(new Claim("Phone", user.contact));
+                        identity.AddClaim(new Claim("Contact", user.contact));
+                        identity.AddClaim(new Claim("Userrole", user.userRoll));
+                        identity.AddClaim(new Claim("Status", user.status));
                         context.Validated(identity);
                     }
                     else

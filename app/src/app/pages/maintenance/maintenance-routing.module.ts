@@ -8,15 +8,16 @@ import { EmployeesComponent } from "./employees/employees.component";
 import { SalariesComponent } from "./salaries/salaries.component";
 import { CategoriesComponent } from './categories/categories.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { AdminGuard } from '../../guards/admin-guard.service';
 
 const routes: Routes = [
   {
     path: "",
-    component: MaintenanceComponent,
+    component: MaintenanceComponent, canActivate: [AdminGuard],
     children: [
       {
         path: "users",
-        component: UsersComponent
+        component: UsersComponent,
       },
       {
         path: "suppliers",

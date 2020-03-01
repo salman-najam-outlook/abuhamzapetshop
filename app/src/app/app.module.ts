@@ -16,6 +16,8 @@ import {
 } from '@nebular/theme';
 import { CoreModule } from './@core/core.module';
 import { AutofocusDirective } from './autofocus.directive';
+import { AdminGuard } from './guards/admin-guard.service';
+import { UserGuard } from './guards/user-guard.service';
 
 @NgModule({
   declarations: [AppComponent, AutofocusDirective],
@@ -33,6 +35,7 @@ import { AutofocusDirective } from './autofocus.directive';
     NbToastrModule.forRoot(),
     CoreModule.forRoot(),
   ],
+  providers: [AdminGuard, UserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

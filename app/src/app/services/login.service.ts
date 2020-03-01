@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +16,10 @@ export class LoginService {
         return this.httpClient.post<any>('http://localhost:51110/token', data, { headers: reqheaders });
     }
 
-    // getDonorDetails(): Observable<User> {
-    //     return this.httpClient.get<User>('http://api.electricianpk.com/api/Misc/GetDonorClaims'
-    //         , { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('access_token') }) });
-    // }
+    getLoggedInUserClaims(): Observable<User> {
+        return this.httpClient.get<User>('http://localhost:51110/api/users/GetUsersClaims'
+            , { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('access_token') }) });
+    }
 
 }
 

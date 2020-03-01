@@ -7,6 +7,7 @@ import { MaintenanceService } from '../../../services/maintenance.service';
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 import { SaleOrder } from '../../../models/saleOrder.model';
 import { Product } from '../../../models/product.model';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
     selector: 'ngx-sales',
@@ -81,7 +82,7 @@ export class SalesComponent implements OnInit {
     };
 
     constructor(private productService: ProductService, private maintenanceService: MaintenanceService,
-        private toastrService: NbToastrService) { }
+        private toastrService: NbToastrService, private loginService: LoginService) { }
 
     ngOnInit() {
         this.saleOrderForm = new FormGroup({
