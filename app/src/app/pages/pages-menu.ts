@@ -1,5 +1,4 @@
 import { NbMenuItem } from '@nebular/theme';
-const user = JSON.parse(localStorage.getItem('user'));
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -14,12 +13,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Add - Update',
         link: '/pages/products/addedit',
-        hidden: (user.userRoll === "emp") ? true : false,
       },
       {
         title: 'Purchase',
         link: '/pages/products/purchase',
-        hidden: (user.userRoll === "emp") ? true : false,
       },
       {
         title: 'Sales',
@@ -30,7 +27,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Maintenance',
     icon: 'layout-outline',
-    hidden: (user.userRoll === "emp") ? true : false,
     children: [
       {
         title: 'Users',

@@ -103,6 +103,10 @@ export class UsersComponent implements OnInit {
   onCreateConfirm(event): void {
     event.confirm.resolve();
     this.user.user_id = 0;
+    if (event.newData.firstname == "") {
+      this.showToast('danger', 'Error!', 'Please fill up all the required fields!');
+      return;
+    }
     this.user.firstname = event.newData.firstname;
     this.user.lastname = event.newData.lastname;
     this.user.username = event.newData.username;

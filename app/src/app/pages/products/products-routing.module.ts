@@ -18,12 +18,14 @@ const routes: Routes = [
       },
       {
         path: 'purchase',
-        component: PurchaseComponent, canActivate: [AdminGuard]
+        component: PurchaseComponent, canActivate: [AdminGuard],
       },
       {
         path: 'sales',
-        component: SalesComponent, canActivate: [UserGuard]
+        component: SalesComponent, canActivate: [UserGuard],
       },
+      { path: '', redirectTo: '/sales', pathMatch: 'full' },
+      { path: '**', redirectTo: '' }
     ],
   },
 ];

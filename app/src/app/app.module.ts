@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import {
   NbDatepickerModule,
@@ -35,7 +36,7 @@ import { UserGuard } from './guards/user-guard.service';
     NbToastrModule.forRoot(),
     CoreModule.forRoot(),
   ],
-  providers: [AdminGuard, UserGuard],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, AdminGuard, UserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
