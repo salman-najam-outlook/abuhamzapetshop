@@ -25,6 +25,7 @@ import { PaymentsComponent } from './payments/payments.component';
 import { FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SubCategoriesAddEditComponent } from './categories/subcategories-add-edit-model/subcategories-add-edit-model.component';
 import { FourthCategoriesAddEditComponent } from './categories/fourthcategories-add-edit-model/fourthcategories-add-edit-model.component';
+import { AccountsComponent } from './accounts/accounts.component';
 
 
 const ENTRY_COMPONENTS = [
@@ -62,7 +63,8 @@ const ENTRY_COMPONENTS = [
     SubCategoriesAddEditComponent,
     FourthCategoriesAddEditComponent,
     CategoriesComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    AccountsComponent
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS,

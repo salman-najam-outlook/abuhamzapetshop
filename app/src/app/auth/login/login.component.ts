@@ -51,9 +51,6 @@ export class NgxLoginComponent implements OnInit {
         this.loginService.getLoggedInUserClaims().subscribe(
           response => {
             this.user = response;
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('expires');
-            localStorage.removeItem('user');
             localStorage.setItem('user', JSON.stringify(this.user));
             this.user = JSON.parse(localStorage.getItem('user'));
             if (this.user.status === "active") {

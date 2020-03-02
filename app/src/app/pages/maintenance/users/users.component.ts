@@ -103,7 +103,7 @@ export class UsersComponent implements OnInit {
   onCreateConfirm(event): void {
     event.confirm.resolve();
     this.user.user_id = 0;
-    if (event.newData.firstname == "") {
+    if (event.newData.firstname == "" || event.newData.lastname == "") {
       this.showToast('danger', 'Error!', 'Please fill up all the required fields!');
       return;
     }

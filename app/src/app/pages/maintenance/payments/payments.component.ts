@@ -49,7 +49,7 @@ export class PaymentsComponent implements OnInit {
         type: "string"
       },
       totalAmount: {
-        title: "Remaining Amount",
+        title: "Total Amount",
         type: "number"
       },
       pendingAmount: {
@@ -73,7 +73,7 @@ export class PaymentsComponent implements OnInit {
     this.paymentForm = new FormGroup({
       voucherNumber: new FormControl("", Validators.required),
       remainingAmount: new FormControl("", Validators.required),
-      amountToBePaid: new FormControl(""),
+      amountToBePaid: new FormControl("", Validators.required),
       supplier: new FormControl("", Validators.required)
     });
     this.maintenanceService.getAllSuppliers().subscribe(
@@ -118,10 +118,23 @@ export class PaymentsComponent implements OnInit {
     this.paymentModel.amountPaid = this.paymentForm.controls.amountToBePaid.value;
     this.maintenanceService.paymentAgainstSupplier(this.paymentModel).subscribe(
       response => {
+        this.paymentForm.reset();
         this.showToast(
           "success",
           "Success!",
           "Payment has been updated against selected supplier !"
+        );
+        this.maintenanceService.getPendingVouchersBySupplierID(this.selectedSupplier).subscribe(
+          response => {
+            this.source.load(response);
+          },
+          error => {
+            this.showToast(
+              "danger",
+              "Error!",
+              "An error occured while fetching pending vouchers!"
+            );
+          }
         );
       },
       error => {

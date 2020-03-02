@@ -9,12 +9,17 @@ import { SalariesComponent } from "./salaries/salaries.component";
 import { CategoriesComponent } from './categories/categories.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { AdminGuard } from '../../guards/admin-guard.service';
+import { AccountsComponent } from './accounts/accounts.component';
 
 const routes: Routes = [
   {
     path: "",
     component: MaintenanceComponent, canActivate: [AdminGuard],
     children: [
+      {
+        path: "accounts",
+        component: AccountsComponent
+      },
       {
         path: "users",
         component: UsersComponent,

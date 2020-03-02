@@ -11,6 +11,7 @@ import { SubCategory } from "../models/subCategory.model";
 import { FourthSubCategory } from "../models/fourthSubCategory.model";
 import { PendingPayments } from '../models/pendingPayment.model';
 import { Payment } from '../models/payment.model';
+import { Account } from '../models/account.model';
 
 @Injectable({
   providedIn: "root"
@@ -33,13 +34,8 @@ export class MaintenanceService {
 
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(
-      "http://localhost:51110/api/users/GetAllUsers",
-      {
-        headers: new HttpHeaders({
-          Authorization: "Bearer " + localStorage.getItem("access_token")
-        })
-      }
-    );
+      "http://localhost:51110/api/users/GetAllUsers"
+      , { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('access_token') }) });
   }
 
   deleteUser(id: number): Observable<string> {
@@ -172,6 +168,41 @@ export class MaintenanceService {
   deleteSalary(id: number): Observable<string> {
     return this.httpClient.delete<string>(
       "http://localhost:51110/api/salaries/DeleteSalary/" + id,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  // For Accounts
+  addUpdateAccount(account: Account) {
+    return this.httpClient.post<Account>(
+      "http://localhost:51110/api/accounts/AddUpdateAccount",
+      account,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getAllAccounts(): Observable<Account[]> {
+    return this.httpClient.get<Account[]>(
+      "http://localhost:51110/api/accounts/GetAllAccounts",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  deleteAccount(id: number): Observable<string> {
+    return this.httpClient.delete<string>(
+      "http://localhost:51110/api/accounts/DeleteAccount/" + id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")

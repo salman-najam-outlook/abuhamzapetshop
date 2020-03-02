@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-sm-12">
+        <nb-card>
+            <nb-card-header>Add New Accounts</nb-card-header>
+            <nb-card-body>
+                <form novalidate [formGroup]="accountForm">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <nb-select placeholder="Select Account Type" formControlName="accountType"
+                                class="position-select" style="padding-top: 20px;" fullWidth>
+                                <nb-option value="1">Assets</nb-option>
+                                <nb-option value="2">Expense</nb-option>
+                                <nb-option value="3">Income</nb-option>
+                                <nb-option value="4">Liabilities</nb-option>
+                                <nb-option value="5">Equity</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="accountname" class="label">Account Name</label>
+                                <input type="text" nbInput fullWidth id="accountname"
+                                    placeholder="Account Name" formControlName="accountName">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="accountbalance" class="label">Account Balance</label>
+                                <input type="number" nbInput fullWidth id="accountbalance"
+                                    placeholder="Account Balance" formControlName="accountBalance">
+                            </div>
+                        </div>
+                    </div>
+                    <button nbButton status="danger" hero (click)="onClear()">Clear</button>
+                    <button nbButton status="success" hero type="submit" (click)="onSubmit()"
+                        [disabled]="accountForm.invalid">Submit</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -177,6 +177,9 @@ export class AddEditComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.productAddEditForm.controls.markupPrice.value == ""){
+      return;
+    }
     this.productToAdd = new Product();
     this.productToAdd.pro_id = this.productAddEditForm.controls.productId.value;
     this.productToAdd.barcode = this.productAddEditForm.controls.barcode.value;
@@ -185,10 +188,10 @@ export class AddEditComponent implements OnInit {
     this.productToAdd.purchase_price = this.productAddEditForm.controls.originalPrice.value;
     this.productToAdd.quantity = 0;
     this.productToAdd.sell_price = this.productAddEditForm.controls.markupPrice.value;
-    this.productToAdd.fsubCat_id = this.productAddEditForm.controls.fourthCategoryId.value;
-    this.productToAdd.subCat_id = this.productAddEditForm.controls.subCategoryId.value;
-    this.productToAdd.cat_id = this.productAddEditForm.controls.categoryId.value;
     this.productToAdd.mainCat_id = this.productAddEditForm.controls.mainCategoryId.value;
+    this.productToAdd.cat_id = this.productAddEditForm.controls.categoryId.value;
+    this.productToAdd.subCat_id = this.productAddEditForm.controls.subCategoryId.value;
+    this.productToAdd.fsubCat_id = this.productAddEditForm.controls.fourthCategoryId.value;
     this.productService.addUpdateProduct(this.productToAdd).subscribe(
       response => {
         if(response === 'updated') {

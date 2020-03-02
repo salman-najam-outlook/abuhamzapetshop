@@ -46,7 +46,7 @@ export class PagesComponent implements OnInit {
             title: 'Sales',
             link: '/pages/products/sales',
           }
-        ],
+        ]
       },
       {
         title: 'Maintenance',
@@ -54,16 +54,12 @@ export class PagesComponent implements OnInit {
         hidden: (this.user.userRoll === "emp") ? true : false,
         children: [
           {
-            title: 'Users',
-            link: '/pages/maintenance/users',
+            title: 'Accounts',
+            link: '/pages/maintenance/accounts',
           },
           {
             title: 'Categories',
             link: '/pages/maintenance/categories',
-          },
-          {
-            title: 'Suppliers',
-            link: '/pages/maintenance/suppliers',
           },
           {
             title: 'Employees',
@@ -72,8 +68,16 @@ export class PagesComponent implements OnInit {
           {
             title: 'Payments',
             link: '/pages/maintenance/payments',
+          },
+          {
+            title: 'Suppliers',
+            link: '/pages/maintenance/suppliers',
+          },
+          {
+            title: 'Users',
+            link: '/pages/maintenance/users',
           }
-        ],
+        ]
       }
     ];
     this.menu = this.newMenuItem;
