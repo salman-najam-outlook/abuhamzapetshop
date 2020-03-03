@@ -3,11 +3,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SingleProduct } from '../../../models/singleProduct.model';
 import { ProductService } from '../../../services/product.service';
-import { MaintenanceService } from '../../../services/maintenance.service';
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 import { SaleOrder } from '../../../models/saleOrder.model';
 import { Product } from '../../../models/product.model';
-import { LoginService } from '../../../services/login.service';
 
 @Component({
     selector: 'ngx-sales',
@@ -65,6 +63,7 @@ export class SalesComponent implements OnInit {
             sellPrice: {
                 title: 'Price',
                 type: 'number',
+                editable: false,
             },
             quantity: {
                 title: 'Quantity',
@@ -81,8 +80,7 @@ export class SalesComponent implements OnInit {
         },
     };
 
-    constructor(private productService: ProductService, private maintenanceService: MaintenanceService,
-        private toastrService: NbToastrService, private loginService: LoginService) { }
+    constructor(private productService: ProductService, private toastrService: NbToastrService) { }
 
     ngOnInit() {
         this.saleOrderForm = new FormGroup({
@@ -95,21 +93,18 @@ export class SalesComponent implements OnInit {
         this.source.load(this.singleProductList);
     }
 
-    onCreateConfirm(event): void {
-        event.confirm.resolve();
-        // this.source.getAll().then(res =>{
-        //     this.singleProductList = res;
-        //     console.log(this.singleProductList);
-        //   });
-        this.singleProduct = new SingleProduct();
-        this.singleProduct.barcode = event.newData.barcode;
-        this.singleProduct.productName = event.newData.productName;
-        this.singleProduct.sellPrice = event.newData.sellPrice;
-        this.singleProduct.quantity = event.newData.quantity;
-        this.singleProduct.totalAmount = this.singleProduct.sellPrice * this.singleProduct.quantity;
-        this.singleProductList.push(this.singleProduct);
-        this.subTotal = this.singleProductList.map(this.amount).reduce(this.sum);
-    }
+    // onCreateConfirm(event): void {
+    //     event.confirm.resolve();
+    //     this.singleProduct = new SingleProduct();
+    //     this.singleProduct.barcode = event.newData.barcode;
+    //     this.singleProduct.productName = event.newData.productName;
+    //     this.singleProduct.sellPrice = event.newData.sellPrice;
+    //     this.singleProduct.quantity = event.newData.quantity;
+    //     this.singleProduct.totalAmount = this.singleProduct.sellPrice * this.singleProduct.quantity;
+    //     this.singleProductList.push(this.singleProduct);
+    //     this.subTotal = this.singleProductList.map(this.amount).reduce(this.sum);
+    //     this.grandTotal = this.subTotal;
+    // }
 
     onChange(discount: number): void {
         this.grandTotal = this.subTotal - discount;
@@ -124,6 +119,10 @@ export class SalesComponent implements OnInit {
     getProductByBarcode(barcode: string) {
         this.productService.getProductByBarcode(barcode).subscribe(
             response => {
+                if (response.barcode === null || response.pro_id === 0) {
+                    this.showToast('danger', 'Error!', 'No product found against entered barcode.');
+                    return;
+                }
                 this.singleProduct = new SingleProduct();
                 this.product = response;
                 this.singleProduct.barcode = response.barcode;
@@ -134,6 +133,7 @@ export class SalesComponent implements OnInit {
                     let index = this.singleProductList.indexOf(updateItem);
                     this.singleProductList[index] = updateItem;
                     this.subTotal = this.singleProductList.map(item => item.totalAmount).reduce((prev, next) => prev + next);
+                    this.grandTotal = this.subTotal;
                     this.source.load(this.singleProductList);
                 } else {
                     this.singleProduct.productName = response.name;
@@ -143,9 +143,11 @@ export class SalesComponent implements OnInit {
                     this.singleProduct.totalAmount = this.singleProduct.sellPrice * this.singleProduct.quantity;
                     this.singleProductList.push(this.singleProduct);
                     this.subTotal = this.singleProductList.map(item => item.totalAmount).reduce((prev, next) => prev + next);
+                    this.grandTotal = this.subTotal;
                     this.source.load(this.singleProductList);
                 }
                 this.subTotal = this.singleProductList.map(item => item.totalAmount).reduce((prev, next) => prev + next);
+                this.grandTotal = this.subTotal;
                 this.product = new Product();
             }
         );
@@ -156,32 +158,54 @@ export class SalesComponent implements OnInit {
             event.confirm.resolve();
             this.showToast('success', 'Success!', 'Targeted record has been deleted successfully.');
             this.singleProductList = this.singleProductList.filter(singleProductList => singleProductList.barcode !== event.data.barcode);
+            if (this.singleProductList.length === 0) {
+                this.subTotal = 0;
+                this.grandTotal = this.subTotal;
+            } else {
+                this.subTotal = this.singleProductList.map(item => item.totalAmount).reduce((prev, next) => prev + next);
+                this.grandTotal = this.subTotal;
+            }
             this.source.load(this.singleProductList);
         } else {
             event.confirm.reject();
         }
     }
 
+    onConfirmEdit(event): void {
+        event.confirm.resolve();
+        this.showUpdatedItem(event);
+        var total = this.singleProductList.map(this.amount).reduce(this.sum);
+        this.saleOrderForm.controls.totalAmount.setValue(total);
+    }
+
     onClick() {
         this.source.getAll().then(res => {
-            console.log(res);
             this.singleProductList = res;
-            console.log(this.singleProductList);
         });
     }
 
-    onAdd() {
-        // this.singleProduct = new SingleProduct();
-        // this.singleProduct.barcode = this.purchaseProductForm.controls.barcode.value;
-        // this.singleProduct.productName = this.purchaseProductForm.controls.productName.value;
-        // this.singleProduct.purchasePrice = this.purchaseProductForm.controls.purchasePrice.value;
-        // this.singleProduct.quantity = this.purchaseProductForm.controls.quantity.value;
-        // this.single.push(this.singleProduct);
-        // this.purchaseProductForm.reset();
-        // this.purchaseProductForm.controls.supplier.setValue(this.selectedSupplier);
-        // var total = this.single.map(this.amount).reduce(this.sum);
-        // this.purchaseProductForm.controls.totalAmount.setValue(total);
-        // this.source.load(this.single);
+    onSubmit() {
+        this.saleOrder = new SaleOrder();
+        this.saleOrder.subTotal = +this.subTotal;
+        this.saleOrder.discount = +this.discount;
+        this.saleOrder.grandTotal = +this.grandTotal;
+        this.saleOrder.tenderAmount = +this.tenderAmount;
+        this.saleOrder.remainingCash = this.remainingCash;
+        this.saleOrder.singleProductList = this.singleProductList;
+        this.productService.addInvoice(this.saleOrder).subscribe(
+            response => {
+                this.showToast('success', 'Success!', 'A new sale has been entered into the system!');
+                this.saleOrderForm.reset();
+                this.subTotal = 0;
+                this.grandTotal = 0;
+                this.remainingCash = 0;
+                this.discount = 0;
+                this.tenderAmount = 0;
+            },
+            error => {
+                this.showToast('danger', 'Error!', 'An error occured while submitting Sale!');
+            }
+        );
     }
 
     // Methods to calculate total amount along with quantity starts
@@ -193,13 +217,6 @@ export class SalesComponent implements OnInit {
         return prev + next;
     }
     // Methods to calculate total amount along with quantity ends
-
-    onConfirmEdit(event): void {
-        event.confirm.resolve();
-        this.showUpdatedItem(event);
-        var total = this.singleProductList.map(this.amount).reduce(this.sum);
-        this.saleOrderForm.controls.totalAmount.setValue(total);
-    }
 
     // Methods to find old object and replace it with your object starts
     showUpdatedItem(newItem) {
@@ -218,25 +235,6 @@ export class SalesComponent implements OnInit {
         return newItem.barcode === this;
     }
     // Methods to find old object and replace it with your object ends
-
-    onSubmit() {
-        this.saleOrder = new SaleOrder();
-        this.saleOrder.subTotal = +this.subTotal;
-        this.saleOrder.discount = +this.discount;
-        this.saleOrder.grandTotal = +this.grandTotal;
-        this.saleOrder.tenderAmount = +this.tenderAmount;
-        this.saleOrder.remainingCash = this.remainingCash;
-        this.saleOrder.singleProductList = this.singleProductList;
-        console.log(this.saleOrder);
-        this.productService.addInvoice(this.saleOrder).subscribe(
-            response => {
-                console.log(response);
-            },
-            error => {
-                console.log(error);
-            }
-        );
-    }
 
     private showToast(type: NbComponentStatus, title: string, body: string) {
         const config = {

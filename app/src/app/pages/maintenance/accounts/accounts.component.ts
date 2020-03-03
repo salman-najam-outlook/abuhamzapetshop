@@ -24,6 +24,7 @@ export class AccountsComponent implements OnInit {
 
     onSubmit() {
         this.account = new Account();
+        this.account.acc_id = 0;
         this.account.AccType_id = +this.accountForm.controls.accountType.value;
         this.account.name = this.accountForm.controls.accountName.value;
         this.account.balance = this.accountForm.controls.accountBalance.value;

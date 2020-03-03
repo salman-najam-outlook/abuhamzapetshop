@@ -31,32 +31,32 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="tenderamount" class="label">Tender Amount</label>
-                                <input type="text" (input)="onTenderAmountEntered($event.target.value)" nbInput fullWidth id="tenderamount" placeholder="Tender Amount">
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="subtotal" class="label">Sub Total</label>
-                                <input type="text" nbInput fullWidth id="subtotal" placeholder="Sub Total" disabled value={{subTotal}}>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
                                 <label for="discount" class="label">Discount</label>
                                 <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth id="discount" placeholder="Discount" value={{discount}}>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
+                                <label for="subtotal" class="label">Sub Total</label>
+                                <input type="text" style="color: red" nbInput fullWidth id="subtotal" placeholder="Sub Total" disabled value={{subTotal}}>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
                                 <label for="grandTotal" class="label">Grand Amount</label>
-                                <input type="text" nbInput fullWidth id="grandTotal" placeholder="Grand Total" value={{grandTotal}}>
+                                <input type="text" style="color: red" nbInput fullWidth id="grandTotal" placeholder="Grand Total" disabled value={{grandTotal}}>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="tenderamount" class="label">Tender Amount</label>
+                                <input type="text" (input)="onTenderAmountEntered($event.target.value)" nbInput fullWidth id="tenderamount" placeholder="Tender Amount">
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="remainingcash" class="label">Remaining Cash</label>
-                                <input type="text" nbInput fullWidth id="remainingcash" placeholder="Remaining Cash" value={{remainingCash}}>
+                                <input type="text" style="color: red" nbInput fullWidth id="remainingcash" placeholder="Remaining Cash" disabled value={{remainingCash}}>
                             </div>
                         </div>
                     </div>
