@@ -4,4 +4,16 @@
   nb-card {
     transform: translate3d(0, 0, 0);
   }
+
+  .form-control {
+    color: gray !important;
+  }
+}
+
+ng2-smart-table thead input {
+  color: gray !important;
+}
+
+.nb-theme-dark ng2-smart-table thead tr.ng2-smart-filters th .ng2-smart-filter input {
+  color: gray !important;
 }

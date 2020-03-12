@@ -29,6 +29,7 @@ namespace abuhamza.repository
     
         public virtual DbSet<tblAccount> tblAccounts { get; set; }
         public virtual DbSet<tblAccType> tblAccTypes { get; set; }
+        public virtual DbSet<tblAdvance> tblAdvances { get; set; }
         public virtual DbSet<tblCategory> tblCategories { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
         public virtual DbSet<tblDetailInvoice> tblDetailInvoices { get; set; }
@@ -45,9 +46,9 @@ namespace abuhamza.repository
         public virtual DbSet<tblSupplier> tblSuppliers { get; set; }
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<tblUserType> tblUserTypes { get; set; }
         public virtual DbSet<tblvch> tblvches { get; set; }
         public virtual DbSet<tblVchDetail> tblVchDetails { get; set; }
-        public virtual DbSet<tblUserType> tblUserTypes { get; set; }
     
         public virtual int stpDetailOrder(Nullable<int> orderId, Nullable<int> quatity, string barcode, Nullable<decimal> purchasePrice, string voucherNo)
         {
@@ -363,6 +364,180 @@ namespace abuhamza.repository
                 new ObjectParameter("subCat_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CheckChildCategory", mainCat_idParameter, cat_idParameter, subCat_idParameter);
+        }
+    
+        public virtual int sp_alterdiagram1(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram1", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram1(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram1", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram1(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram1", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition1_Result> sp_helpdiagramdefinition1(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition1_Result>("sp_helpdiagramdefinition1", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams1_Result> sp_helpdiagrams1(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams1_Result>("sp_helpdiagrams1", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram1(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram1", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams1");
+        }
+    
+        public virtual ObjectResult<stpGetAllInvoices_Result> stpGetAllInvoices()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetAllInvoices_Result>("stpGetAllInvoices");
+        }
+    
+        public virtual ObjectResult<stpGetFromAccounts_Result> stpGetFromAccounts()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetFromAccounts_Result>("stpGetFromAccounts");
+        }
+    
+        public virtual int stpGetToAccounts()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpGetToAccounts");
+        }
+    
+        public virtual ObjectResult<stpGetPendingVouchersByVoucherType_Result> stpGetPendingVouchersByVoucherType(string vchType)
+        {
+            var vchTypeParameter = vchType != null ?
+                new ObjectParameter("vchType", vchType) :
+                new ObjectParameter("vchType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetPendingVouchersByVoucherType_Result>("stpGetPendingVouchersByVoucherType", vchTypeParameter);
+        }
+    
+        public virtual int stpAdvance(Nullable<decimal> amount, string barcode, string desc, string cus_No, string voucherNo, Nullable<System.DateTime> date, string cus_Name)
+        {
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("amount", amount) :
+                new ObjectParameter("amount", typeof(decimal));
+    
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("barcode", barcode) :
+                new ObjectParameter("barcode", typeof(string));
+    
+            var descParameter = desc != null ?
+                new ObjectParameter("desc", desc) :
+                new ObjectParameter("desc", typeof(string));
+    
+            var cus_NoParameter = cus_No != null ?
+                new ObjectParameter("cus_No", cus_No) :
+                new ObjectParameter("cus_No", typeof(string));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("voucherNo", voucherNo) :
+                new ObjectParameter("voucherNo", typeof(string));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            var cus_NameParameter = cus_Name != null ?
+                new ObjectParameter("cus_Name", cus_Name) :
+                new ObjectParameter("cus_Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpAdvance", amountParameter, barcodeParameter, descParameter, cus_NoParameter, voucherNoParameter, dateParameter, cus_NameParameter);
+        }
+    
+        public virtual ObjectResult<stpGetAdvances_Result> stpGetAdvances(string vchType)
+        {
+            var vchTypeParameter = vchType != null ?
+                new ObjectParameter("vchType", vchType) :
+                new ObjectParameter("vchType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetAdvances_Result>("stpGetAdvances", vchTypeParameter);
+        }
+    
+        public virtual ObjectResult<stpGetPendingAdvanceVouchers_Result> stpGetPendingAdvanceVouchers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetPendingAdvanceVouchers_Result>("stpGetPendingAdvanceVouchers");
         }
     }
 }

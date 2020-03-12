@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountDomainModel.cs" />
+    <Compile Include="AdvanceDomainModel.cs" />
     <Compile Include="CashTransactionDomainModel.cs" />
     <Compile Include="CategoryDomainModel.cs" />
     <Compile Include="CustomerDomainModel.cs" />

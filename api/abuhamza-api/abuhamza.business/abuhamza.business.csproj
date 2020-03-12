@@ -45,12 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountBusiness.cs" />
+    <Compile Include="AdvanceBusiness.cs" />
     <Compile Include="CategoryBusiness.cs" />
     <Compile Include="CustomerBusiness.cs" />
     <Compile Include="DetailOrderBusiness.cs" />
     <Compile Include="EmployeeBusiness.cs" />
     <Compile Include="ForthSubCategoryBusiness.cs" />
     <Compile Include="Interface\IAccountBusiness.cs" />
+    <Compile Include="Interface\IAdvanceBusiness.cs" />
     <Compile Include="Interface\ICategoryBusiness.cs" />
     <Compile Include="Interface\ICustomerBusiness.cs" />
     <Compile Include="Interface\IDetailOrderBusiness.cs" />

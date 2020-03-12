@@ -29,6 +29,7 @@ namespace abuhamza_api
             container.RegisterType<ITransactionBusiness, TransactionBusiness>();
             container.RegisterType<IInvoiceBusiness, InvoiceBusiness>();
             container.RegisterType<IVoucherBusiness, VoucherBusiness>();
+            container.RegisterType<IAdvanceBusiness, AdvanceBusiness>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             config.DependencyResolver = new UnityResolver(container);
 

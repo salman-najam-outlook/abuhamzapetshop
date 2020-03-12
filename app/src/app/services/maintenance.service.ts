@@ -9,15 +9,18 @@ import { MainCategory } from "../models/mainCategory.model";
 import { Category } from "../models/category.model";
 import { SubCategory } from "../models/subCategory.model";
 import { FourthSubCategory } from "../models/fourthSubCategory.model";
-import { PendingPayments } from '../models/pendingPayment.model';
-import { Payment } from '../models/payment.model';
-import { Account } from '../models/account.model';
+import { PendingPayments } from "../models/pendingPayment.model";
+import { Payment } from "../models/payment.model";
+import { Account } from "../models/account.model";
+import { CashTransaction } from "../models/cashTransaction.model";
+import { Customer } from "../models/customer.model";
+import { Advance } from "../models/advance.model";
 
 @Injectable({
   providedIn: "root"
 })
 export class MaintenanceService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   // For Users
   addUpdateUser(user: User) {
@@ -34,8 +37,13 @@ export class MaintenanceService {
 
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(
-      "http://localhost:51110/api/users/GetAllUsers"
-      , { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('access_token') }) });
+      "http://localhost:51110/api/users/GetAllUsers",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
   }
 
   deleteUser(id: number): Observable<string> {
@@ -97,28 +105,6 @@ export class MaintenanceService {
     );
   }
 
-  getPendingVouchersBySupplierID(supplierId: number): Observable<PendingPayments[]> {
-    return this.httpClient.get<PendingPayments[]>(
-      "http://localhost:51110/api/vouchers/GetPendingVouchersBySupplierID/" + supplierId,
-      {
-        headers: new HttpHeaders({
-          Authorization: "Bearer " + localStorage.getItem("access_token")
-        })
-      }
-    );
-  }
-
-  paymentAgainstSupplier(payment: Payment): Observable<any> {
-    return this.httpClient.post<any>(
-      "http://localhost:51110/api/vouchers/pendingOrderPayment", payment,
-      {
-        headers: new HttpHeaders({
-          Authorization: "Bearer " + localStorage.getItem("access_token")
-        })
-      }
-    );
-  }
-
   getAllSuppliers(): Observable<Supplier[]> {
     return this.httpClient.get<Supplier[]>(
       "http://localhost:51110/api/suppliers/GetAllSuppliers",
@@ -133,6 +119,78 @@ export class MaintenanceService {
   deleteSupplier(id: number): Observable<string> {
     return this.httpClient.delete<string>(
       "http://localhost:51110/api/suppliers/DeleteSupplier/" + id,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  // For Vouchers
+
+  getPendingVouchersBySupplierID(
+    supplierId: number
+  ): Observable<PendingPayments[]> {
+    return this.httpClient.get<PendingPayments[]>(
+      "http://localhost:51110/api/vouchers/GetPendingVouchersBySupplierID/" +
+        supplierId,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getPendingVouchersOfSale(): Observable<PendingPayments[]> {
+    return this.httpClient.get<PendingPayments[]>(
+      "http://localhost:51110/api/vouchers/GetPendingVouchersOfSale",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getPendingVouchersOfAdvance(): Observable<PendingPayments[]> {
+    return this.httpClient.get<PendingPayments[]>(
+      "http://localhost:51110/api/vouchers/GetPendingVouchersOfAdvance",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getPendingVouchersOfPurchase(): Observable<PendingPayments[]> {
+    return this.httpClient.get<PendingPayments[]>(
+      "http://localhost:51110/api/vouchers/GetPendingVouchersOfPurchase",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getAllPendingVouchers(): Observable<PendingPayments[]> {
+    return this.httpClient.get<PendingPayments[]>(
+      "http://localhost:51110/api/vouchers/GetAllPendingVouchers",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  paymentAgainstSupplier(payment: Payment): Observable<any> {
+    return this.httpClient.post<any>(
+      "http://localhost:51110/api/vouchers/pendingOrderPayment",
+      payment,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -273,7 +331,7 @@ export class MaintenanceService {
   getAllCategoriesByMainCategoryId(id: number): Observable<Category[]> {
     return this.httpClient.get<Category[]>(
       "http://localhost:51110/api/categories/GetAllCategoriesByMainCategoryId/" +
-      id,
+        id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -320,7 +378,7 @@ export class MaintenanceService {
   getAllSubCategoriesByCategoryId(id: number): Observable<SubCategory[]> {
     return this.httpClient.get<SubCategory[]>(
       "http://localhost:51110/api/SubCategories/GetSubCategoriesByCategoryId/" +
-      id,
+        id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -369,7 +427,7 @@ export class MaintenanceService {
   ): Observable<FourthSubCategory[]> {
     return this.httpClient.get<FourthSubCategory[]>(
       "http://localhost:51110/api/ForthSubCategories/GetForthSubCategoriesbySubCategoryid/" +
-      id,
+        id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")
@@ -381,7 +439,122 @@ export class MaintenanceService {
   deleteForthSubCategory(id: number): Observable<string> {
     return this.httpClient.delete<string>(
       "http://localhost:51110/api/ForthSubCategories/DeleteForthSubCategory/" +
-      id,
+        id,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  //Cash Transaction
+  sendAmount(cashTransaction: CashTransaction) {
+    return this.httpClient.post<CashTransaction>(
+      "http://localhost:51110/api/accounts/CashTransaction",
+      cashTransaction,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  GetFromAccounts(): Observable<Account[]> {
+    return this.httpClient.get<Account[]>(
+      "http://localhost:51110/api/accounts/GetFromAccounts",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  GetToAccounts(): Observable<Account[]> {
+    return this.httpClient.get<Account[]>(
+      "http://localhost:51110/api/accounts/GetToAccounts",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+  //Customer
+  addUpdateCustomer(customer: Customer) {
+    return this.httpClient.post<Customer>(
+      "http://localhost:51110/api/customers/AddUpdateCustomer",
+      customer,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getAllCustomers(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>(
+      "http://localhost:51110/api/customers/GetAllCustomers",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  deleteCustomer(id: number): Observable<string> {
+    return this.httpClient.delete<string>(
+      "http://localhost:51110/api/customers/DeleteCustomer/" + id,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  //Advance
+  addUpdateAdvance(advance: Advance) {
+    return this.httpClient.post<Advance>(
+      "http://localhost:51110/api/advances/AddUpdateAdvance",
+      advance,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getAllAdvances(): Observable<Advance[]> {
+    return this.httpClient.get<Advance[]>(
+      "http://localhost:51110/api/advances/GetAllAdvances",
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  getAdvanceByVoucherNo(voucherNo: string): Observable<Advance> {
+    return this.httpClient.get<Advance>(
+      "http://localhost:51110/api/advances/GetAdvanceByVoucherNo/" + voucherNo,
+      {
+        headers: new HttpHeaders({
+          Authorization: "Bearer " + localStorage.getItem("access_token")
+        })
+      }
+    );
+  }
+
+  deleteAdvance(id: number): Observable<string> {
+    return this.httpClient.delete<string>(
+      "http://localhost:51110/api/advances/DeleteAdvance/" + id,
       {
         headers: new HttpHeaders({
           Authorization: "Bearer " + localStorage.getItem("access_token")

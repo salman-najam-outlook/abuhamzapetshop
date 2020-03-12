@@ -6,23 +6,30 @@ import { UsersComponent } from "./users/users.component";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
 import { EmployeesComponent } from "./employees/employees.component";
 import { SalariesComponent } from "./salaries/salaries.component";
-import { CategoriesComponent } from './categories/categories.component';
-import { PaymentsComponent } from './payments/payments.component';
-import { AdminGuard } from '../../guards/admin-guard.service';
-import { AccountsComponent } from './accounts/accounts.component';
+import { CategoriesComponent } from "./categories/categories.component";
+import { PaymentsComponent } from "./payments/payments.component";
+import { AdminGuard } from "../../guards/admin-guard.service";
+import { AccountsComponent } from "./accounts/accounts.component";
+import { TransactionsComponent } from "./transactions/transactions.component";
+import { CustomersComponent } from "./customers/customers.component";
+import { AdvancesComponent } from "./advances/advances.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: MaintenanceComponent, canActivate: [AdminGuard],
+    component: MaintenanceComponent,
     children: [
       {
         path: "accounts",
         component: AccountsComponent
       },
       {
+        path: "advances",
+        component: AdvancesComponent
+      },
+      {
         path: "users",
-        component: UsersComponent,
+        component: UsersComponent
       },
       {
         path: "suppliers",
@@ -33,8 +40,16 @@ const routes: Routes = [
         component: EmployeesComponent
       },
       {
+        path: "customers",
+        component: CustomersComponent
+      },
+      {
         path: "salaries",
         component: SalariesComponent
+      },
+      {
+        path: "transactions",
+        component: TransactionsComponent
       },
       {
         path: "categories",

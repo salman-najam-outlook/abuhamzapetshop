@@ -127,6 +127,11 @@ export class EmployeesComponent implements OnInit {
 
   onCreateConfirm(event): void {
     event.confirm.resolve();
+    if (event.newData.name == "") {
+      this.showToast("danger", "Error!", "Please enter employee name");
+      return;
+    }
+
     this.employee.emp_id = 0;
     this.employee.name = event.newData.name;
     this.employee.NIC = event.newData.NIC;
@@ -168,6 +173,10 @@ export class EmployeesComponent implements OnInit {
 
   onConfirmEdit(event): void {
     event.confirm.resolve();
+    if (event.newData.name == "") {
+      this.showToast("danger", "Error!", "Please enter employee name");
+      return;
+    }
     this.employee.emp_id = event.newData.emp_id;
     this.employee.name = event.newData.name;
     this.employee.NIC = event.newData.NIC;

@@ -4,6 +4,8 @@ using abuhamza.repository;
 using abuhamza.repository.Infrastructure.Contract;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -121,6 +123,71 @@ namespace abuhamza.business
                 }
             }
             return status;
+        }
+
+        public async Task<List<tblAccount>> GetToAccounts()
+        {
+            List<tblAccount> uList = new List<tblAccount>();
+            
+            int condition = 0;
+            if (condition > 0)
+            {
+                uList = await accountRepository.GetAll();
+            }
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlCommand cmd = new SqlCommand("stpGetToAccounts", conn))
+            {
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                adapt.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                adapt.Fill(dt);
+
+                uList = (from DataRow dr in dt.Rows
+                          select new tblAccount()
+                          {
+                              acc_id = Convert.ToInt32(dr["acc_id"]),
+                              AccType_id = Convert.ToInt32(dr["AccType_id"]),
+                              name = dr["name"].ToString(),
+                              balance = Convert.ToDecimal(dr["balance"])
+                          }).ToList();
+            }
+
+            return uList;
+        }
+
+        public async Task<List<tblAccount>> GetFromAccounts()
+        {
+            List<tblAccount> uList = new List<tblAccount>();
+            int condition = 0;
+            if (condition > 0)
+            {
+                uList = await accountRepository.GetAll();
+            }
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlCommand cmd = new SqlCommand("stpGetFromAccounts", conn))
+            {
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                adapt.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                adapt.Fill(dt);
+
+                uList = (from DataRow dr in dt.Rows
+                         select new tblAccount()
+                         {
+                             acc_id = Convert.ToInt32(dr["acc_id"]),
+                             AccType_id = Convert.ToInt32(dr["AccType_id"]),
+                             name = dr["name"].ToString(),
+                             balance = Convert.ToDecimal(dr["balance"])
+                         }).ToList();
+            }
+
+            return uList;
         }
     }
 }

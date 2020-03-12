@@ -13,6 +13,7 @@ using abuhamza_api.Models;
 
 namespace abuhamza_api.Controllers
 {
+    //[Authorize]
     public class SubCategoriesController : ApiController
     {
                 ISubCategoryBusiness subCategoryBusiness;

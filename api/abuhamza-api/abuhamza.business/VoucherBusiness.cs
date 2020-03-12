@@ -37,11 +37,10 @@ namespace abuhamza.business
 
             List<tblvch> upList = new List<tblvch>();
             upList = await voucherRepository.GetAll(v => v.vch_id == id);
-            string status ="";
 
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-P44VT9L\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetPendingVouchersBySupplierID", conn))
             {
 
@@ -69,17 +68,125 @@ namespace abuhamza.business
             return suList;
         }
 
+        public async Task<List<VoucherDM>> GetPendingVouchersOfSale()
+        {
+            List<VoucherDM> suList = new List<VoucherDM>();
+
+            List<tblvch> upList = new List<tblvch>();
+            upList = await voucherRepository.GetAll(v => v.vch_id == 0);
+            
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlCommand cmd = new SqlCommand("stpGetPendingVouchersByVoucherType", conn))
+            {
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                adapt.SelectCommand.CommandType = CommandType.StoredProcedure;
+                adapt.SelectCommand.Parameters.Add(new SqlParameter("@vchType", SqlDbType.VarChar));
+                adapt.SelectCommand.Parameters["@vchType"].Value = "Sale";
+
+                adapt.Fill(dt);
+
+                suList = (from DataRow dr in dt.Rows
+                          select new VoucherDM()
+                          {
+                              vch_id = Convert.ToInt32(dr["vch_id"]),
+                              vchNo = dr["vchNo"].ToString(),
+                              date = Convert.ToDateTime(dr["date"]),
+                              pendingAmount = Convert.ToDecimal(dr["pendingAmount"]),
+                              paidAmount = Convert.ToDecimal(dr["paidAmount"]),
+                              totalAmount = Convert.ToDecimal(dr["totalAmount"]),
+                              status = dr["status"].ToString(),
+                              vchType = dr["vchType"].ToString(),
+                              SupplierName = dr["SupplierName"].ToString()
+                          }).ToList();
+            }
+            return suList;
+        }
+
+        public async Task<List<VoucherDM>> GetPendingVouchersOfAdvance()
+        {
+            List<VoucherDM> suList = new List<VoucherDM>();
+
+            List<tblvch> upList = new List<tblvch>();
+            upList = await voucherRepository.GetAll(v => v.vch_id == 0);
+
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlCommand cmd = new SqlCommand("stpGetPendingAdvanceVouchers", conn))
+            {
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                adapt.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                adapt.Fill(dt);
+
+                suList = (from DataRow dr in dt.Rows
+                          select new VoucherDM()
+                          {
+                              vch_id = Convert.ToInt32(dr["vch_id"]),
+                              vchNo = dr["vchNo"].ToString(),
+                              date = Convert.ToDateTime(dr["date"]),
+                              pendingAmount = Convert.ToDecimal(dr["pendingAmount"]),
+                              paidAmount = Convert.ToDecimal(dr["paidAmount"]),
+                              totalAmount = Convert.ToDecimal(dr["totalAmount"]),
+                              status = dr["status"].ToString(),
+                              vchType = dr["vchType"].ToString(),
+                              SupplierName = dr["CustomerName"].ToString()
+                          }).ToList();
+            }
+            return suList;
+        }
+
+        public async Task<List<VoucherDM>> GetPendingVouchersOfPurchase()
+        {
+            List<VoucherDM> suList = new List<VoucherDM>();
+
+            List<tblvch> upList = new List<tblvch>();
+            upList = await voucherRepository.GetAll(v => v.vch_id == 0);
+
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlCommand cmd = new SqlCommand("stpGetPendingVouchersByVoucherType", conn))
+            {
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                adapt.SelectCommand.CommandType = CommandType.StoredProcedure;
+                adapt.SelectCommand.Parameters.Add(new SqlParameter("@vchType", SqlDbType.VarChar));
+                adapt.SelectCommand.Parameters["@vchType"].Value = "Purchase";
+
+                adapt.Fill(dt);
+
+                suList = (from DataRow dr in dt.Rows
+                          select new VoucherDM()
+                          {
+                              vch_id = Convert.ToInt32(dr["vch_id"]),
+                              vchNo = dr["vchNo"].ToString(),
+                              date = Convert.ToDateTime(dr["date"]),
+                              pendingAmount = Convert.ToDecimal(dr["pendingAmount"]),
+                              paidAmount = Convert.ToDecimal(dr["paidAmount"]),
+                              totalAmount = Convert.ToDecimal(dr["totalAmount"]),
+                              status = dr["status"].ToString(),
+                              vchType = dr["vchType"].ToString(),
+                              SupplierName = dr["SupplierName"].ToString()
+                          }).ToList();
+            }
+            return suList;
+        }
+
         public async Task<List<VoucherDM>> GetAllPendingVouchers()
         {
             List<VoucherDM> suList = new List<VoucherDM>();
 
             List<tblvch> upList = new List<tblvch>();
             upList = await voucherRepository.GetAll(v => v.vch_id == 0);
-            string status = "";
 
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-P44VT9L\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetAllPendingVouchers", conn))
             {
 

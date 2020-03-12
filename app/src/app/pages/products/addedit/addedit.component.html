@@ -33,11 +33,12 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <ngx-barcode [bc-value]="bcValue" *ngFor="let bcValue of values" [bc-display-value]="true"></ngx-barcode>
+                            <ngx-barcode [bc-value]="bcValue" *ngFor="let bcValue of values" [bc-display-value]="true">
+                            </ngx-barcode>
                             <div class="form-group">
                                 <label for="barcode" class="label">Barcode</label>
                                 <input type="text" nbInput fullWidth autofocus id="barcode" placeholder="Barcode"
-                                 formControlName="barcode" [(ngModel)]="value">
+                                    formControlName="barcode" [(ngModel)]="value">
                             </div>
                         </div>
                     </div>
@@ -76,7 +77,8 @@
                     <div class="form-group">
                         <textarea nbInput fullWidth placeholder="Description" formControlName="description"></textarea>
                     </div>
-                    <button nbButton status="primary" hero type="submit" (click)="onSubmit()">Submit</button>
+                    <button nbButton status="primary" hero type="submit" (click)="onSubmit()"
+                        [disabled]="productAddEditForm.invalid">Submit</button>
                     <button nbButton status="danger" hero (click)="onClear()">Clear</button>
                 </form>
             </nb-card-body>

@@ -2,15 +2,19 @@
     <div class="col-sm-8">
         <nb-card>
             <nb-card-body>
-                <form>
+                <form [formGroup]="saleOrderForm">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="barcode" class="label">Barcode</label>
-                                <input type="text" nbInput fullWidth ngxAutofocus #barcode placeholder="Barcode" (blur)="getProductByBarcode(barcode.value)">
+                                <input type="text" nbInput fullWidth ngxAutofocus #barcode placeholder="Barcode"
+                                    (blur)="getProductByBarcode(barcode.value)" formControlName="barcode">
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <label for="voucherno" class="label">Voucher No</label>
+                            <input type="text" nbInput fullWidth ngxAutofocus #voucherno placeholder="Voucher No"
+                                (blur)="getAdvanceByVoucherNo(voucherno.value)" formControlName="voucherno">
                         </div>
                     </div>
                 </form>
@@ -19,7 +23,7 @@
         <nb-card>
             <nb-card-body>
                 <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
-                (createConfirm)="onCreateConfirm($event)" (editConfirm)="onConfirmEdit($event)">
+                    (createConfirm)="onCreateConfirm($event)" (editConfirm)="onConfirmEdit($event)">
                 </ng2-smart-table>
             </nb-card-body>
         </nb-card>
@@ -27,40 +31,55 @@
     <div class="col-sm-4">
         <nb-card>
             <nb-card-body>
-                <form>
+                <form [formGroup]="saleOrderForm">
                     <div class="row">
+                        <div class="col-sm-12" [hidden]=!isAdvanceVisible>
+                            <div class="form-group">
+                                <label for="advance" class="label">Advance</label>
+                                <input type="text" nbInput fullWidth id="advance" placeholder="Advance"
+                                    value={{advance}} formControlName="advance">
+                            </div>
+                        </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="discount" class="label">Discount</label>
-                                <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth id="discount" placeholder="Discount" value={{discount}}>
+                                <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth
+                                    id="discount" placeholder="Discount" value={{discount}} formControlName="discount">
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="subtotal" class="label">Sub Total</label>
-                                <input type="text" style="color: red" nbInput fullWidth id="subtotal" placeholder="Sub Total" disabled value={{subTotal}}>
+                                <input type="text" style="color: red" nbInput fullWidth id="subtotal"
+                                    placeholder="Sub Total" disabled value={{subTotal}} formControlName="subTotal">
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="grandTotal" class="label">Grand Amount</label>
-                                <input type="text" style="color: red" nbInput fullWidth id="grandTotal" placeholder="Grand Total" disabled value={{grandTotal}}>
+                                <input type="text" style="color: red" nbInput fullWidth id="grandTotal"
+                                    placeholder="Grand Total" disabled value={{grandTotal}}
+                                    formControlName="grandTotal">
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="tenderamount" class="label">Tender Amount</label>
-                                <input type="text" (input)="onTenderAmountEntered($event.target.value)" nbInput fullWidth id="tenderamount" placeholder="Tender Amount">
+                                <input type="text" (input)="onTenderAmountEntered($event.target.value)" nbInput
+                                    fullWidth id="tenderamount" placeholder="Tender Amount"
+                                    formControlName="tenderAmount">
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="remainingcash" class="label">Remaining Cash</label>
-                                <input type="text" style="color: red" nbInput fullWidth id="remainingcash" placeholder="Remaining Cash" disabled value={{remainingCash}}>
+                                <input type="text" style="color: red" nbInput fullWidth id="remainingcash"
+                                    placeholder="Remaining Cash" disabled value={{remainingCash}}>
                             </div>
                         </div>
                     </div>
-                    <button nbButton status="warning" hero (click)="onSubmit()">Submit</button>
+                    <button nbButton status="warning" hero (click)="onSubmit()"
+                        [disabled]="singleProductList.length === 0">Submit</button>
                 </form>
             </nb-card-body>
         </nb-card>

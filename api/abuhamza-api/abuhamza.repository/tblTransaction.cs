@@ -30,7 +30,6 @@ namespace abuhamza.repository
         public Nullable<int> totalQty { get; set; }
         public string barcode { get; set; }
     
-        public virtual tblAccount tblAccount { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblDetailTransaction> tblDetailTransactions { get; set; }
     }

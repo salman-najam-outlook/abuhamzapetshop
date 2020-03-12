@@ -19,32 +19,42 @@ namespace abuhamza_api
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             ////context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-            using (var db = new abuhamzapetstoreEntities())
+            string error = "";
+            try
             {
-                if (db != null)
+                using (var db = new abuhamzapetstoreEntities())
                 {
-                    tblUser user = db.tblUsers.Where(u => u.email == context.UserName && u.password == context.Password).FirstOrDefault();
-                    if (user != null)
+                    if (db != null)
                     {
-                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                        identity.AddClaim(new Claim("Userid", user.user_id.ToString()));
-                        identity.AddClaim(new Claim("Username", user.username));
-                        identity.AddClaim(new Claim("Firstname", user.firstname));
-                        identity.AddClaim(new Claim("Lastname", user.lastname));
-                        identity.AddClaim(new Claim("Email", user.email));
-                        identity.AddClaim(new Claim("Contact", user.contact));
-                        identity.AddClaim(new Claim("Userrole", user.userRoll));
-                        identity.AddClaim(new Claim("Status", user.status));
-                        context.Validated(identity);
+                        tblUser user = db.tblUsers.Where(u => u.email == context.UserName && u.password == context.Password).FirstOrDefault();
+                        if (user != null)
+                        {
+                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                            identity.AddClaim(new Claim("Userid", user.user_id.ToString()));
+                            identity.AddClaim(new Claim("Username", user.username));
+                            identity.AddClaim(new Claim("Firstname", user.firstname));
+                            identity.AddClaim(new Claim("Lastname", user.lastname));
+                            identity.AddClaim(new Claim("Email", user.email));
+                            identity.AddClaim(new Claim("Contact", user.contact));
+                            identity.AddClaim(new Claim("Userrole", user.userRoll));
+                            identity.AddClaim(new Claim("Status", user.status));
+                            context.Validated(identity);
+                        }
+                        else
+                        {
+                            context.SetError("invalid_grant", "Provided username and password is incorrect.");
+                            context.Rejected();
+                        }
+                        return;
                     }
-                    else
-                    {
-                        context.SetError("invalid_grant", "Provided username and password is incorrect.");
-                        context.Rejected();
-                    }
-                    return;
                 }
             }
+            catch (Exception ex)
+            {
+
+                error = ex.Message;
+            }
+            
         }
     }
 }

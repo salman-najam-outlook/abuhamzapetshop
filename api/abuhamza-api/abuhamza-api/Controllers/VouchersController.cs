@@ -13,6 +13,7 @@ using abuhamza_api.Models;
 
 namespace abuhamza_api.Controllers
 {
+
     public class VouchersController : ApiController
     {
         IVoucherBusiness voucherBusiness;
@@ -46,15 +47,43 @@ namespace abuhamza_api.Controllers
             return voucherToReturnVM;
         }
 
-        // api/vouchers/GetVoucherById/1
+        //api/vouchers/GetVoucherById/1
         // This Api call will get single voucher from the database based on acc_id
         [HttpGet]
         [Route("api/vouchers/GetPendingVouchersBySupplierID/{id}")]
         public async Task<IEnumerable<VoucherDM>> GetPendingVouchersBySupplierID(int id)
         {
-            //VoucherToReturnVM voucherToReturnVM = new VoucherToReturnVM();
             IEnumerable<VoucherDM> voucherDomainModel = await voucherBusiness.GetPendingVouchersBySupplierID(id);
-           // AutoMapper.Mapper.Map(voucherDomainModel, voucherToReturnVM);
+            return voucherDomainModel;
+        }
+
+        // api/vouchers/GetVoucherById/1
+        // This Api call will get single voucher from the database based on acc_id
+        [HttpGet]
+        [Route("api/vouchers/GetPendingVouchersOfSale")]
+        public async Task<IEnumerable<VoucherDM>> GetPendingVouchersOfSale()
+        {
+            IEnumerable<VoucherDM> voucherDomainModel = await voucherBusiness.GetPendingVouchersOfSale();
+            return voucherDomainModel;
+        }
+
+        // api/vouchers/GetPendingVouchersOfAdvance
+        // This Api call will get single voucher from the database based on acc_id
+        [HttpGet]
+        [Route("api/vouchers/GetPendingVouchersOfAdvance")]
+        public async Task<IEnumerable<VoucherDM>> GetPendingVouchersOfAdvance()
+        {
+            IEnumerable<VoucherDM> voucherDomainModel = await voucherBusiness.GetPendingVouchersOfAdvance();
+            return voucherDomainModel;
+        }
+
+        // api/vouchers/GetVoucherById/1
+        // This Api call will get single voucher from the database based on acc_id
+        [HttpGet]
+        [Route("api/vouchers/GetPendingVouchersOfPurchase")]
+        public async Task<IEnumerable<VoucherDM>> GetPendingVouchersOfPurchase()
+        {
+            IEnumerable<VoucherDM> voucherDomainModel = await voucherBusiness.GetPendingVouchersOfPurchase();
             return voucherDomainModel;
         }
 

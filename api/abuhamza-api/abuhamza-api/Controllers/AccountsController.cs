@@ -11,6 +11,7 @@ using abuhamza_api.Models;
 
 namespace abuhamza_api.Controllers
 {
+    //[Authorize]
     public class AccountsController : ApiController
     {
         IAccountBusiness accountBusiness;
@@ -28,6 +29,30 @@ namespace abuhamza_api.Controllers
         {
             List<AccountToReturnVM> listAccountVM = new List<AccountToReturnVM>();
             List<tblAccount> listAccount = await accountBusiness.GetAccounts();
+            AutoMapper.Mapper.Map(listAccount, listAccountVM);
+            return listAccountVM;
+        }
+
+        // api/accounts/GetFromAccounts
+        // This Api call will get all FromAccounts from the database
+        [HttpGet]
+        [Route("api/accounts/GetFromAccounts")]
+        public async Task<List<AccountToReturnVM>> GetFromAccounts()
+        {
+            List<AccountToReturnVM> listAccountVM = new List<AccountToReturnVM>();
+            List<tblAccount> listAccount = await accountBusiness.GetFromAccounts();
+            AutoMapper.Mapper.Map(listAccount, listAccountVM);
+            return listAccountVM;
+        }
+
+        // api/accounts/GetToAccounts
+        // This Api call will get all FromAccounts from the database
+        [HttpGet]
+        [Route("api/accounts/GetToAccounts")]
+        public async Task<List<AccountToReturnVM>> GetToAccounts()
+        {
+            List<AccountToReturnVM> listAccountVM = new List<AccountToReturnVM>();
+            List<tblAccount> listAccount = await accountBusiness.GetToAccounts();
             AutoMapper.Mapper.Map(listAccount, listAccountVM);
             return listAccountVM;
         }

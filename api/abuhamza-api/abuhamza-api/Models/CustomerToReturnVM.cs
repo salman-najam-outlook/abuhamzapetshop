@@ -10,5 +10,6 @@ namespace abuhamza_api.Models
         public int cus_id { get; set; }
         public string name { get; set; }
         public string contact { get; set; }
+        public Nullable<System.DateTime> date { get; set; } = DateTime.Now;
     }
 }

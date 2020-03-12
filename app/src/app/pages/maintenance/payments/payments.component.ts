@@ -22,6 +22,7 @@ export class PaymentsComponent implements OnInit {
   paymentForm: FormGroup;
   suppliers: Supplier[];
   selectedSupplier: number;
+  selectedVrType: number;
   paymentModel: Payment;
 
   // Toaster Setting Starts
@@ -41,7 +42,7 @@ export class PaymentsComponent implements OnInit {
     },
     columns: {
       SupplierName: {
-        title: "Supplier Name",
+        title: "Name",
         type: "string"
       },
       vchNo: {
@@ -74,7 +75,8 @@ export class PaymentsComponent implements OnInit {
       voucherNumber: new FormControl("", Validators.required),
       remainingAmount: new FormControl("", Validators.required),
       amountToBePaid: new FormControl("", Validators.required),
-      supplier: new FormControl("", Validators.required)
+      supplier: new FormControl(""),
+      voucher: new FormControl("")
     });
     this.maintenanceService.getAllSuppliers().subscribe(
       response => {
@@ -111,6 +113,50 @@ export class PaymentsComponent implements OnInit {
     );
   }
 
+  onVoucherSelect(event) {
+    this.selectedVrType = +event;
+    if (this.selectedVrType == 1) {
+      this.maintenanceService.getAllPendingVouchers().subscribe(
+        response => {
+          this.source.load(response);
+        },
+        error => {
+          this.showToast(
+            "danger",
+            "Error!",
+            "An error occured while fetching pending vouchers!"
+          );
+        }
+      );
+    } else if (this.selectedVrType == 2) {
+      this.maintenanceService.getPendingVouchersOfSale().subscribe(
+        response => {
+          this.source.load(response);
+        },
+        error => {
+          this.showToast(
+            "danger",
+            "Error!",
+            "An error occured while fetching pending vouchers!"
+          );
+        }
+      );
+    } else if (this.selectedVrType == 3) {
+      this.maintenanceService.getPendingVouchersOfAdvance().subscribe(
+        response => {
+          this.source.load(response);
+        },
+        error => {
+          this.showToast(
+            "danger",
+            "Error!",
+            "An error occured while fetching pending vouchers!"
+          );
+        }
+      );
+    }
+  }
+
   onSubmit() {
     this.paymentModel = new Payment();
     this.paymentModel.supplierId = this.paymentForm.controls.supplier.value;
@@ -124,18 +170,20 @@ export class PaymentsComponent implements OnInit {
           "Success!",
           "Payment has been updated against selected supplier !"
         );
-        this.maintenanceService.getPendingVouchersBySupplierID(this.selectedSupplier).subscribe(
-          response => {
-            this.source.load(response);
-          },
-          error => {
-            this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching pending vouchers!"
-            );
-          }
-        );
+        this.maintenanceService
+          .getPendingVouchersBySupplierID(this.selectedSupplier)
+          .subscribe(
+            response => {
+              this.source.load(response);
+            },
+            error => {
+              this.showToast(
+                "danger",
+                "Error!",
+                "An error occured while fetching pending vouchers!"
+              );
+            }
+          );
       },
       error => {
         this.showToast(

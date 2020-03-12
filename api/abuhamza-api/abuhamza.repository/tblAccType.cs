@@ -14,16 +14,7 @@ namespace abuhamza.repository
     
     public partial class tblAccType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblAccType()
-        {
-            this.tblAccounts = new HashSet<tblAccount>();
-        }
-    
         public int AccType_id { get; set; }
         public string Name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAccount> tblAccounts { get; set; }
     }
 }

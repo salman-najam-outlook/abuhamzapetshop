@@ -93,6 +93,10 @@ namespace abuhamza_api.Infrastructure
 
             CreateMap<CashTransactionDomainModel, CashTransaction>();
             CreateMap<CashTransaction, CashTransactionDomainModel>();
+
+            CreateMap<AdvanceDomainModel, AdvanceToReturnVM>();
+            CreateMap<tblAdvance, AdvanceToReturnVM>();
+            CreateMap<AdvanceVM, AdvanceDomainModel>();
         }
 
         public static void Run()

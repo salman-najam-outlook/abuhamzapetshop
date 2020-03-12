@@ -16,3 +16,8 @@
     }
   }
 }
+
+:host /deep/ ng2-smart-table input { color: #000000; }
+:host /deep/ ng2-smart-table input:link { color: #000000; }
+:host /deep/ ng2-smart-table input:hover { color: #000000; }
+:host /deep/ ng2-smart-table input:focus { color: #000000; }

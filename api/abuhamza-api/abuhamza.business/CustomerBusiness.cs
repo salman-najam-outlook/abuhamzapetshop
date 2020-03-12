@@ -70,10 +70,22 @@ namespace abuhamza.business
             else
             {
                 tblCustomer customerToAdd = new tblCustomer();
-                customerToAdd.name = customer.name;
-                customerToAdd.contact = customer.contact;
-                await customerRepository.Insert(customerToAdd);
-                status = "added";
+                tblCustomer cust = new tblCustomer();
+                cust = await customerRepository.SingleOrDefault(c => c.contact == customer.contact);
+
+                if (cust != null)
+                {
+
+                }
+                else
+                {
+                    customerToAdd.name = customer.name;
+                    customerToAdd.contact = customer.contact;
+                    customerToAdd.date = DateTime.Now;
+                    await customerRepository.Insert(customerToAdd);
+                    status = "added";
+                }
+
             }
             return status;
         }

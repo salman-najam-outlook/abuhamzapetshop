@@ -22,8 +22,9 @@ namespace abuhamza.repository
         public Nullable<decimal> AmountTendered { get; set; }
         public Nullable<decimal> change { get; set; }
         public Nullable<int> user_id { get; set; }
-        public Nullable<int> tra_id { get; set; }
+        public string voucherNo { get; set; }
         public Nullable<decimal> subTotal { get; set; }
+        public Nullable<int> cus_id { get; set; }
     
         public virtual tblUser tblUser { get; set; }
     }

@@ -1,0 +1,17 @@
+<nb-card>
+    <nb-card-header>Customer Details</nb-card-header>
+    <nb-card-body>
+        <form>
+            <div class="form-group">
+                <input #name nbInput placeholder="Name">
+            </div>
+            <div class="form-group">
+                <input #contact nbInput placeholder="Contact">
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
+        <button nbButton status="success" (click)="submit(name.value,contact.value)">Submit</button>
+    </nb-card-footer>
+</nb-card>

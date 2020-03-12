@@ -53,7 +53,6 @@ namespace abuhamza.business
                 invoice.AmountTendered  = model.AmountTendered;
                 invoice.change          = model.change;
                 invoice.user_id         = model.user_id;
-                invoice.tra_id          = model.tra_id;
             }
             return invoice;
         }

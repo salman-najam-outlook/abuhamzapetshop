@@ -33,8 +33,8 @@
     <nb-card class="list-card">
       <nb-card-header>
         <div class="float-left">First Sub-Categories</div>
-        <div class="float-right"><button nbButton status="success" (click)="onaddEditCategory(selectedMainCategory.mainCat_id)" size="tiny"
-            outline>Ad</button></div>
+        <div class="float-right"><button nbButton status="success"
+            (click)="onaddEditCategory(selectedMainCategory.mainCat_id)" size="tiny" outline>Ad</button></div>
       </nb-card-header>
       <nb-card-header>Selected: {{selectedCategory.name}}</nb-card-header>
       <nb-card-body>
@@ -45,7 +45,8 @@
             </div>
             <div class="float-right">
               <div class="buttons-row">
-                <button nbButton status="warning" (click)="onaddEditCategory(category.mainCat_id, category)" size="tiny" outline>
+                <button nbButton status="warning" (click)="onaddEditCategory(category.mainCat_id, category)" size="tiny"
+                  outline>
                   ED
                 </button>
                 &nbsp;
@@ -63,8 +64,8 @@
     <nb-card class="list-card">
       <nb-card-header>
         <div class="float-left">Second Sub-Categories</div>
-        <div class="float-right"><button nbButton status="success" (click)="onAddEditSubCategory(selectedCategory.cat_id)" size="tiny"
-            outline>Ad</button></div>
+        <div class="float-right"><button nbButton status="success"
+            (click)="onAddEditSubCategory(selectedCategory.cat_id)" size="tiny" outline>Ad</button></div>
       </nb-card-header>
       <nb-card-header>Selected: {{selectedSubCategory.name}}</nb-card-header>
       <nb-card-body>
@@ -75,7 +76,8 @@
             </div>
             <div class="float-right">
               <div class="buttons-row">
-                <button nbButton status="warning" (click)="onAddEditSubCategory(sCategory.cat_id, sCategory)" size="tiny" outline>
+                <button nbButton status="warning" (click)="onAddEditSubCategory(sCategory.cat_id, sCategory)"
+                  size="tiny" outline>
                   ED
                 </button>
                 &nbsp;
@@ -93,8 +95,8 @@
     <nb-card class="list-card">
       <nb-card-header>
         <div class="float-left">Third Sub-Categories</div>
-        <div class="float-right"><button nbButton status="success" (click)="onAddEditFourthSubCategory(selectedSubCategory.subCat_id)" size="tiny"
-            outline>Ad</button></div>
+        <div class="float-right"><button nbButton status="success"
+            (click)="onAddEditFourthSubCategory(selectedSubCategory.subCat_id)" size="tiny" outline>Ad</button></div>
       </nb-card-header>
       <nb-card-header>Selected: {{selectedSubSubCateory.name}}</nb-card-header>
       <nb-card-body>
@@ -105,11 +107,12 @@
             </div>
             <div class="float-right">
               <div class="buttons-row">
-                <button nbButton status="warning" (click)="onAddEditFourthSubCategory(sSCategory.subCat_id, sSCategory)" size="tiny" outline>
+                <button nbButton status="warning" (click)="onAddEditFourthSubCategory(sSCategory.subCat_id, sSCategory)"
+                  size="tiny" outline>
                   ED
                 </button>
                 &nbsp;
-                <button nbButton status="danger" (click)="onDeleteSubCategory(sSCategory)" size="tiny" outline>
+                <button nbButton status="danger" (click)="onDeleteSubSubCategory(sSCategory)" size="tiny" outline>
                   DL
                 </button>
               </div>

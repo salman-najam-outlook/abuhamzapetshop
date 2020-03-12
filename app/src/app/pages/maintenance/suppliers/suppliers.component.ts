@@ -3,6 +3,7 @@ import { LocalDataSource } from "ng2-smart-table";
 import { MaintenanceService } from "../../../services/maintenance.service";
 import { Supplier } from "../../../models/supplier.model";
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: "ngx-suppliers",
@@ -22,7 +23,8 @@ export class SuppliersComponent implements OnInit {
   preventDuplicates = false;
   // Toaster Setting Ends
 
-  constructor(private maintenanceService: MaintenanceService, private toastrService: NbToastrService) { }
+  constructor(private maintenanceService: MaintenanceService, private toastrService: NbToastrService,
+    private datePipe: DatePipe) { }
 
   settings = {
     add: {
@@ -52,7 +54,12 @@ export class SuppliersComponent implements OnInit {
       },
       date: {
         title: "Date",
-        type: "date"
+        type: "date",
+        editable:false,
+        addable: false,
+        valuePrepareFunction: (date) => {
+          return this.datePipe.transform(new Date(date), 'dd MMM yyyy');
+        }
       },
       contact: {
         title: "Contact",

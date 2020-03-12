@@ -17,7 +17,7 @@ namespace abuhamza.domain
         public Nullable<decimal> change { get; set; }
         public Nullable<int> user_id { get; set; }
         public Nullable<int> tra_id { get; set; }
-
+        public string voucherNo { get; set; }
         //public virtual tblUser tblUser { get; set; }
     }
 }

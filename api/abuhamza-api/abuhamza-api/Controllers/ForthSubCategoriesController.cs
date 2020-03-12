@@ -12,6 +12,7 @@ using abuhamza_api.Models;
 
 namespace abuhamza_api.Controllers
 {
+    //[Authorize]
     public class ForthSubCategoriesController : ApiController
     {
         IForthSubCategoryBusiness forthSubCategoryBusiness;
@@ -70,7 +71,7 @@ namespace abuhamza_api.Controllers
         // This Api call will Add a new forthSubCategory in case if fsubCat_id is equal to zero else update the forthSubCategory.
         [HttpPost]
         [Route("api/ForthSubCategories/AddUpdateForthSubCategory")]
-        public async Task<string> AddUpdateUser(ForthSubCategoryVM forthSubCategoryVM)
+        public async Task<string> AddUpdateForthSubCategory(ForthSubCategoryVM forthSubCategoryVM)
         {
             ForthSubCategoryDomainModel forthSubCategoryDM = new ForthSubCategoryDomainModel();
             AutoMapper.Mapper.Map(forthSubCategoryVM, forthSubCategoryDM);

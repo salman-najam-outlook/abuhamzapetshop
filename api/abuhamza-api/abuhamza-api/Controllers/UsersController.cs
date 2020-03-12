@@ -12,6 +12,7 @@ using abuhamza_api.Models;
 
 namespace abuhamza_api.Controllers
 {
+    //[Authorize]
     public class UsersController : ApiController
     {
         IUserBusiness userBusiness;        
@@ -72,7 +73,6 @@ namespace abuhamza_api.Controllers
         [HttpGet]
         //[EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("api/users/GetUsersClaims")]
-        [Authorize]
         public UserToReturnVM GetDonorClaims()
         {
             DateTime dobClaim = DateTime.Now;

@@ -78,7 +78,7 @@ namespace abuhamza.business
                 supplierToAdd.name = supplier.name;
                 supplierToAdd.contact = supplier.contact;
                 supplierToAdd.company = supplier.company;
-                supplierToAdd.date = supplier.date;
+                supplierToAdd.date = DateTime.Now;
                 await supplierRepository.Insert(supplierToAdd);
                 status = "added";
             }
