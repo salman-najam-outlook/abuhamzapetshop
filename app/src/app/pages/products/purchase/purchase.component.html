@@ -19,6 +19,15 @@
                                     formControlName="productName">
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <label for="supplier" class="label">Select Supplier</label>
+                            <nb-select placeholder="Select Supplier" [(selected)]="selectedSupplier" style="display: contents;"
+                                class="position-select" (selectedChange)="onSupplierSelect($event)"
+                                formControlName="supplier">
+                                <nb-option *ngFor="let supplier of suppliers" [(value)]="supplier.sup_id">
+                                    {{ supplier.name }}</nb-option>
+                            </nb-select>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
@@ -45,34 +54,36 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <div class="form-group">
+                                <label for="description" class="label">Description (if any)</label>
                                 <textarea nbInput fullWidth placeholder="Description"
                                     formControlName="description"></textarea>
                             </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <nb-select placeholder="Select Supplier" [(selected)]="selectedSupplier"
-                                class="position-select" (selectedChange)="onSupplierSelect($event)"
-                                formControlName="supplier" status="primary">
-                                <nb-option *ngFor="let supplier of suppliers" [(value)]="supplier.sup_id">
-                                    {{ supplier.name }}</nb-option>
-                            </nb-select>
                         </div>
                     </div>
 
                     <button nbButton status="primary" hero (click)="onAdd()"
                         [disabled]="purchaseProductForm.invalid">Add</button>
                     <button nbButton status="danger" hero (click)="onClear()">Clear</button>
-                    <div class="row">
-                        <div class="col-sm-6">
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="totalamount" class="label">Total Amount</label>
                                 <input nbInput fullWidth id="totalamount" placeholder="Total Amount" type="number"
                                     disabled style="color: red" formControlName="totalAmount">
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="fAccount" class="label">From Account</label>
+                                <nb-select placeholder="Select Account From" id="fAccount" style="display: contents;" formControlName="fromAccount" class="position-select">
+                                    <nb-option *ngFor="let acounts of fromAccounts" [(value)]="acounts.acc_id">
+                                        {{ acounts.name }}</nb-option>
+                                </nb-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="paidamount" class="label">Paid Amount</label>
                                 <input nbInput fullWidth id="paidamount" placeholder="Paid Amount" type="number"

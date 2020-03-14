@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { NbDialogRef } from "@nebular/theme";
 import { Customer } from "../../../../models/customer.model";
 import { MaintenanceService } from "../../../../services/maintenance.service";
@@ -16,6 +16,7 @@ import {
 })
 export class CustomersAddComponent {
   customer?: Customer;
+  @Output() cusNo: EventEmitter<string>  = new EventEmitter<string>();
   constructor(
     protected ref: NbDialogRef<CustomersAddComponent>,
     private maintenanceService: MaintenanceService,
@@ -41,6 +42,7 @@ export class CustomersAddComponent {
     }
     this.customer.name = name;
     this.customer.contact = contact;
+    this.cusNo.emit(contact);
     console.log(this.customer);
     this.maintenanceService.addUpdateCustomer(this.customer).subscribe(
       response => {

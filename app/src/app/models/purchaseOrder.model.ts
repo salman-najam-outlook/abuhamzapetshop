@@ -5,5 +5,6 @@ export class PurchaseOrder {
   paidAmount: number = 0;
   description: string = '';
   supplier: string = '';
+  creditorAcc_Id: number = 0;
   orderDetails: SingleProduct[]
 }

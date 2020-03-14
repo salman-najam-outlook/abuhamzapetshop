@@ -1,25 +1,29 @@
-import { Component, OnInit } from "@angular/core";
-import { LocalDataSource } from "ng2-smart-table";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { Advance } from "../../../models/advance.model";
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { Advance } from '../../../models/advance.model';
 import {
   NbGlobalPosition,
   NbGlobalPhysicalPosition,
   NbComponentStatus,
-  NbToastrService
-} from "@nebular/theme";
-import { Customer } from "../../../models/customer.model";
+  NbToastrService,
+} from '@nebular/theme';
+import { Customer } from '../../../models/customer.model';
 import { DatePipe } from '@angular/common';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ManageAdvance } from '../../../models/manageAdvance.model';
 
 @Component({
-  selector: "ngx-advances",
-  templateUrl: "./advances.component.html",
-  styleUrls: ["./advances.component.scss"]
+  selector: 'ngx-advances',
+  templateUrl: './advances.component.html',
+  styleUrls: ['./advances.component.scss'],
 })
 export class AdvancesComponent implements OnInit {
   advance: Advance = new Advance();
   customer: Customer = new Customer();
   source: LocalDataSource = new LocalDataSource();
+  advanceForm: FormGroup;
+  manageAdvance = new ManageAdvance();
 
   // Toaster Setting Starts
   index = 1;
@@ -33,103 +37,106 @@ export class AdvancesComponent implements OnInit {
   constructor(
     private maintenanceService: MaintenanceService,
     private toastrService: NbToastrService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {}
 
   settings = {
+    actions: {
+      edit: false,
+      delete: false,
+    },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true
+      confirmCreate: true,
     },
     columns: {
       cus_Name: {
-        title: "Customer Name",
-        type: "string"
+        title: 'Customer Name',
+        type: 'string',
+      },
+      voucherNo: {
+        title: 'Voucher Number',
+        type: 'number',
       },
       barcode: {
-        title: "Product Barcode",
-        type: "string"
+        title: 'Product Barcode',
+        type: 'string',
       },
       amount: {
-        title: "Amount",
-        type: "number"
+        title: 'Amount',
+        type: 'number',
       },
       cus_No: {
-        title: "Contact",
-        type: "number"
+        title: 'Contact',
+        type: 'number',
       },
       date: {
-        title: "Date",
-        type: "date",
-        valuePrepareFunction: (date) => {
+        title: 'Date',
+        type: 'date',
+        valuePrepareFunction: date => {
           return this.datePipe.transform(new Date(date), 'dd MMM yyyy');
-        }
+        },
       },
       description: {
-        title: "Description",
-        type: "string"
-      }
-    }
+        title: 'Description',
+        type: 'string',
+      },
+    },
   };
 
   ngOnInit() {
+    this.advanceForm = new FormGroup({
+      voucherNumber: new FormControl('', Validators.required),
+      transactionType: new FormControl('', Validators.required),
+      amount: new FormControl('', Validators.required),
+    });
     this.maintenanceService.getAllAdvances().subscribe(
       response => {
-        console.log(response);
         this.source.load(response);
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching all Advances."
+          'danger',
+          'Error!',
+          'An error occured while fetching all Advances.',
         );
-      }
+      },
     );
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm("Are you sure you want to delete?")) {
+    if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
       this.maintenanceService.deleteAdvance(event.data.advance_id).subscribe(
         response => {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted Advance has been deleted succesfully."
+            'success',
+            'Success!',
+            'Targeted Advance has been deleted succesfully.',
           );
           this.maintenanceService.getAllAdvances().subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
             response => {
               this.source.load(response);
             },
             error => {
               this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching all Advances."
+                'danger',
+                'Error!',
+                'An error occured while fetching all Advances.',
               );
-            }
+            },
           );
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "Unable to delete the targeted Advance."
+            'danger',
+            'Error!',
+            'Unable to delete the targeted Advance.',
           );
-        }
+        },
       );
     } else {
       event.confirm.reject();
@@ -146,34 +153,34 @@ export class AdvancesComponent implements OnInit {
     this.advance.barcode = event.newData.barcode;
     this.advance.cus_Name = event.newData.cus_Name;
     this.advance.amount = +event.newData.amount;
-    console.log(this.advance);
     this.maintenanceService.addUpdateAdvance(this.advance).subscribe(
       response => {
         this.showToast(
-          "success",
-          "Success!",
-          "New Advance has been added successfully."
+          'success',
+          'Success!',
+          'New Advance has been added successfully.',
         );
         this.maintenanceService.getAllAdvances().subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
           response => {
             this.source.load(response);
           },
           error => {
             this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching all Advances."
+              'danger',
+              'Error!',
+              'An error occured while fetching all Advances.',
             );
-          }
+          },
         );
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while adding new Advances"
+          'danger',
+          'Error!',
+          'An error occured while adding new Advances',
         );
-      }
+      },
     );
 
     // this.maintenanceService.addUpdateCustomer(this.customer).subscribe(
@@ -199,31 +206,65 @@ export class AdvancesComponent implements OnInit {
     this.maintenanceService.addUpdateAdvance(this.advance).subscribe(
       response => {
         this.showToast(
-          "success",
-          "Success!",
-          "Advance has been updated successfully."
+          'success',
+          'Success!',
+          'Advance has been updated successfully.',
         );
         this.maintenanceService.getAllAdvances().subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
           response => {
             this.source.load(response);
           },
           error => {
             this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching all Advances."
+              'danger',
+              'Error!',
+              'An error occured while fetching all Advances.',
             );
-          }
+          },
         );
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while updating targeted Advance."
+          'danger',
+          'Error!',
+          'An error occured while updating targeted Advance.',
         );
-      }
+      },
     );
+  }
+
+  onRowSelect(event: any) {
+    this.manageAdvance.voucherNo = event.data.voucherNo;
+    this.advanceForm.controls.voucherNumber.setValue(event.data.voucherNo);
+  }
+
+  onSubmit() {
+    this.manageAdvance.voucherNo = this.advanceForm.controls.voucherNumber.value;
+    this.manageAdvance.transactionType = this.advanceForm.controls.transactionType.value;
+    this.manageAdvance.amount = this.advanceForm.controls.amount.value;
+    this.maintenanceService.manageAdvance(this.manageAdvance).subscribe(
+      (response) => {
+        this.showToast(
+          'success',
+          'Success!',
+          'Selected advance has been updated successfully!',
+        );
+        this.advanceForm.reset();
+      },
+      (error) => {
+        this.showToast(
+          'danger',
+          'Error!',
+          'An error occured while updating targeted advance.',
+        );
+        this.advanceForm.reset();
+      },
+    );
+  }
+
+  onClear() {
+    this.advanceForm.reset();
   }
 
   private showToast(type: NbComponentStatus, title: string, body: string) {
@@ -233,9 +274,9 @@ export class AdvancesComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 }

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-9">
         <nb-card>
             <nb-card-body>
                 <form [formGroup]="saleOrderForm">
@@ -23,12 +23,12 @@
         <nb-card>
             <nb-card-body>
                 <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
-                    (createConfirm)="onCreateConfirm($event)" (editConfirm)="onConfirmEdit($event)">
+                    (editConfirm)="onConfirmEdit($event)">
                 </ng2-smart-table>
             </nb-card-body>
         </nb-card>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <nb-card>
             <nb-card-body>
                 <form [formGroup]="saleOrderForm">
@@ -36,14 +36,13 @@
                         <div class="col-sm-12" [hidden]=!isAdvanceVisible>
                             <div class="form-group">
                                 <label for="advance" class="label">Advance</label>
-                                <input type="text" nbInput fullWidth id="advance" placeholder="Advance"
-                                    value={{advance}} formControlName="advance">
+                                <input type="text" nbInput fullWidth id="advance" placeholder="Advance" formControlName="advance">
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="discount" class="label">Discount</label>
-                                <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth
+                                <input type="text" (input)="onChange($event.target.value)" nbInput fullWidth style="color: red"
                                     id="discount" placeholder="Discount" value={{discount}} formControlName="discount">
                             </div>
                         </div>
@@ -66,7 +65,7 @@
                             <div class="form-group">
                                 <label for="tenderamount" class="label">Tender Amount</label>
                                 <input type="text" (input)="onTenderAmountEntered($event.target.value)" nbInput
-                                    fullWidth id="tenderamount" placeholder="Tender Amount"
+                                    fullWidth id="tenderamount" placeholder="Tender Amount" style="color: red"
                                     formControlName="tenderAmount">
                             </div>
                         </div>
@@ -78,8 +77,8 @@
                             </div>
                         </div>
                     </div>
-                    <button nbButton status="warning" hero (click)="onSubmit()"
-                        [disabled]="singleProductList.length === 0">Submit</button>
+                    <button nbButton status="danger" hero (click)="onClear()">Clear</button>
+                    <button nbButton status="warning" hero (click)="onSubmit()" [disabled]="singleProductList.length === 0">Submit</button>
                 </form>
             </nb-card-body>
         </nb-card>

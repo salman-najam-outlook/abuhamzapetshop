@@ -14,6 +14,7 @@ namespace abuhamza_api.Models
         public string barcode { get; set; }
         public string cus_No { get; set; }
         public string cus_Name { get; set; }
+        public string voucherNo { get; set; }
         public string description { get; set; }
     }
 }

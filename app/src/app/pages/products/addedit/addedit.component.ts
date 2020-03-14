@@ -1,24 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import { LocalDataSource } from "ng2-smart-table";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { MainCategory } from "../../../models/mainCategory.model";
-import { Category } from "../../../models/category.model";
-import { SubCategory } from "../../../models/subCategory.model";
-import { FourthSubCategory } from "../../../models/fourthSubCategory.model";
-import { ProductService } from "../../../services/product.service";
-import { Product } from "../../../models/product.model";
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { MainCategory } from '../../../models/mainCategory.model';
+import { Category } from '../../../models/category.model';
+import { SubCategory } from '../../../models/subCategory.model';
+import { FourthSubCategory } from '../../../models/fourthSubCategory.model';
+import { ProductService } from '../../../services/product.service';
+import { Product } from '../../../models/product.model';
 import {
   NbGlobalPosition,
   NbGlobalPhysicalPosition,
   NbToastrService,
-  NbComponentStatus
-} from "@nebular/theme";
+  NbComponentStatus,
+} from '@nebular/theme';
 
 @Component({
-  selector: "ngx-add-edit",
-  styleUrls: ["./addedit.component.scss"],
-  templateUrl: "./addedit.component.html"
+  selector: 'ngx-add-edit',
+  styleUrls: ['./addedit.component.scss'],
+  templateUrl: './addedit.component.html',
 })
 export class AddEditComponent implements OnInit {
   mainCategories: MainCategory[];
@@ -27,12 +27,12 @@ export class AddEditComponent implements OnInit {
   fourthCategories: FourthSubCategory[];
   productToAdd: Product;
   productAddEditForm: FormGroup;
-  selectedMainCategoryId: number;
-  selectedCategoryId: number;
-  selectedSubCategoryId: number;
-  selectedFourthCategoryId: number;
+  selectedMainCategoryId: any;
+  selectedCategoryId: any;
+  selectedSubCategoryId: any;
+  selectedFourthCategoryId: any;
   source: LocalDataSource = new LocalDataSource();
-  value: string;
+  value: string = 'Abu-Hamza-Pet-Store';
 
   // Toaster Setting Starts
   index = 1;
@@ -46,51 +46,49 @@ export class AddEditComponent implements OnInit {
   settings = {
     actions: {
       add: false,
-      edit: false
+      edit: false,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true
+      confirmDelete: true,
     },
     columns: {
       barcode: {
-        title: "Barcode",
-        type: "string",
-        editable: false
+        title: 'Barcode',
+        type: 'string',
+        editable: false,
       },
       name: {
-        title: "Name",
-        type: "string",
-        editable: false
+        title: 'Name',
+        type: 'string',
+        editable: false,
       },
       purchase_price: {
-        title: "Purchasing Price",
-        type: "number"
+        title: 'Purchasing Price',
+        type: 'number',
       },
       sell_price: {
-        title: "Selling Price",
-        type: "number"
+        title: 'Selling Price',
+        type: 'number',
       },
       quantity: {
-        title: "Quantity",
-        type: "number",
-        editable: false
+        title: 'Quantity',
+        type: 'number',
+        editable: false,
       },
       description: {
-        title: "Description",
-        type: "string",
-        width: "25%"
-      }
-    }
+        title: 'Description',
+        type: 'string',
+        width: '25%',
+      },
+    },
   };
 
   constructor(
     private maintenanceService: MaintenanceService,
     private productService: ProductService,
-    private toastrService: NbToastrService
-  ) {
-    this.value = "TempName";
-  }
+    private toastrService: NbToastrService,
+  ) {}
 
   ngOnInit() {
     this.maintenanceService.getAllMainCategories().subscribe(
@@ -99,11 +97,11 @@ export class AddEditComponent implements OnInit {
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Main Categories."
+          'danger',
+          'Error!',
+          'An error occured while fetching Main Categories.',
         );
-      }
+      },
     );
     this.maintenanceService.getAllCategories().subscribe(
       response => {
@@ -111,11 +109,11 @@ export class AddEditComponent implements OnInit {
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Categories."
+          'danger',
+          'Error!',
+          'An error occured while fetching Categories.',
         );
-      }
+      },
     );
     this.maintenanceService.getAllSubCategories().subscribe(
       response => {
@@ -123,11 +121,11 @@ export class AddEditComponent implements OnInit {
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Sub Categories."
+          'danger',
+          'Error!',
+          'An error occured while fetching Sub Categories.',
         );
-      }
+      },
     );
     this.maintenanceService.getAllForthSubCategories().subscribe(
       response => {
@@ -135,11 +133,11 @@ export class AddEditComponent implements OnInit {
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Fourth Categories."
+          'danger',
+          'Error!',
+          'An error occured while fetching Fourth Categories.',
         );
-      }
+      },
     );
     this.productService.getAllProducts().subscribe(
       response => {
@@ -147,58 +145,58 @@ export class AddEditComponent implements OnInit {
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Products list."
+          'danger',
+          'Error!',
+          'An error occured while fetching Products list.',
         );
-      }
+      },
     );
 
     this.productAddEditForm = new FormGroup({
-      mainCategoryId: new FormControl("", Validators.required),
-      categoryId: new FormControl("", Validators.required),
-      subCategoryId: new FormControl(""),
-      fourthCategoryId: new FormControl(""),
-      barcode: new FormControl("", Validators.required),
-      productId: new FormControl(""),
-      name: new FormControl("", Validators.required),
-      originalPrice: new FormControl("", Validators.required),
-      markupPrice: new FormControl("", Validators.required),
-      description: new FormControl("")
+      mainCategoryId: new FormControl('', Validators.required),
+      categoryId: new FormControl('', Validators.required),
+      subCategoryId: new FormControl(''),
+      fourthCategoryId: new FormControl(''),
+      barcode: new FormControl({value: '', disabled: true}, Validators.required),
+      productId: new FormControl(''),
+      name: new FormControl('', Validators.required),
+      originalPrice: new FormControl('', Validators.required),
+      markupPrice: new FormControl('', Validators.required),
+      description: new FormControl(''),
     });
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm("Are you sure you want to delete?")) {
+    if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
-
       this.productService.deleteProduct(event.data.pro_id).subscribe(
         response => {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted product has been deleted successfully!"
+            'success',
+            'Success!',
+            'Targeted product has been deleted successfully!',
           );
           this.productService.getAllProducts().subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
             response => {
               this.source.load(response);
             },
             error => {
               this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching all products!"
+                'danger',
+                'Error!',
+                'An error occured while fetching all products!',
               );
-            }
+            },
           );
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while deleting product!"
+            'danger',
+            'Error!',
+            'An error occured while deleting product!',
           );
-        }
+        },
       );
     } else {
       event.confirm.reject();
@@ -214,39 +212,44 @@ export class AddEditComponent implements OnInit {
     this.subCategories = [];
     this.fourthCategories = [];
     this.selectedCategoryId = null;
+    this.selectedSubCategoryId = null;
+    this.selectedFourthCategoryId = null;
     this.maintenanceService.getAllCategoriesByMainCategoryId(event).subscribe(
       response => {
         this.categories = response;
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Main categories."
+          'danger',
+          'Error!',
+          'An error occured while fetching Main categories.',
         );
-      }
+      },
     );
   }
 
   onCategorySelect(event): void {
     this.subCategories = [];
     this.fourthCategories = [];
+    this.selectedSubCategoryId = null;
+    this.selectedFourthCategoryId = null;
     this.maintenanceService.getAllSubCategoriesByCategoryId(event).subscribe(
       response => {
         this.subCategories = response;
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Sub categories."
+          'danger',
+          'Error!',
+          'An error occured while fetching Sub categories.',
         );
-      }
+      },
     );
   }
 
   onSubCategorySelect(event): void {
     this.fourthCategories = [];
+    this.selectedFourthCategoryId = null;
     this.maintenanceService
       .getAllForthSubCategoriesByCategoryId(event)
       .subscribe(
@@ -255,16 +258,16 @@ export class AddEditComponent implements OnInit {
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching Fourth categories."
+            'danger',
+            'Error!',
+            'An error occured while fetching Fourth categories.',
           );
-        }
+        },
       );
   }
 
   onSubmit() {
-    let isValid = false;
+    const isValid = false;
     if (!this.validateForm(isValid)) {
       return;
     }
@@ -283,43 +286,43 @@ export class AddEditComponent implements OnInit {
     this.productToAdd.fsubCat_id = this.productAddEditForm.controls.fourthCategoryId.value;
     this.productService.addUpdateProduct(this.productToAdd).subscribe(
       response => {
-        this.value = "TempName";
-        if (response === "updated") {
+        this.value = 'TempName';
+        if (response === 'updated') {
           this.showToast(
-            "info",
-            "Success!",
-            "Product has been updated successfully."
+            'info',
+            'Success!',
+            'Product has been updated successfully.',
           );
         } else {
           this.showToast(
-            "success",
-            "Success!",
-            "New Product has been added successfully."
+            'success',
+            'Success!',
+            'New Product has been added successfully.',
           );
         }
         this.productAddEditForm.reset();
-        this.value = "TempName";
+        this.value = 'TempName';
         this.productService.getAllProducts().subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
           response => {
             this.source.load(response);
           },
           error => {
             this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching records."
+              'danger',
+              'Error!',
+              'An error occured while fetching records.',
             );
-          }
+          },
         );
       },
       error => {
-        this.showToast("danger", "Error!", "Unable to add new Product.");
-      }
+        this.showToast('danger', 'Error!', 'Unable to add new Product.');
+      },
     );
   }
 
   onRowSelect(event) {
-    debugger;
     this.productService.getProductByProductId(event.data.pro_id).subscribe(
       response => {
         this.value = response.barcode;
@@ -327,29 +330,29 @@ export class AddEditComponent implements OnInit {
         this.productAddEditForm.controls.barcode.setValue(response.barcode);
         this.productAddEditForm.controls.name.setValue(response.name);
         this.productAddEditForm.controls.description.setValue(
-          response.description
+          response.description,
         );
         this.productAddEditForm.controls.originalPrice.setValue(
-          response.purchase_price
+          response.purchase_price,
         );
         this.productAddEditForm.controls.markupPrice.setValue(
-          response.sell_price
+          response.sell_price,
         );
         this.productAddEditForm.controls.mainCategoryId.setValue(
-          response.mainCat_id
+          response.mainCat_id,
         );
         this.productAddEditForm.controls.categoryId.setValue(response.cat_id);
         this.productAddEditForm.controls.subCategoryId.setValue(
-          response.subCat_id
+          response.subCat_id,
         );
         this.productAddEditForm.controls.fourthCategoryId.setValue(
-          response.fsubCat_id
+          response.fsubCat_id,
         );
         this.productService
           .getSavedCategories(
             this.productAddEditForm.controls.mainCategoryId.value,
             this.productAddEditForm.controls.categoryId.value,
-            this.productAddEditForm.controls.subCategoryId.value
+            this.productAddEditForm.controls.subCategoryId.value,
           )
           .subscribe(
             res => {
@@ -362,30 +365,57 @@ export class AddEditComponent implements OnInit {
               this.selectedFourthCategoryId = this.productAddEditForm.controls.fourthCategoryId.value;
             },
             err => {
-              this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching records."
-              );
-            }
+              // this.showToast(
+              //   'danger',
+              //   'Error!',
+              //   'An error occured while fetching records.',
+              // );
+            },
           );
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching records."
+          'danger',
+          'Error!',
+          'An error occured while fetching records.',
         );
-      }
+      },
     );
   }
 
   onClear() {
-    this.productAddEditForm.reset();
+    this.mainCategories = [];
+    this.categories = [];
+    this.subCategories = [];
+    this.fourthCategories = [];
+    this.selectedMainCategoryId = null;
+    this.selectedCategoryId = null;
+    this.selectedSubCategoryId = null;
+    this.selectedFourthCategoryId = null;
+    this.productAddEditForm.controls.productId.setValue('');
+    this.productAddEditForm.controls.name.setValue('');
+    this.productAddEditForm.controls.originalPrice.setValue('');
+    this.productAddEditForm.controls.barcode.setValue('Abu-Hamza-Pet-Store');
+    this.productAddEditForm.controls.markupPrice.setValue('');
+    this.productAddEditForm.controls.description.setValue('');
+    this.productAddEditForm.controls.productId.setValue('');
+    this.productAddEditForm.controls.productId.setValue('');
+    this.maintenanceService.getAllMainCategories().subscribe(
+      response => {
+        this.mainCategories = response;
+      },
+      error => {
+        this.showToast(
+          'danger',
+          'Error!',
+          'An error occured while fetching Main Categories.',
+        );
+      },
+    );
   }
 
   get values(): string[] {
-    return this.value.split("\n");
+    return this.value.split('\n');
   }
 
   private showToast(type: NbComponentStatus, title: string, body: string) {
@@ -395,37 +425,36 @@ export class AddEditComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 
   private validateForm(isValid: boolean): boolean {
     isValid = false;
-    debugger;
-    if (this.productAddEditForm.controls.barcode.value == "") {
-      this.showToast("danger", "Error!", "Please enter barcode.");
+    if (this.productAddEditForm.controls.barcode.value === '') {
+      this.showToast('danger', 'Error!', 'Please enter barcode.');
       return;
     }
-    if (this.productAddEditForm.controls.name.value == "") {
-      this.showToast("danger", "Error!", "Please enter product name.");
+    if (this.productAddEditForm.controls.name.value === '') {
+      this.showToast('danger', 'Error!', 'Please enter product name.');
       return;
     }
     if (this.productAddEditForm.controls.originalPrice.value == null) {
-      this.showToast("danger", "Error!", "Please enter orignal price.");
+      this.showToast('danger', 'Error!', 'Please enter orignal price.');
       return;
     }
     if (this.productAddEditForm.controls.markupPrice.value == null) {
-      this.showToast("danger", "Error!", "Please enter markup price.");
+      this.showToast('danger', 'Error!', 'Please enter markup price.');
       return;
     }
-    if (this.productAddEditForm.controls.mainCategoryId.value == "") {
-      this.showToast("danger", "Error!", "Please select main category.");
+    if (this.productAddEditForm.controls.mainCategoryId.value === '') {
+      this.showToast('danger', 'Error!', 'Please select main category.');
       return;
     }
-    if (this.productAddEditForm.controls.categoryId.value == "") {
-      this.showToast("danger", "Error!", "Please select first sub category.");
+    if (this.productAddEditForm.controls.categoryId.value === '') {
+      this.showToast('danger', 'Error!', 'Please select first sub category.');
       return;
     }
     isValid = true;

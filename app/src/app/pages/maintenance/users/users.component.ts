@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { LocalDataSource } from "ng2-smart-table";
-import { User } from "../../../models/user.model";
-import { MaintenanceService } from "../../../services/maintenance.service";
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { User } from '../../../models/user.model';
+import { MaintenanceService } from '../../../services/maintenance.service';
 import {
   NbToastrService,
   NbComponentStatus,
   NbGlobalPosition,
-  NbGlobalPhysicalPosition
-} from "@nebular/theme";
+  NbGlobalPhysicalPosition,
+} from '@nebular/theme';
 
 @Component({
-  selector: "ngx-smart-table",
-  templateUrl: "./users.component.html",
-  styleUrls: ["./users.component.scss"]
+  selector: 'ngx-smart-table',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
   user: User = new User();
@@ -28,49 +28,55 @@ export class UsersComponent implements OnInit {
   // Toaster Setting Ends
 
   settings = {
+    defaultStyle: false,
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true
+      confirmCreate: true,
+      create: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true
+      confirmDelete: true,
     },
     columns: {
       firstname: {
-        title: "First Name *",
-        type: "string"
+        title: 'First Name *',
+        type: 'html',
+        valuePrepareFunction: (data) => { return '<p class="mandatory">' + data + '</p>'; },
+        attr: {
+          class: 'responstable' // this is custom table scss or css class for table
+          },
       },
       lastname: {
-        title: "Last Name",
-        type: "string"
+        title: 'Last Name',
+        type: 'string',
       },
       username: {
-        title: "Username",
-        type: "string"
+        title: 'Username',
+        type: 'string',
       },
       email: {
-        title: "E-mail",
-        type: "string"
+        title: 'E-mail',
+        type: 'string',
       },
       contact: {
-        title: "Contact",
-        type: "number"
+        title: 'Contact',
+        type: 'number',
       }
-    }
+    },
   };
 
   constructor(
     private maintenanceService: MaintenanceService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
   ) {}
 
   ngOnInit() {
@@ -80,44 +86,45 @@ export class UsersComponent implements OnInit {
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching all Users!"
+          'danger',
+          'Error!',
+          'An error occured while fetching all Users!',
         );
-      }
+      },
     );
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm("Are you sure you want to delete?")) {
+    if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
       this.maintenanceService.deleteUser(event.data.user_id).subscribe(
         response => {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted User has been deleted successfully!"
+            'success',
+            'Success!',
+            'Targeted User has been deleted successfully!',
           );
           this.maintenanceService.getAllUsers().subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
             response => {
               this.source.load(response);
             },
             error => {
               this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching all Users!"
+                'danger',
+                'Error!',
+                'An error occured while fetching all Users!',
               );
-            }
+            },
           );
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while deleting User!"
+            'danger',
+            'Error!',
+            'An error occured while deleting User!',
           );
-        }
+        },
       );
     } else {
       event.confirm.reject();
@@ -127,11 +134,24 @@ export class UsersComponent implements OnInit {
   onCreateConfirm(event): void {
     event.confirm.resolve();
     this.user.user_id = 0;
-    if (event.newData.firstname == "" || event.newData.lastname == "") {
+    if (event.newData.firstname === '' || event.newData.lastname === '') {
       this.showToast(
-        "danger",
-        "Error!",
-        "Please fill up all the required fields!"
+        'danger',
+        'Error!',
+        'Please fill up all the required fields!',
+      );
+      this.maintenanceService.getAllUsers().subscribe(
+        // tslint:disable-next-line: no-shadowed-variable
+        response => {
+          this.source.load(response);
+        },
+        error => {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching User!',
+          );
+        },
       );
       return;
     }
@@ -140,36 +160,37 @@ export class UsersComponent implements OnInit {
     this.user.username = event.newData.username;
     this.user.email = event.newData.email;
     this.user.contact = event.newData.contact;
-    this.user.status = "active";
-    this.user.userRoll = "emp";
-    this.user.password = "pass123";
+    this.user.status = 'active';
+    this.user.userRoll = 'emp';
+    this.user.password = 'pass123';
     this.maintenanceService.addUpdateUser(this.user).subscribe(
       response => {
         this.showToast(
-          "success",
-          "Success!",
-          "New User has been added successfully!"
+          'success',
+          'Success!',
+          'New User has been added successfully!',
         );
         this.maintenanceService.getAllUsers().subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
           response => {
             this.source.load(response);
           },
           error => {
             this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching User!"
+              'danger',
+              'Error!',
+              'An error occured while fetching User!',
             );
-          }
+          },
         );
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while adding a new User!"
+          'danger',
+          'Error!',
+          'An error occured while adding a new User!',
         );
-      }
+      },
     );
   }
 
@@ -181,31 +202,32 @@ export class UsersComponent implements OnInit {
     this.user.username = event.newData.username;
     this.user.email = event.newData.email;
     this.user.contact = event.newData.contact;
-    this.user.status = "active";
-    this.user.userRoll = "emp";
-    this.user.password = "pass123";
+    this.user.status = 'active';
+    this.user.userRoll = 'emp';
+    this.user.password = 'pass123';
     this.maintenanceService.addUpdateUser(this.user).subscribe(response => {
       this.showToast(
-        "success",
-        "Success!",
-        "User has been updated successfully!"
+        'success',
+        'Success!',
+        'User has been updated successfully!',
       );
       this.maintenanceService.getAllUsers().subscribe(
+        // tslint:disable-next-line: no-shadowed-variable
         response => {
           this.source.load(response);
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching all Users!"
+            'danger',
+            'Error!',
+            'An error occured while fetching all Users!',
           );
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while updating User!"
+            'danger',
+            'Error!',
+            'An error occured while updating User!',
           );
-        }
+        },
       );
     });
   }
@@ -217,9 +239,9 @@ export class UsersComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 }

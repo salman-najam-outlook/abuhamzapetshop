@@ -5,3 +5,39 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
+
+// :host /deep/ ng2-smart-table .mandatory {
+//   color: red;
+//   font-size: 30px;
+// }
+// :host /deep/ .mandatory {
+//  color: red;
+//   }
+
+:host /deep/ .responstable {
+ color: red;
+  }
+
+//   [_nghost-iry-c25] input[_ngcontent-iry-c25], [_nghost-iry-c25] textarea[_ngcontent-iry-c25] {
+//     color: red;
+// }
+
+// :host /deep/ .cell_right {
+//   width:100%;
+//   height: 100%;
+//   text-align: right;
+//   color: red;
+//   }
+
+th {
+  color: red; // black
+  padding: 1em;
+  a{
+  color: red; // black
+  }
+  a:hover {
+  color: #fff; // white
+  text-decoration: none; // for remove under line of link
+  }
+}

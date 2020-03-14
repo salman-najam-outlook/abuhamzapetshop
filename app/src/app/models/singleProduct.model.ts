@@ -6,4 +6,5 @@ export class SingleProduct {
     quantity: number = 0;
     totalAmount: number = 0;
     sellPrice: number = 0;
+    sellerId: number = 0;
 }
