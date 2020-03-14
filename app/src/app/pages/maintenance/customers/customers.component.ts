@@ -73,18 +73,7 @@ export class CustomersComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.maintenanceService.getAllCustomers().subscribe(
-      response => {
-        this.source.load(response);
-      },
-      error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching all Customers.',
-        );
-      },
-    );
+    this.getAllCustomers();
   }
 
   onDeleteConfirm(event): void {
@@ -193,6 +182,41 @@ export class CustomersComponent implements OnInit {
           'danger',
           'Error!',
           'An error occured while updating targeted Customer.',
+        );
+      },
+    );
+  }
+
+  onCustomerTypeSelected(event: number) {
+    const customerTypeNumber = +event;
+    if (customerTypeNumber === 0) {
+      this.getAllCustomers();
+    } else {
+      this.maintenanceService.getCustomersByType(customerTypeNumber).subscribe(
+        (response) => {
+          this.source.load(response);
+        },
+        (error) => {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Customers.',
+          );
+        },
+      )
+    }
+  }
+
+  private getAllCustomers() {
+    this.maintenanceService.getAllCustomers().subscribe(
+      response => {
+        this.source.load(response);
+      },
+      error => {
+        this.showToast(
+          'danger',
+          'Error!',
+          'An error occured while fetching all Customers.',
         );
       },
     );

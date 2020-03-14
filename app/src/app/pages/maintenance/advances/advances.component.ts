@@ -59,6 +59,7 @@ export class AdvancesComponent implements OnInit {
       voucherNo: {
         title: 'Voucher Number',
         type: 'number',
+        addable: false,
       },
       barcode: {
         title: 'Product Barcode',
@@ -75,6 +76,7 @@ export class AdvancesComponent implements OnInit {
       date: {
         title: 'Date',
         type: 'date',
+        addable: false,
         valuePrepareFunction: date => {
           return this.datePipe.transform(new Date(date), 'dd MMM yyyy');
         },

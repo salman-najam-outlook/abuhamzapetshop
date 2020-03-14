@@ -252,6 +252,18 @@ export class SalesComponent implements OnInit {
     event.confirm.resolve();
     this.showUpdatedItem(event);
     const total = this.singleProductList.map(this.amount).reduce(this.sum);
+    this.discount = +this.discount;
+    this.grandTotal = this.subTotal - this.discount;
+    if (this.grandTotal > 0) {
+      this.remainingAmount = this.grandTotal - this.voucherAmount;
+      if (this.remainingAmount < 0) {
+        this.remainingVoucherAmount = +this.remainingAmount * -1;
+        this.grandTotal = 0;
+      } else {
+        this.grandTotal = this.remainingAmount;
+        this.remainingVoucherAmount = 0;
+      }
+    }
     this.saleOrderForm.controls.totalAmount.setValue(total);
   }
 

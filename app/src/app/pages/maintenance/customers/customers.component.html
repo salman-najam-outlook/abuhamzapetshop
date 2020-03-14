@@ -2,6 +2,18 @@
     <nb-card-header>
         Customers
     </nb-card-header>
+    <nb-card-body>
+        <div>
+            <label for="supplier" class="label">Select Customer Type</label>
+            <nb-select placeholder="Select Account Type" formControlName="accountType" class="position-select" style="display: contents;"
+            (selectedChange)="onCustomerTypeSelected($event)" class="position-select" selected="0">
+                <nb-option value="0">All Customers</nb-option>
+                <nb-option value="4">Advance Taken</nb-option>
+                <nb-option value="1">Loan Given</nb-option>
+            </nb-select>
+        </div>
+    </nb-card-body>
+
 
     <nb-card-body>
         <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"

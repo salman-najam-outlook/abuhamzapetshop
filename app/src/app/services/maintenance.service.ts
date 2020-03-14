@@ -508,6 +508,17 @@ export class MaintenanceService {
     );
   }
 
+  getCustomersByType(typeNumber: number): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>(
+      'http://localhost:51110/api/customers/GetCustomersByAccountTypeId/' + typeNumber,
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        }),
+      },
+    );
+  }
+
   deleteCustomer(id: number): Observable<string> {
     return this.httpClient.delete<string>(
       'http://localhost:51110/api/customers/DeleteCustomer/' + id,
