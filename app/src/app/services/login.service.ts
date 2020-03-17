@@ -4,20 +4,22 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 
 export class LoginService {
     constructor(private httpClient: HttpClient) { }
 
     onSignIn(email: string, password: string): Observable<any> {
-        let reqheaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        var data = "username=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password) + "&grant_type=password";
-        return this.httpClient.post<any>('http://localhost:51110/token', data, { headers: reqheaders });
+        const reqheaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        // tslint:disable-next-line: max-line-length
+        // tslint:disable-next-line: prefer-const
+        let data = 'username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password) + '&grant_type=password';
+        return this.httpClient.post<any>('https://abuhamzaapi.sizzlingmart.com/token', data, { headers: reqheaders });
     }
 
     getLoggedInUserClaims(): Observable<User> {
-        return this.httpClient.get<User>('http://localhost:51110/api/users/GetUsersClaims'
+        return this.httpClient.get<User>('https://abuhamzaapi.sizzlingmart.com/api/users/GetUsersClaims'
             , { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('access_token') }) });
     }
 

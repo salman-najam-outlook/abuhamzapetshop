@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{47F4C47F-5FD0-48BF-A93B-9272FFD1B790}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>abuhamza.repository</RootNamespace>
+    <AssemblyName>abuhamza.repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbuHamzaEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AbuHamzaEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AbuHamzaEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AbuHamzaEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AbuHamzaEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="AccountRepository.cs" />
+    <Compile Include="AdvanceRepository.cs" />
+    <Compile Include="CategoryRepository.cs" />
+    <Compile Include="ComplexType1.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetailOrderRepository.cs" />
+    <Compile Include="EmployeeRepository.cs" />
+    <Compile Include="ForthSubCategoryRepository.cs" />
+    <Compile Include="Infrastructure\BaseRepository.cs" />
+    <Compile Include="Infrastructure\Contract\IBaseRepository.cs" />
+    <Compile Include="Infrastructure\Contract\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="InvoiceRepository.cs" />
+    <Compile Include="MainCategoryRepository.cs" />
+    <Compile Include="ProductRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrderRepository.cs" />
+    <Compile Include="SalaryRepository.cs" />
+    <Compile Include="sp_helpdiagramdefinition1_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams1_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetAdvances_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetAllInvoices_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetAllPendingVouchers_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetCustomerByAccountTypeID.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetCustomerByAccountTypeID1_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetFromAccounts_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetPendingAdvanceVouchers_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetPendingVouchersBySupplierID_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetPendingVouchersByVoucherType_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubCategoryRepository.cs" />
+    <Compile Include="SupplierRepository.cs" />
+    <Compile Include="tblAccount.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAccType.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAdvance.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCategory.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCustomer.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblDetailInvoice.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblDetailOrder.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblDetailTransaction.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblEmployee.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblForthSubCategory.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblInvoice.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblMainCategory.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblProduct.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPurchaseOrder.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblSalary.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblSubCategory.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblSupplier.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTransaction.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblUser.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblUserType.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblvch.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblVchDetail.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerRepository.cs" />
+    <Compile Include="TransactionRepository.cs" />
+    <Compile Include="UserRepository.cs" />
+    <Compile Include="VoucherRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="AbuHamzaEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AbuHamzaEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AbuHamzaEntities.edmx.diagram">
+      <DependentUpon>AbuHamzaEntities.edmx</DependentUpon>
+    </None>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AbuHamzaEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AbuHamzaEntities.Context.cs</LastGenOutput>
+      <DependentUpon>AbuHamzaEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="AbuHamzaEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AbuHamzaEntities.edmx</DependentUpon>
+      <LastGenOutput>AbuHamzaEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

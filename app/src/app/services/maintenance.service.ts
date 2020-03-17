@@ -27,7 +27,7 @@ export class MaintenanceService {
   // For Users
   addUpdateUser(user: User) {
     return this.httpClient.post<User>(
-      'http://localhost:51110/api/users/AddUpdateUser',
+      'https://abuhamzaapi.sizzlingmart.com/api/users/AddUpdateUser',
       user,
       {
         headers: new HttpHeaders({
@@ -39,7 +39,7 @@ export class MaintenanceService {
 
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(
-      'http://localhost:51110/api/users/GetAllUsers',
+      'https://abuhamzaapi.sizzlingmart.com/api/users/GetAllUsers',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -50,7 +50,7 @@ export class MaintenanceService {
 
   deleteUser(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/users/DeleteUser/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/users/DeleteUser/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -62,7 +62,7 @@ export class MaintenanceService {
   // For Employees
   addUpdateEmployee(employee: Employee) {
     return this.httpClient.post<Employee>(
-      'http://localhost:51110/api/employees/AddUpdateEmployee',
+      'https://abuhamzaapi.sizzlingmart.com/api/employees/AddUpdateEmployee',
       employee,
       {
         headers: new HttpHeaders({
@@ -74,7 +74,7 @@ export class MaintenanceService {
 
   getAllEmployees(): Observable<Employee[]> {
     return this.httpClient.get<Employee[]>(
-      'http://localhost:51110/api/employees/GetAllEmployees',
+      'https://abuhamzaapi.sizzlingmart.com/api/employees/GetAllEmployees',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -85,7 +85,7 @@ export class MaintenanceService {
 
   deleteEmployee(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/employees/DeleteEmployee/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/employees/DeleteEmployee/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -97,7 +97,7 @@ export class MaintenanceService {
   // For Suppliers
   addUpdateSupplier(supplier: Supplier) {
     return this.httpClient.post<Supplier>(
-      'http://localhost:51110/api/suppliers/AddUpdateSupplier',
+      'https://abuhamzaapi.sizzlingmart.com/api/suppliers/AddUpdateSupplier',
       supplier,
       {
         headers: new HttpHeaders({
@@ -109,7 +109,7 @@ export class MaintenanceService {
 
   getAllSuppliers(): Observable<Supplier[]> {
     return this.httpClient.get<Supplier[]>(
-      'http://localhost:51110/api/suppliers/GetAllSuppliers',
+      'https://abuhamzaapi.sizzlingmart.com/api/suppliers/GetAllSuppliers',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -120,7 +120,7 @@ export class MaintenanceService {
 
   deleteSupplier(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/suppliers/DeleteSupplier/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/suppliers/DeleteSupplier/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -135,7 +135,7 @@ export class MaintenanceService {
     supplierId: number,
   ): Observable<PendingPayments[]> {
     return this.httpClient.get<PendingPayments[]>(
-      'http://localhost:51110/api/vouchers/GetPendingVouchersBySupplierID/' +
+      'https://abuhamzaapi.sizzlingmart.com/api/vouchers/GetPendingVouchersBySupplierID/' +
         supplierId,
       {
         headers: new HttpHeaders({
@@ -147,7 +147,7 @@ export class MaintenanceService {
 
   getPendingVouchersOfSale(): Observable<PendingPayments[]> {
     return this.httpClient.get<PendingPayments[]>(
-      'http://localhost:51110/api/vouchers/GetPendingVouchersOfSale',
+      'https://abuhamzaapi.sizzlingmart.com/api/vouchers/GetPendingVouchersOfSale',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -158,7 +158,7 @@ export class MaintenanceService {
 
   getPendingVouchersOfAdvance(): Observable<PendingPayments[]> {
     return this.httpClient.get<PendingPayments[]>(
-      'http://localhost:51110/api/vouchers/GetPendingVouchersOfAdvance',
+      'https://abuhamzaapi.sizzlingmart.com/api/vouchers/GetPendingVouchersOfAdvance',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -169,7 +169,7 @@ export class MaintenanceService {
 
   getPendingVouchersOfPurchase(): Observable<PendingPayments[]> {
     return this.httpClient.get<PendingPayments[]>(
-      'http://localhost:51110/api/vouchers/GetPendingVouchersOfPurchase',
+      'https://abuhamzaapi.sizzlingmart.com/api/vouchers/GetPendingVouchersOfPurchase',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -180,7 +180,7 @@ export class MaintenanceService {
 
   getAllPendingVouchers(): Observable<PendingPayments[]> {
     return this.httpClient.get<PendingPayments[]>(
-      'http://localhost:51110/api/vouchers/GetAllPendingVouchers',
+      'https://abuhamzaapi.sizzlingmart.com/api/vouchers/GetAllPendingVouchers',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -191,7 +191,7 @@ export class MaintenanceService {
 
   paymentAgainstSupplier(payment: Payment): Observable<any> {
     return this.httpClient.post<any>(
-      'http://localhost:51110/api/vouchers/pendingOrderPayment',
+      'https://abuhamzaapi.sizzlingmart.com/api/vouchers/pendingOrderPayment',
       payment,
       {
         headers: new HttpHeaders({
@@ -204,7 +204,7 @@ export class MaintenanceService {
   // For Salaries
   addUpdateSalary(supplier: Salary) {
     return this.httpClient.post<Salary>(
-      'http://localhost:51110/api/salaries/AddUpdateSalary',
+      'https://abuhamzaapi.sizzlingmart.com/api/salaries/AddUpdateSalary',
       supplier,
       {
         headers: new HttpHeaders({
@@ -216,7 +216,7 @@ export class MaintenanceService {
 
   getAllSalaries(): Observable<Salary[]> {
     return this.httpClient.get<Salary[]>(
-      'http://localhost:51110/api/salaries/GetAllSalaries',
+      'https://abuhamzaapi.sizzlingmart.com/api/salaries/GetAllSalaries',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -227,7 +227,7 @@ export class MaintenanceService {
 
   deleteSalary(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/salaries/DeleteSalary/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/salaries/DeleteSalary/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -239,7 +239,7 @@ export class MaintenanceService {
   // For Accounts
   addUpdateAccount(account: Account) {
     return this.httpClient.post<Account>(
-      'http://localhost:51110/api/accounts/AddUpdateAccount',
+      'https://abuhamzaapi.sizzlingmart.com/api/accounts/AddUpdateAccount',
       account,
       {
         headers: new HttpHeaders({
@@ -251,7 +251,7 @@ export class MaintenanceService {
 
   getAllAccounts(): Observable<Account[]> {
     return this.httpClient.get<Account[]>(
-      'http://localhost:51110/api/accounts/GetAllAccounts',
+      'https://abuhamzaapi.sizzlingmart.com/api/accounts/GetAllAccounts',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -262,7 +262,7 @@ export class MaintenanceService {
 
   deleteAccount(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/accounts/DeleteAccount/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/accounts/DeleteAccount/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -274,7 +274,7 @@ export class MaintenanceService {
   // Main Category
   addUpdateMainCategory(mainCategory: MainCategory) {
     return this.httpClient.post<MainCategory>(
-      'http://localhost:51110/api/mainCategories/AddUpdateMainCategory',
+      'https://abuhamzaapi.sizzlingmart.com/api/mainCategories/AddUpdateMainCategory',
       mainCategory,
       {
         headers: new HttpHeaders({
@@ -286,7 +286,7 @@ export class MaintenanceService {
 
   getAllMainCategories(): Observable<MainCategory[]> {
     return this.httpClient.get<MainCategory[]>(
-      'http://localhost:51110/api/mainCategories/GetAllMainCategories',
+      'https://abuhamzaapi.sizzlingmart.com/api/mainCategories/GetAllMainCategories',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -297,7 +297,7 @@ export class MaintenanceService {
 
   deleteMainCategory(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/mainCategories/DeleteMainCategory/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/mainCategories/DeleteMainCategory/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -309,7 +309,7 @@ export class MaintenanceService {
   // Category
   addUpdateCategory(category: Category) {
     return this.httpClient.post<Category>(
-      'http://localhost:51110/api/categories/AddUpdateCategory',
+      'https://abuhamzaapi.sizzlingmart.com/api/categories/AddUpdateCategory',
       category,
       {
         headers: new HttpHeaders({
@@ -321,7 +321,7 @@ export class MaintenanceService {
 
   getAllCategories(): Observable<Category[]> {
     return this.httpClient.get<Category[]>(
-      'http://localhost:51110/api/categories/GetAllCategories',
+      'https://abuhamzaapi.sizzlingmart.com/api/categories/GetAllCategories',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -332,7 +332,7 @@ export class MaintenanceService {
 
   getAllCategoriesByMainCategoryId(id: number): Observable<Category[]> {
     return this.httpClient.get<Category[]>(
-      'http://localhost:51110/api/categories/GetAllCategoriesByMainCategoryId/' +
+      'https://abuhamzaapi.sizzlingmart.com/api/categories/GetAllCategoriesByMainCategoryId/' +
         id,
       {
         headers: new HttpHeaders({
@@ -344,7 +344,7 @@ export class MaintenanceService {
 
   deleteCategory(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/categories/DeleteCategory/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/categories/DeleteCategory/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -356,7 +356,7 @@ export class MaintenanceService {
   // Sub Category
   addUpdateSubCategory(subCategory: SubCategory) {
     return this.httpClient.post<SubCategory>(
-      'http://localhost:51110/api/SubCategories/AddUpdateSubCategory',
+      'https://abuhamzaapi.sizzlingmart.com/api/SubCategories/AddUpdateSubCategory',
       subCategory,
       {
         headers: new HttpHeaders({
@@ -368,7 +368,7 @@ export class MaintenanceService {
 
   getAllSubCategories(): Observable<SubCategory[]> {
     return this.httpClient.get<SubCategory[]>(
-      'http://localhost:51110/api/SubCategories/GetAllSubCategories',
+      'https://abuhamzaapi.sizzlingmart.com/api/SubCategories/GetAllSubCategories',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -379,7 +379,7 @@ export class MaintenanceService {
 
   getAllSubCategoriesByCategoryId(id: number): Observable<SubCategory[]> {
     return this.httpClient.get<SubCategory[]>(
-      'http://localhost:51110/api/SubCategories/GetSubCategoriesByCategoryId/' +
+      'https://abuhamzaapi.sizzlingmart.com/api/SubCategories/GetSubCategoriesByCategoryId/' +
         id,
       {
         headers: new HttpHeaders({
@@ -391,7 +391,7 @@ export class MaintenanceService {
 
   deleteSubCategory(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/SubCategories/DeleteSubCategory/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/SubCategories/DeleteSubCategory/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -403,7 +403,7 @@ export class MaintenanceService {
   // Forth Sub Category
   addUpdateForthSubCategory(forthSubCategory: FourthSubCategory) {
     return this.httpClient.post<FourthSubCategory>(
-      'http://localhost:51110/api/ForthSubCategories/AddUpdateForthSubCategory',
+      'https://abuhamzaapi.sizzlingmart.com/api/ForthSubCategories/AddUpdateForthSubCategory',
       forthSubCategory,
       {
         headers: new HttpHeaders({
@@ -415,7 +415,7 @@ export class MaintenanceService {
 
   getAllForthSubCategories(): Observable<FourthSubCategory[]> {
     return this.httpClient.get<FourthSubCategory[]>(
-      'http://localhost:51110/api/ForthSubCategories/GetAllForthSubCategories',
+      'https://abuhamzaapi.sizzlingmart.com/api/ForthSubCategories/GetAllForthSubCategories',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -428,7 +428,7 @@ export class MaintenanceService {
     id: number,
   ): Observable<FourthSubCategory[]> {
     return this.httpClient.get<FourthSubCategory[]>(
-      'http://localhost:51110/api/ForthSubCategories/GetForthSubCategoriesbySubCategoryid/' +
+      'https://abuhamzaapi.sizzlingmart.com/api/ForthSubCategories/GetForthSubCategoriesbySubCategoryid/' +
         id,
       {
         headers: new HttpHeaders({
@@ -440,7 +440,7 @@ export class MaintenanceService {
 
   deleteForthSubCategory(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/ForthSubCategories/DeleteForthSubCategory/' +
+      'https://abuhamzaapi.sizzlingmart.com/api/ForthSubCategories/DeleteForthSubCategory/' +
         id,
       {
         headers: new HttpHeaders({
@@ -453,7 +453,7 @@ export class MaintenanceService {
   //Cash Transaction
   sendAmount(cashTransaction: CashTransaction) {
     return this.httpClient.post<CashTransaction>(
-      'http://localhost:51110/api/accounts/CashTransaction',
+      'https://abuhamzaapi.sizzlingmart.com/api/accounts/CashTransaction',
       cashTransaction,
       {
         headers: new HttpHeaders({
@@ -465,7 +465,7 @@ export class MaintenanceService {
 
   GetFromAccounts(): Observable<Account[]> {
     return this.httpClient.get<Account[]>(
-      'http://localhost:51110/api/accounts/GetFromAccounts',
+      'https://abuhamzaapi.sizzlingmart.com/api/accounts/GetFromAccounts',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -476,7 +476,7 @@ export class MaintenanceService {
 
   GetToAccounts(): Observable<Account[]> {
     return this.httpClient.get<Account[]>(
-      'http://localhost:51110/api/accounts/GetToAccounts',
+      'https://abuhamzaapi.sizzlingmart.com/api/accounts/GetToAccounts',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -487,7 +487,7 @@ export class MaintenanceService {
   //Customer
   addUpdateCustomer(customer: Customer) {
     return this.httpClient.post<Customer>(
-      'http://localhost:51110/api/customers/AddUpdateCustomer',
+      'https://abuhamzaapi.sizzlingmart.com/api/customers/AddUpdateCustomer',
       customer,
       {
         headers: new HttpHeaders({
@@ -499,7 +499,7 @@ export class MaintenanceService {
 
   getAllCustomers(): Observable<Customer[]> {
     return this.httpClient.get<Customer[]>(
-      'http://localhost:51110/api/customers/GetAllCustomers',
+      'https://abuhamzaapi.sizzlingmart.com/api/customers/GetAllCustomers',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -510,7 +510,7 @@ export class MaintenanceService {
 
   getCustomersByType(typeNumber: number): Observable<Customer[]> {
     return this.httpClient.get<Customer[]>(
-      'http://localhost:51110/api/customers/GetCustomersByAccountTypeId/' + typeNumber,
+      'https://abuhamzaapi.sizzlingmart.com/api/customers/GetCustomersByAccountTypeId/' + typeNumber,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -521,7 +521,7 @@ export class MaintenanceService {
 
   deleteCustomer(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/customers/DeleteCustomer/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/customers/DeleteCustomer/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -533,7 +533,7 @@ export class MaintenanceService {
   //Advance
   addUpdateAdvance(advance: Advance) {
     return this.httpClient.post<Advance>(
-      'http://localhost:51110/api/advances/AddUpdateAdvance',
+      'https://abuhamzaapi.sizzlingmart.com/api/advances/AddUpdateAdvance',
       advance,
       {
         headers: new HttpHeaders({
@@ -545,7 +545,7 @@ export class MaintenanceService {
 
   getAllAdvances(): Observable<Advance[]> {
     return this.httpClient.get<Advance[]>(
-      'http://localhost:51110/api/advances/GetAllAdvances',
+      'https://abuhamzaapi.sizzlingmart.com/api/advances/GetAllAdvances',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -556,7 +556,7 @@ export class MaintenanceService {
 
   getAdvanceByVoucherNo(voucherNo: string): Observable<Advance> {
     return this.httpClient.get<Advance>(
-      'http://localhost:51110/api/advances/GetAdvanceByVoucherNo/' + voucherNo,
+      'https://abuhamzaapi.sizzlingmart.com/api/advances/GetAdvanceByVoucherNo/' + voucherNo,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -567,7 +567,7 @@ export class MaintenanceService {
 
   deleteAdvance(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'http://localhost:51110/api/advances/DeleteAdvance/' + id,
+      'https://abuhamzaapi.sizzlingmart.com/api/advances/DeleteAdvance/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -578,7 +578,7 @@ export class MaintenanceService {
 
   addUpdateAdvanceByVoucher(vouchers: UpdateAdvance[]) {
     return this.httpClient.post<UpdateAdvance>(
-      'http://localhost:51110/api/advances/AddUpdateAdvanceByVoucher',
+      'https://abuhamzaapi.sizzlingmart.com/api/advances/AddUpdateAdvanceByVoucher',
       vouchers,
       {
         headers: new HttpHeaders({
@@ -590,7 +590,7 @@ export class MaintenanceService {
 
   manageAdvance(manageAdvance: ManageAdvance) {
     return this.httpClient.post<ManageAdvance>(
-      'http://localhost:51110/api/advances/UpdateAdvanceByVoucher',
+      'https://abuhamzaapi.sizzlingmart.com/api/advances/UpdateAdvanceByVoucher',
       manageAdvance,
       {
         headers: new HttpHeaders({

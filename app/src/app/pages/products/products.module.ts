@@ -40,13 +40,13 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     NbSelectModule,
     NbIconModule,
     ngFormsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
   ],
   declarations: [
     ProductsComponent,
     AddEditComponent,
     PurchaseComponent,
-    SalesComponent
+    SalesComponent,
   ],
 })
 export class ProductsModule { }
