@@ -12,6 +12,7 @@ import { Customer } from '../../../models/customer.model';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ManageAdvance } from '../../../models/manageAdvance.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-advances',
@@ -38,6 +39,7 @@ export class AdvancesComponent implements OnInit {
     private maintenanceService: MaintenanceService,
     private toastrService: NbToastrService,
     private datePipe: DatePipe,
+    private router: Router
   ) {}
 
   settings = {
@@ -99,6 +101,13 @@ export class AdvancesComponent implements OnInit {
         this.source.load(response);
       },
       error => {
+        if (error.status === 401) {
+          this.showToast('danger', 'Session Time Out!', 'Your session has been expired. Please re-login!');
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth']);
+        }
         this.showToast(
           'danger',
           'Error!',

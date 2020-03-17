@@ -43,7 +43,6 @@ export class CustomersAddComponent {
     this.customer.name = name;
     this.customer.contact = contact;
     this.cusNo.emit(contact);
-    console.log(this.customer);
     this.maintenanceService.addUpdateCustomer(this.customer).subscribe(
       response => {
         this.ref.close();
@@ -54,7 +53,6 @@ export class CustomersAddComponent {
           "Error!",
           "An error occured while creating customer!"
         );
-        console.log(error);
         this.ref.close();
       }
     );

@@ -13,6 +13,7 @@ import {
   NbComponentStatus,
   NbToastrService,
 } from '@nebular/theme';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'ngx-purchase',
@@ -29,6 +30,7 @@ export class PurchaseComponent implements OnInit {
   suppliers: Supplier[];
   selectedSupplier: number;
   fromAccounts: Account[];
+  user: User;
 
   // Toaster Setting Starts
   index = 1;
@@ -82,6 +84,7 @@ export class PurchaseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.purchaseProductForm = new FormGroup({
       barcode: new FormControl('', Validators.required),
       pro_id: new FormControl(''),

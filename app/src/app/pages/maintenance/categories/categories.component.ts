@@ -1,24 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { MainCategory } from "../../../models/mainCategory.model";
-import { Category } from "../../../models/category.model";
-import { SubCategory } from "../../../models/subCategory.model";
-import { FourthSubCategory } from "../../../models/fourthSubCategory.model";
-import { NbDialogService } from "@nebular/theme";
-import { MCategoriesAddEditComponent } from "./mcategories-add-edit-model/mcategories-add-edit-model.component";
-import { CategoriesAddEditComponent } from "./categories-add-edit-model/categories-add-edit-model.component";
-import { SubCategoriesAddEditComponent } from "./subcategories-add-edit-model/subcategories-add-edit-model.component";
-import { FourthCategoriesAddEditComponent } from "./fourthcategories-add-edit-model/fourthcategories-add-edit-model.component";
+import { Component, OnInit } from '@angular/core';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { MainCategory } from '../../../models/mainCategory.model';
+import { Category } from '../../../models/category.model';
+import { SubCategory } from '../../../models/subCategory.model';
+import { FourthSubCategory } from '../../../models/fourthSubCategory.model';
+import { NbDialogService } from '@nebular/theme';
+import { MCategoriesAddEditComponent } from './mcategories-add-edit-model/mcategories-add-edit-model.component';
+import { CategoriesAddEditComponent } from './categories-add-edit-model/categories-add-edit-model.component';
+import { SubCategoriesAddEditComponent } from './subcategories-add-edit-model/subcategories-add-edit-model.component';
+import { FourthCategoriesAddEditComponent } from './fourthcategories-add-edit-model/fourthcategories-add-edit-model.component';
 import {
   NbToastrService,
   NbComponentStatus,
   NbGlobalPosition,
-  NbGlobalPhysicalPosition
-} from "@nebular/theme";
+  NbGlobalPhysicalPosition,
+} from '@nebular/theme';
 @Component({
-  selector: "ngx-categories",
-  templateUrl: "categories.component.html",
-  styleUrls: ["categories.component.scss"]
+  selector: 'ngx-categories',
+  templateUrl: 'categories.component.html',
+  styleUrls: ['categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
   mainCategories: MainCategory[];
@@ -33,12 +33,12 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private maintenanceService: MaintenanceService,
     private dialogService: NbDialogService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
   ) {
-    this.selectedMainCategory.name = "None";
-    this.selectedCategory.name = "None";
-    this.selectedSubCategory.name = "None";
-    this.selectedSubSubCateory.name = "None";
+    this.selectedMainCategory.name = 'None';
+    this.selectedCategory.name = 'None';
+    this.selectedSubCategory.name = 'None';
+    this.selectedSubSubCateory.name = 'None';
   }
 
   // Toaster Setting Starts
@@ -57,19 +57,19 @@ export class CategoriesComponent implements OnInit {
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching main-categories!"
+          'danger',
+          'Error!',
+          'An error occured while fetching main-categories!'
         );
-      }
+      },
     );
   }
 
   onSelectMainCategory(mcategory: MainCategory) {
     this.selectedMainCategory = mcategory;
-    this.selectedCategory.name = "None";
-    this.selectedSubCategory.name = "None";
-    this.selectedSubSubCateory.name = "None";
+    this.selectedCategory.name = 'None';
+    this.selectedSubCategory.name = 'None';
+    this.selectedSubSubCateory.name = 'None';
     this.categories = [];
     this.subCategories = [];
     this.subSubCategories = [];
@@ -81,26 +81,26 @@ export class CategoriesComponent implements OnInit {
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching first sub-categories!"
+            'danger',
+            'Error!',
+            'An error occured while fetching first sub-categories!'
           );
-        }
+        },
       );
   }
 
   onAddEditMainCategory(mcategory?: MainCategory) {
     if (mcategory === undefined) {
-      this.modelTitle = "Add Main Category";
+      this.modelTitle = 'Add Main Category';
     } else {
-      this.modelTitle = "Edit " + mcategory.name;
+      this.modelTitle = 'Edit ' + mcategory.name;
     }
     this.dialogService
       .open(MCategoriesAddEditComponent, {
         context: {
           title: this.modelTitle,
-          mCategory: mcategory
-        }
+          mCategory: mcategory,
+        },
       })
       .onClose.subscribe(response => {
         this.maintenanceService.getAllMainCategories().subscribe(
@@ -112,11 +112,11 @@ export class CategoriesComponent implements OnInit {
           },
           error => {
             this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching main-categories!"
+              'danger',
+              'Error!',
+              'An error occured while fetching main-categories!'
             );
-          }
+          },
         );
       });
   }
@@ -124,34 +124,33 @@ export class CategoriesComponent implements OnInit {
   onDeleteMainCategory(category: MainCategory) {
     this.maintenanceService.deleteMainCategory(category.mainCat_id).subscribe(
       response => {
-        if (response == "Deleted") {
+        if (response == 'Deleted') {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted main-category has been deleted successfully!"
+            'success',
+            'Success!',
+            'Targeted main-category has been deleted successfully!'
           );
         } else {
           this.showToast(
-            "danger",
-            "Error!",
-            "Targeted main-category cannot delete!"
+            'danger',
+            'Error!',
+            'Targeted main-category cannot delete!'
           );
         }
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while deleting main-category!"
+          'danger',
+          'Error!',
+          'An error occured while deleting main-category!'
         );
-      }
+      },
     );
-    // console.log("onDeleteCategory", category);
   }
 
   onSelectCategory(category: Category) {
     this.selectedCategory = category;
-    this.selectedSubCategory.name = "None";
+    this.selectedSubCategory.name = 'None';
     this.subCategories = [];
     this.subSubCategories = [];
     this.maintenanceService
@@ -162,27 +161,27 @@ export class CategoriesComponent implements OnInit {
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching first sub-categories!"
+            'danger',
+            'Error!',
+            'An error occured while fetching first sub-categories!'
           );
-        }
+        },
       );
   }
 
   onaddEditCategory(mCategoryId: number, category?: Category) {
     if (category === undefined) {
-      this.modelTitle = "Add Category";
+      this.modelTitle = 'Add Category';
     } else {
-      this.modelTitle = "Edit " + category.name;
+      this.modelTitle = 'Edit ' + category.name;
     }
     this.dialogService
       .open(CategoriesAddEditComponent, {
         context: {
           title: this.modelTitle,
           mCategoryId: mCategoryId,
-          category: category
-        }
+          category: category,
+        },
       })
       .onClose.subscribe(response => {
         this.maintenanceService
@@ -195,11 +194,11 @@ export class CategoriesComponent implements OnInit {
             },
             error => {
               this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching first sub-categories!"
+                'danger',
+                'Error!',
+                'An error occured while fetching first sub-categories!'
               );
-            }
+            },
           );
       });
   }
@@ -207,27 +206,27 @@ export class CategoriesComponent implements OnInit {
   onDeleteCategory(category: Category) {
     this.maintenanceService.deleteCategory(category.cat_id).subscribe(
       response => {
-        if (response == "Deleted") {
+        if (response == 'Deleted') {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted first sub-category has been deleted successfully!"
+            'success',
+            'Success!',
+            'Targeted first sub-category has been deleted successfully!'
           );
         } else {
           this.showToast(
-            "danger",
-            "Error!",
-            "Targeted first sub-category cannot delete!"
+            'danger',
+            'Error!',
+            'Targeted first sub-category cannot delete!'
           );
         }
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while deleting first sub-category!"
+          'danger',
+          'Error!',
+          'An error occured while deleting first sub-category!'
         );
-      }
+      },
     );
   }
 
@@ -242,11 +241,11 @@ export class CategoriesComponent implements OnInit {
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching second sub-categories!"
+            'danger',
+            'Error!',
+            'An error occured while fetching second sub-categories!'
           );
-        }
+        },
       );
   }
 
@@ -256,17 +255,17 @@ export class CategoriesComponent implements OnInit {
 
   onAddEditSubCategory(categoryId: number, subCategory?: SubCategory) {
     if (subCategory === undefined) {
-      this.modelTitle = "Add SubCategory";
+      this.modelTitle = 'Add SubCategory';
     } else {
-      this.modelTitle = "Edit " + subCategory.name;
+      this.modelTitle = 'Edit ' + subCategory.name;
     }
     this.dialogService
       .open(SubCategoriesAddEditComponent, {
         context: {
           title: this.modelTitle,
           cat_id: categoryId,
-          subCategory: subCategory
-        }
+          subCategory: subCategory,
+        },
       })
       .onClose.subscribe(response => {
         this.maintenanceService
@@ -279,11 +278,11 @@ export class CategoriesComponent implements OnInit {
             },
             error => {
               this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching second sub-categories!"
+                'danger',
+                'Error!',
+                'An error occured while fetching second sub-categories!'
               );
-            }
+            },
           );
       });
   }
@@ -291,46 +290,46 @@ export class CategoriesComponent implements OnInit {
   onDeleteSubCategory(subCategory: SubCategory) {
     this.maintenanceService.deleteSubCategory(subCategory.subCat_id).subscribe(
       response => {
-        if (response == "Deleted") {
+        if (response == 'Deleted') {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted second sub-category has been deleted successfully!"
+            'success',
+            'Success!',
+            'Targeted second sub-category has been deleted successfully!'
           );
         } else {
           this.showToast(
-            "danger",
-            "Error!",
-            "Targeted second sub-category cannot delete!"
+            'danger',
+            'Error!',
+            'Targeted second sub-category cannot delete!'
           );
         }
       },
       error => {
         this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while deleting second sub-category!"
+          'danger',
+          'Error!',
+          'An error occured while deleting second sub-category!'
         );
-      }
+      },
     );
   }
 
   onAddEditFourthSubCategory(
     subCategoryId: number,
-    fourthSubCategory?: FourthSubCategory
+    fourthSubCategory?: FourthSubCategory,
   ) {
     if (fourthSubCategory === undefined) {
-      this.modelTitle = "Add Fourth Sub Category";
+      this.modelTitle = 'Add Fourth Sub Category';
     } else {
-      this.modelTitle = "Edit " + fourthSubCategory.name;
+      this.modelTitle = 'Edit ' + fourthSubCategory.name;
     }
     this.dialogService
       .open(FourthCategoriesAddEditComponent, {
         context: {
           title: this.modelTitle,
           subCat_id: subCategoryId,
-          fourthSubCategory: fourthSubCategory
-        }
+          fourthSubCategory: fourthSubCategory,
+        },
       })
       .onClose.subscribe(response => {
         this.maintenanceService
@@ -342,11 +341,11 @@ export class CategoriesComponent implements OnInit {
             },
             error => {
               this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching third sub-categories!"
+                'danger',
+                'Error!',
+                'An error occured while fetching third sub-categories!'
               );
-            }
+            },
           );
       });
   }
@@ -356,27 +355,27 @@ export class CategoriesComponent implements OnInit {
       .deleteForthSubCategory(fourthSubCategory.fsubCat_id)
       .subscribe(
         response => {
-          if (response == "deleted") {
+          if (response == 'deleted') {
             this.showToast(
-              "success",
-              "Success!",
-              "Targeted third sub-category has been deleted successfully!"
+              'success',
+              'Success!',
+              'Targeted third sub-category has been deleted successfully!'
             );
           } else {
             this.showToast(
-              "danger",
-              "Error!",
-              "Targeted third sub-category cannot delete!"
+              'danger',
+              'Error!',
+              'Targeted third sub-category cannot delete!'
             );
           }
         },
         error => {
           this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while deleting third sub-category!"
+            'danger',
+            'Error!',
+            'An error occured while deleting third sub-category!'
           );
-        }
+        },
       );
   }
 
@@ -387,9 +386,9 @@ export class CategoriesComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 }

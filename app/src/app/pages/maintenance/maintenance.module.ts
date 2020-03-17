@@ -72,7 +72,7 @@ const ENTRY_COMPONENTS = [
     PaymentsComponent,
     AccountsComponent,
     TransactionsComponent,
-    AdvancesComponent
+    AdvancesComponent,
   ],
   entryComponents: [...ENTRY_COMPONENTS]
 })

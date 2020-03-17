@@ -32,13 +32,13 @@ export class NgxLoginComponent implements OnInit {
   preventDuplicates = false;
   // Toaster Setting Ends
 
-  getConfigValue(key: string): any { };
-  login(): void { };
+  getConfigValue(key: string): any { }
+  login(): void { }
 
   ngOnInit() {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required)
+      password: new FormControl('', Validators.required),
     });
   }
 
@@ -53,7 +53,9 @@ export class NgxLoginComponent implements OnInit {
             this.user = response;
             localStorage.setItem('user', JSON.stringify(this.user));
             this.user = JSON.parse(localStorage.getItem('user'));
-            if (this.user.status === "active") {
+            if (this.user.userRoll === 'admin') {
+              this.router.navigate(['pages/reports/dashboard']);
+            } else if (this.user.userRoll === 'emp') {
               this.router.navigate(['pages/products/sales']);
             } else {
               this.router.navigate(['auth']);
@@ -61,11 +63,11 @@ export class NgxLoginComponent implements OnInit {
           },
           error => {
             this.showToast('danger', 'Error!', 'An error occured while fetching your details!');
-          }
+          },
         ),
           error => {
             this.showToast('danger', 'Error!', 'Network Error... Please try later!');
-          }
+          };
       },
       (errors) => {
         if (errors.status === 400) {
@@ -73,7 +75,7 @@ export class NgxLoginComponent implements OnInit {
         } else {
           this.showToast('danger', 'Error!', 'Network Error... Please try later!');
         }
-      }
+      },
     );
   }
 

@@ -44,7 +44,7 @@
                                     formControlName="quantity" (blur)="calculateCost()">
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" *ngIf="user.userRoll === 'admin'">
                             <div class="form-group">
                                 <label for="purchasePrice" class="label">Purchase Price</label>
                                 <input type="number" nbInput fullWidth id="purchasePrice" placeholder="Purchase Price"

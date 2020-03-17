@@ -1,14 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { LocalDataSource } from "ng2-smart-table";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { Supplier } from "../../../models/supplier.model";
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { Supplier } from '../../../models/supplier.model';
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "ngx-suppliers",
-  templateUrl: "./suppliers.component.html",
-  styleUrls: ["./suppliers.component.scss"]
+  selector: 'ngx-suppliers',
+  templateUrl: './suppliers.component.html',
+  styleUrls: ['./suppliers.component.scss'],
 })
 export class SuppliersComponent implements OnInit {
   supplier: Supplier = new Supplier();
@@ -24,48 +25,48 @@ export class SuppliersComponent implements OnInit {
   // Toaster Setting Ends
 
   constructor(private maintenanceService: MaintenanceService, private toastrService: NbToastrService,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe, private router: Router) { }
 
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true
+      confirmDelete: true,
     },
     columns: {
       name: {
-        title: "Name",
-        type: "string"
+        title: 'Name',
+        type: 'string',
       },
       company: {
-        title: "Company Name",
-        type: "string"
+        title: 'Company Name',
+        type: 'string'
       },
       date: {
-        title: "Date",
-        type: "date",
-        editable:false,
+        title: 'Date',
+        type: 'date',
+        editable: false,
         addable: false,
         valuePrepareFunction: (date) => {
           return this.datePipe.transform(new Date(date), 'dd MMM yyyy');
-        }
+        },
       },
       contact: {
-        title: "Contact",
-        type: "number"
-      }
-    }
+        title: 'Contact',
+        type: 'number',
+      },
+    },
   };
 
   ngOnInit() {
@@ -74,13 +75,21 @@ export class SuppliersComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
-      }
+        if (error.status === 401) {
+          this.showToast('danger', 'Session Time Out!', 'Your session has been expired. Please re-login!');
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth']);
+        } else {
+          this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
+        }
+      },
     );
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm("Are you sure you want to delete?")) {
+    if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
       this.maintenanceService.deleteSupplier(event.data.sup_id).subscribe(
         response => {
@@ -91,12 +100,12 @@ export class SuppliersComponent implements OnInit {
             },
             error => {
               this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
-            }
+            },
           );
         },
         error => {
           this.showToast('danger', 'Error!', 'Unable to delete the targeted Supplier.');
-        }
+        },
       );
     } else {
       event.confirm.reject();
@@ -121,7 +130,7 @@ export class SuppliersComponent implements OnInit {
             },
             error => {
               this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
-            }
+            },
           );
         },
         error => {
@@ -147,7 +156,7 @@ export class SuppliersComponent implements OnInit {
             },
             error => {
               this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
-            }
+            },
           );
         },
         error => {

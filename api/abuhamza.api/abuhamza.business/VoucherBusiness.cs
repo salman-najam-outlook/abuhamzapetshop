@@ -40,7 +40,7 @@ namespace abuhamza.business
 
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=207.246.92.23;initial catalog=abuhamzapetstore;user id=abuhamza;password=$Default123;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetPendingVouchersBySupplierID", conn))
             {
 
@@ -77,7 +77,7 @@ namespace abuhamza.business
             
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=207.246.92.23;initial catalog=abuhamzapetstore;user id=abuhamza;password=$Default123;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetPendingVouchersByVoucherType", conn))
             {
 
@@ -114,7 +114,7 @@ namespace abuhamza.business
 
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=207.246.92.23;initial catalog=abuhamzapetstore;user id=abuhamza;password=$Default123;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetPendingAdvanceVouchers", conn))
             {
 
@@ -149,7 +149,7 @@ namespace abuhamza.business
 
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=207.246.92.23;initial catalog=abuhamzapetstore;user id=abuhamza;password=$Default123;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetPendingVouchersByVoucherType", conn))
             {
 
@@ -186,7 +186,7 @@ namespace abuhamza.business
 
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=207.246.92.23;initial catalog=abuhamzapetstore;user id=abuhamza;password=$Default123;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetAllPendingVouchers", conn))
             {
 

@@ -17,9 +17,14 @@ const routes: Routes = [{
       loadChildren: () => import('./products/products.module')
         .then(m => m.ProductsModule),
     },
+    {
+      path: 'reports',
+      loadChildren: () => import('./reports/reports.module')
+        .then(m => m.ReportsModule),
+    },
     { path: '', redirectTo: '/auth', pathMatch: 'full' },
     { path: '**', redirectTo: '' }
-  ]
+  ],
 }];
 
 @NgModule({

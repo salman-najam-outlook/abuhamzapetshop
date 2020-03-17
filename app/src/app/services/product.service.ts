@@ -15,7 +15,7 @@ export class ProductService {
 
   getProductByProductId(productId: number) {
     return this.httpClient.get<Product>(
-      'https://abuhamzaapi.sizzlingmart.com/api/products/GetProductById/' + productId,
+      'http://localhost:51110/api/products/GetProductById/' + productId,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -26,7 +26,7 @@ export class ProductService {
 
   getProductByBarcode(barcode: string): Observable<Product>  {
     return this.httpClient.get<Product>(
-      'https://abuhamzaapi.sizzlingmart.com/api/products/GetProductByBarcode/' + barcode,
+      'http://localhost:51110/api/products/GetProductByBarcode/' + barcode,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -37,7 +37,7 @@ export class ProductService {
 
   addUpdateProduct(product: Product): Observable<string> {
     return this.httpClient.post<string>(
-      'https://abuhamzaapi.sizzlingmart.com/api/products/AddUpdateProduct',
+      'http://localhost:51110/api/products/AddUpdateProduct',
       product,
       {
         headers: new HttpHeaders({
@@ -49,7 +49,7 @@ export class ProductService {
 
   getAllProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(
-      'https://abuhamzaapi.sizzlingmart.com/api/products/GetAllProducts',
+      'http://localhost:51110/api/products/GetAllProducts',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -60,7 +60,7 @@ export class ProductService {
 
   deleteProduct(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'https://abuhamzaapi.sizzlingmart.com/api/products/DeleteProduct/' + id,
+      'http://localhost:51110/api/products/DeleteProduct/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -75,7 +75,7 @@ export class ProductService {
 
   getAllPurchaseOrders(): Observable<PurchaseOrder[]> {
     return this.httpClient.get<PurchaseOrder[]>(
-      'https://abuhamzaapi.sizzlingmart.com/api/purchaseOrders/GetAllProductOrders',
+      'http://localhost:51110/api/purchaseOrders/GetAllProductOrders',
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -86,7 +86,7 @@ export class ProductService {
 
   deletePurchaseOrder(id: number): Observable<string> {
     return this.httpClient.delete<string>(
-      'https://abuhamzaapi.sizzlingmart.com/api/purchaseOrders/DeleteProductOrder/' + id,
+      'http://localhost:51110/api/purchaseOrders/DeleteProductOrder/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -96,15 +96,15 @@ export class ProductService {
   }
 
   getSavedCategories(mainCategoryId: number, categoryId: number, subCategoryId: number): Observable<any> {
-    const response1 = this.httpClient.get('https://abuhamzaapi.sizzlingmart.com/api/categories/GetAllCategoriesByMainCategoryId/' + mainCategoryId);
-    const response2 = this.httpClient.get('https://abuhamzaapi.sizzlingmart.com/api/SubCategories/GetSubCategoriesByCategoryId/' + categoryId);
-    const response3 = this.httpClient.get('https://abuhamzaapi.sizzlingmart.com/api/ForthSubCategories/GetForthSubCategoriesbySubCategoryid/' + subCategoryId);
+    const response1 = this.httpClient.get('http://localhost:51110/api/categories/GetAllCategoriesByMainCategoryId/' + mainCategoryId);
+    const response2 = this.httpClient.get('http://localhost:51110/api/SubCategories/GetSubCategoriesByCategoryId/' + categoryId);
+    const response3 = this.httpClient.get('http://localhost:51110/api/ForthSubCategories/GetForthSubCategoriesbySubCategoryid/' + subCategoryId);
     return forkJoin([response1, response2, response3]);
   }
 
   addPurchaseOrder(purchaseOrder: PurchaseOrder): Observable<any> {
     return this.httpClient.post<PurchaseOrder>(
-      'https://abuhamzaapi.sizzlingmart.com/api/purchaseOrders/AddUpdatePurchaseOrder',
+      'http://localhost:51110/api/purchaseOrders/AddUpdatePurchaseOrder',
       purchaseOrder,
       {
         headers: new HttpHeaders({
@@ -118,7 +118,7 @@ export class ProductService {
   // Invoice Starts
   addInvoice(order: SaleOrder): Observable<string> {
     return this.httpClient.post<string>(
-      'https://abuhamzaapi.sizzlingmart.com/api/invoices/AddUpdateInvoice',
+      'http://localhost:51110/api/invoices/AddUpdateInvoice',
       order,
       {
         headers: new HttpHeaders({

@@ -32,7 +32,6 @@ namespace abuhamza.repository
         public virtual DbSet<tblAdvance> tblAdvances { get; set; }
         public virtual DbSet<tblCategory> tblCategories { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
-        public virtual DbSet<tblDetailInvoice> tblDetailInvoices { get; set; }
         public virtual DbSet<tblDetailOrder> tblDetailOrders { get; set; }
         public virtual DbSet<tblDetailTransaction> tblDetailTransactions { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
@@ -49,6 +48,7 @@ namespace abuhamza.repository
         public virtual DbSet<tblUserType> tblUserTypes { get; set; }
         public virtual DbSet<tblvch> tblvches { get; set; }
         public virtual DbSet<tblVchDetail> tblVchDetails { get; set; }
+        public virtual DbSet<tblDetailInvoice> tblDetailInvoices { get; set; }
     
         public virtual int stpDetailOrder(Nullable<int> orderId, Nullable<int> quatity, string barcode, Nullable<decimal> purchasePrice, string voucherNo)
         {
@@ -228,7 +228,7 @@ namespace abuhamza.repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetPendingVouchersBySupplierID_Result>("stpGetPendingVouchersBySupplierID", sup_IdParameter);
         }
     
-        public virtual int stpSaleDetail(Nullable<int> invoiceId, Nullable<int> quatity, string barcode, Nullable<decimal> sellPrice, string voucherNo)
+        public virtual int stpSaleDetail(Nullable<int> invoiceId, Nullable<int> quatity, string barcode, Nullable<decimal> sellPrice, string voucherNo, Nullable<decimal> purchasePrice)
         {
             var invoiceIdParameter = invoiceId.HasValue ?
                 new ObjectParameter("invoiceId", invoiceId) :
@@ -250,7 +250,11 @@ namespace abuhamza.repository
                 new ObjectParameter("voucherNo", voucherNo) :
                 new ObjectParameter("voucherNo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpSaleDetail", invoiceIdParameter, quatityParameter, barcodeParameter, sellPriceParameter, voucherNoParameter);
+            var purchasePriceParameter = purchasePrice.HasValue ?
+                new ObjectParameter("purchasePrice", purchasePrice) :
+                new ObjectParameter("purchasePrice", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpSaleDetail", invoiceIdParameter, quatityParameter, barcodeParameter, sellPriceParameter, voucherNoParameter, purchasePriceParameter);
         }
     
         public virtual int stpSaleOrder(Nullable<int> orderId, Nullable<int> totalQty, Nullable<decimal> subTotal, Nullable<decimal> totalAmount, Nullable<decimal> discount, Nullable<decimal> tenderedAmount, Nullable<decimal> change, string customerName, Nullable<int> user_id, Nullable<decimal> voucherAmount, string voucherNo, string customerNo)
@@ -682,6 +686,20 @@ namespace abuhamza.repository
                 new ObjectParameter("remainingAdvance", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("stpUseAdvance1", advanceVoucherNoParameter, saleVoucherNoParameter, totalAdvanceParameter, remainingAdvanceParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> stpGetAccountBalance(Nullable<int> acc_id)
+        {
+            var acc_idParameter = acc_id.HasValue ?
+                new ObjectParameter("acc_id", acc_id) :
+                new ObjectParameter("acc_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("stpGetAccountBalance", acc_idParameter);
+        }
+    
+        public virtual ObjectResult<stpGetDashboardData_Result> stpGetDashboardData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stpGetDashboardData_Result>("stpGetDashboardData");
         }
     }
 }

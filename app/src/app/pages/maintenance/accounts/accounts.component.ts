@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Account } from '../../../models/account.model';
 import { MaintenanceService } from '../../../services/maintenance.service';
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-accounts',
@@ -13,7 +14,8 @@ export class AccountsComponent implements OnInit {
   accountForm: FormGroup;
   account: Account;
 
-  constructor(private maintenanceService: MaintenanceService, private toastrService: NbToastrService) {}
+  constructor(private maintenanceService: MaintenanceService,
+    private toastrService: NbToastrService, private router: Router) {}
 
   // Toaster Setting Starts
   index = 1;
@@ -47,11 +49,19 @@ export class AccountsComponent implements OnInit {
           );
       },
       error => {
-        this.showToast(
+        if (error.status === 401) {
+          this.showToast('danger', 'Session Time Out!', 'Your session has been expired. Please re-login!');
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth']);
+        } else {
+          this.showToast(
             'danger',
             'Error!',
             'An error occured while adding new account.',
           );
+        }
       },
     );
   }

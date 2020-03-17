@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ngx-form-products',
+  selector: 'ngx-form-reports',
   template: `
     <router-outlet></router-outlet>
   `,
 })
-export class ProductsComponent {
+export class ReportsComponent {
 }

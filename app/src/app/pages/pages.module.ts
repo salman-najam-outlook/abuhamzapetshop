@@ -19,6 +19,7 @@ import { MaintenanceModule } from "./maintenance/maintenance.module";
 import { ProductsModule } from "./products/products.module";
 import { CustomersAddComponent } from "./products/sales/customers-add-model/customers-add-model.component";
 import { SalesComponent } from "./products/sales/sales.component";
+import { ReportsModule } from './reports/reports.module';
 
 const ENTRY_COMPONENTS = [CustomersAddComponent];
 
@@ -29,6 +30,7 @@ const ENTRY_COMPONENTS = [CustomersAddComponent];
     NbMenuModule,
     MaintenanceModule,
     ProductsModule,
+    ReportsModule,
     NbCardModule,
     ngFormsModule,
     FormsModule,

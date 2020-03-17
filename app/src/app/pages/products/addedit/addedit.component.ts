@@ -157,7 +157,7 @@ export class AddEditComponent implements OnInit {
       categoryId: new FormControl('', Validators.required),
       subCategoryId: new FormControl(''),
       fourthCategoryId: new FormControl(''),
-      barcode: new FormControl({value: ''}, Validators.required),
+      barcode: new FormControl('', Validators.required),
       productId: new FormControl(''),
       name: new FormControl('', Validators.required),
       originalPrice: new FormControl('', Validators.required),

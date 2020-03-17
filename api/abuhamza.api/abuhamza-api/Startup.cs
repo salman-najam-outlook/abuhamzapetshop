@@ -19,7 +19,7 @@ namespace abuhamza_api
             {
                 TokenEndpointPath = new PathString("/token"),
                 Provider = new ApplicationOAuthProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(800),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
                 AllowInsecureHttp = true
             };
             app.UseOAuthAuthorizationServer(option);

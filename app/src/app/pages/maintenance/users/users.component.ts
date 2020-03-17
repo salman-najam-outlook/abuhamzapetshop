@@ -85,12 +85,16 @@ export class UsersComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching all Users!',
-        );
-      },
+        if(error.status === 401) {
+          console.log(error);
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching all Users!',
+          );
+        }
+        console.log(error);
+        },
     );
   }
 

@@ -136,7 +136,7 @@ namespace abuhamza.business
             }
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=207.246.92.23;initial catalog=abuhamzapetstore;user id=abuhamza;password=$Default123;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetToAccounts", conn))
             {
 
@@ -168,7 +168,7 @@ namespace abuhamza.business
             }
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(@"data source=207.246.92.23;initial catalog=abuhamzapetstore;user id=abuhamza;password=$Default123;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection conn = new SqlConnection(@"data source=DESKTOP-TCM883N\SQLEXPRESS;initial catalog=abuhamzapetstore;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             using (SqlCommand cmd = new SqlCommand("stpGetFromAccounts", conn))
             {
 

@@ -46,6 +46,7 @@
     <Compile Include="CashTransactionDomainModel.cs" />
     <Compile Include="CategoryDomainModel.cs" />
     <Compile Include="CustomerDomainModel.cs" />
+    <Compile Include="DashboardDomainModel.cs" />
     <Compile Include="DetailOrderDomainModel.cs" />
     <Compile Include="EmployeeDomainModel.cs" />
     <Compile Include="ForthSubCategoryDomainModel.cs" />

@@ -114,6 +114,9 @@
     <Compile Include="stpGetCustomerByAccountTypeID1_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="stpGetDashboardData_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="stpGetFromAccounts_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>

@@ -20,5 +20,6 @@ namespace abuhamza.repository
         public Nullable<int> quantity { get; set; }
         public Nullable<decimal> sellPrice { get; set; }
         public string voucherNo { get; set; }
+        public Nullable<decimal> purchasePrice { get; set; }
     }
 }

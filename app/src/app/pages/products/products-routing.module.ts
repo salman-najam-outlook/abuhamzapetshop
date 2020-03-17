@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'purchase',
-        component: PurchaseComponent, canActivate: [AdminGuard],
+        component: PurchaseComponent, canActivate: [UserGuard],
       },
       {
         path: 'sales',
