@@ -51,15 +51,9 @@
     <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.7.3\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalDecisions.Shared.1.0.0\lib\CrystalDecisions.Shared.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -260,6 +254,7 @@
     <Compile Include="Models\abuHamzaPetModel.cs" />
     <Compile Include="Models\AccountToReturnVM.cs" />
     <Compile Include="Models\AccountVM.cs" />
+    <Compile Include="Models\AdvanceRecord.cs" />
     <Compile Include="Models\AdvanceToReturnVM.cs" />
     <Compile Include="Models\AdvanceVM.cs" />
     <Compile Include="Models\CashTransaction.cs" />
@@ -267,14 +262,17 @@
     <Compile Include="Models\CategoryVM.cs" />
     <Compile Include="Models\CustomerToReturnVM.cs" />
     <Compile Include="Models\CustomerVM.cs" />
+    <Compile Include="Models\DailyReport.cs" />
     <Compile Include="Models\DetailOrderToReturnVM.cs" />
     <Compile Include="Models\DetailOrderVM.cs" />
     <Compile Include="Models\EmployeeToReturnVM.cs" />
     <Compile Include="Models\EmployeeVM.cs" />
+    <Compile Include="Models\ExpenseRecord.cs" />
     <Compile Include="Models\ForthSubCategoryToReturnVM.cs" />
     <Compile Include="Models\ForthSubCategoryVM.cs" />
     <Compile Include="Models\InvoiceToReturnVM.cs" />
     <Compile Include="Models\InvoiceVM.cs" />
+    <Compile Include="Models\LoanRecord.cs" />
     <Compile Include="Models\MainCategoryToReturnVM.cs" />
     <Compile Include="Models\MainCategoryVM.cs" />
     <Compile Include="Models\PaymentVoucher.cs" />
@@ -282,9 +280,12 @@
     <Compile Include="Models\ProductVM.cs" />
     <Compile Include="Models\PurchaseOrderToReturnVM.cs" />
     <Compile Include="Models\PurchaseOrderVM.cs" />
+    <Compile Include="Models\PurchasePending.cs" />
+    <Compile Include="Models\PurchaseRecord.cs" />
     <Compile Include="Models\SalaryToReturnVM.cs" />
     <Compile Include="Models\SalaryVM.cs" />
     <Compile Include="Models\SaleOrder.cs" />
+    <Compile Include="Models\SaleRecord.cs" />
     <Compile Include="Models\SingleProduct.cs" />
     <Compile Include="Models\SubCategoryToReturnVM.cs" />
     <Compile Include="Models\SubCategoryVM.cs" />

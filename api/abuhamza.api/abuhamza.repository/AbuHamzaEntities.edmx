@@ -68,8 +68,8 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <Property Name="barcode" Type="varchar(max)" />
           <Property Name="quantity" Type="int" />
           <Property Name="sellPrice" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="voucherNo" Type="varchar" MaxLength="100" />
           <Property Name="purchasePrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="voucherNo" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tblDetailOrder">
           <Key>
@@ -323,6 +323,7 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
         <Function Name="stpGetAccountBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="acc_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="stpGetAdvanceRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stpGetAdvances" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="vchType" Type="varchar" Mode="In" />
         </Function>
@@ -331,8 +332,11 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
         <Function Name="stpGetCustomerByAccountTypeID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="acc_TypeId" Type="int" Mode="In" />
         </Function>
+        <Function Name="stpGetDailySummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stpGetDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stpGetExpenseRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stpGetFromAccounts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stpGetLoanRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stpGetPendingAdvanceVouchers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stpGetPendingVouchersBySupplierID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="sup_Id" Type="int" Mode="In" />
@@ -340,6 +344,9 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
         <Function Name="stpGetPendingVouchersByVoucherType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="vchType" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="stpGetPurchasePendingRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stpGetPurchaseRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="stpGetSaleRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stpGetToAccounts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="stpOpenAccountWithMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="int" Mode="In" />
@@ -579,31 +586,12 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <Parameter Name="vchType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="stpGetPendingAdvanceVouchers" ReturnType="Collection(abuhamzapetstoreModel.stpGetPendingAdvanceVouchers_Result)" />
-          <FunctionImport Name="stpOpenAccountWithMapping">
-            <Parameter Name="user_id" Mode="In" Type="Int32" />
-            <Parameter Name="usertype" Mode="In" Type="Int32" />
-            <Parameter Name="acctype" Mode="In" Type="Int32" />
-            <Parameter Name="name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="stpUpdateAdvance">
-            <Parameter Name="voucherNo" Mode="In" Type="String" />
-            <Parameter Name="amount" Mode="In" Type="Decimal" />
-            <Parameter Name="transactionType" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="stpUseAdvance">
-            <Parameter Name="advanceVoucherNo" Mode="In" Type="String" />
-            <Parameter Name="saleVoucherNo" Mode="In" Type="String" />
-            <Parameter Name="totalAdvance" Mode="In" Type="Decimal" />
-            <Parameter Name="remainingAdvance" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="stpGetCustomerByAccountTypeID" ReturnType="Collection(abuhamzapetstoreModel.stpGetCustomerByAccountTypeID)">
-            <Parameter Name="acc_TypeId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="tblAccounts" EntityType="abuhamzapetstoreModel.tblAccount" />
           <EntitySet Name="tblAccTypes" EntityType="abuhamzapetstoreModel.tblAccType" />
           <EntitySet Name="tblAdvances" EntityType="abuhamzapetstoreModel.tblAdvance" />
           <EntitySet Name="tblCategories" EntityType="abuhamzapetstoreModel.tblCategory" />
           <EntitySet Name="tblCustomers" EntityType="abuhamzapetstoreModel.tblCustomer" />
+          <EntitySet Name="tblDetailInvoices" EntityType="abuhamzapetstoreModel.tblDetailInvoice" />
           <EntitySet Name="tblDetailOrders" EntityType="abuhamzapetstoreModel.tblDetailOrder" />
           <EntitySet Name="tblDetailTransactions" EntityType="abuhamzapetstoreModel.tblDetailTransaction" />
           <EntitySet Name="tblEmployees" EntityType="abuhamzapetstoreModel.tblEmployee" />
@@ -632,31 +620,67 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblInvoice" EntitySet="tblInvoices" />
           </AssociationSet>
-          <FunctionImport Name="stpGetCustomerByAccountTypeID1" ReturnType="Collection(abuhamzapetstoreModel.stpGetCustomerByAccountTypeID1_Result)">
-          <Parameter Name="acc_TypeId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="stpOpenAccountWithMapping1">
+          <FunctionImport Name="stpOpenAccountWithMapping">
             <Parameter Name="user_id" Mode="In" Type="Int32" />
             <Parameter Name="usertype" Mode="In" Type="Int32" />
             <Parameter Name="acctype" Mode="In" Type="Int32" />
             <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="stpUpdateAdvance1">
+          <FunctionImport Name="stpUpdateAdvance">
             <Parameter Name="voucherNo" Mode="In" Type="String" />
             <Parameter Name="amount" Mode="In" Type="Decimal" />
             <Parameter Name="transactionType" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="stpUseAdvance1">
+          <FunctionImport Name="stpUseAdvance">
             <Parameter Name="advanceVoucherNo" Mode="In" Type="String" />
             <Parameter Name="saleVoucherNo" Mode="In" Type="String" />
             <Parameter Name="totalAdvance" Mode="In" Type="Decimal" />
             <Parameter Name="remainingAdvance" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <EntitySet Name="tblDetailInvoices" EntityType="abuhamzapetstoreModel.tblDetailInvoice" />
+          <FunctionImport Name="stpGetCustomerByAccountTypeID" ReturnType="Collection(abuhamzapetstoreModel.stpGetCustomerByAccountTypeID)">
+          <Parameter Name="acc_TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram2">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram2">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram2">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition2">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams2">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram2">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams2" />
           <FunctionImport Name="stpGetAccountBalance" ReturnType="Collection(Decimal)">
-            <Parameter Name="acc_id" Mode="In" Type="Int32" />
+          <Parameter Name="acc_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="stpGetDashboardData" ReturnType="Collection(abuhamzapetstoreModel.stpGetDashboardData_Result)" />
+          <FunctionImport Name="stpGetAdvanceRecord" ReturnType="Collection(abuhamzapetstoreModel.stpGetAdvanceRecord_Result)" />
+          <FunctionImport Name="stpGetDailySummary" ReturnType="Collection(abuhamzapetstoreModel.stpGetDailySummary_Result)" />
+          <FunctionImport Name="stpGetExpenseRecord" ReturnType="Collection(abuhamzapetstoreModel.stpGetExpenseRecord_Result)" />
+          <FunctionImport Name="stpGetLoanRecord" ReturnType="Collection(abuhamzapetstoreModel.stpGetLoanRecord_Result)" />
+          <FunctionImport Name="stpGetPurchasePendingRecord" ReturnType="Collection(abuhamzapetstoreModel.stpGetPurchasePendingRecord_Result)" />
+          <FunctionImport Name="stpGetPurchaseRecord" ReturnType="Collection(abuhamzapetstoreModel.stpGetPurchaseRecord_Result)" />
+          <FunctionImport Name="stpGetSaleRecord" ReturnType="Collection(abuhamzapetstoreModel.stpGetSaleRecord_Result)" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -753,15 +777,6 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="SupplierName" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="stpGetCustomerByAccountTypeID">
-          <Property Type="Int32" Name="cus_id" Nullable="false" />
-          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="contact" Nullable="true" MaxLength="15" />
-          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
-        </ComplexType>
-        <ComplexType Name="ComplexType1" >
-          <Property Type="Int32" Name="cus_id" Nullable="false" />
-        </ComplexType>
         <EntityType Name="tblAccount">
           <Key>
             <PropertyRef Name="acc_id" />
@@ -808,6 +823,18 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="contact" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblDetailInvoice">
+          <Key>
+            <PropertyRef Name="detailInvoice_id" />
+          </Key>
+          <Property Name="detailInvoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="invoice_id" Type="Int32" />
+          <Property Name="barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="sellPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="voucherNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="purchasePrice" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="tblDetailOrder">
           <Key>
@@ -1036,29 +1063,19 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="stpGetCustomerByAccountTypeID1_Result">
+        <ComplexType Name="stpGetCustomerByAccountTypeID">
           <Property Type="Int32" Name="cus_id" Nullable="false" />
           <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="contact" Nullable="true" MaxLength="15" />
           <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
         </ComplexType>
-        <EntityType Name="tblDetailInvoice">
-          <Key>
-            <PropertyRef Name="detailInvoice_id" />
-          </Key>
-          <Property Name="detailInvoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="invoice_id" Type="Int32" />
-          <Property Name="barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="quantity" Type="Int32" />
-          <Property Name="sellPrice" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="voucherNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="purchasePrice" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
+        <ComplexType Name="ComplexType1" >
+          <Property Type="Int32" Name="cus_id" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="stpGetDashboardData_Result">
           <Property Type="Decimal" Name="CashInDrawer" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="PettyCash" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="Expenses" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="Profit" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="Purchases" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="TotalPurchase" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Decimal" Name="TotalSale" Nullable="false" Precision="18" Scale="0" />
@@ -1068,6 +1085,80 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
           <Property Type="Decimal" Name="PurchasePendings" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Int32" Name="TotalSuppliers" Nullable="false" />
           <Property Type="Int32" Name="TotalCustomers" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="stpGetAdvanceRecord_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="amount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="barcode" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="cus_No" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="cus_Name" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="voucherNo" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="stpGetDailySummary_Result">
+          <Property Type="Decimal" Name="CashInDrawer" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="PettyCash" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalExpenses" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="Profit" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalPurchase" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalSale" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalLoans" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalAdvances" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalPurchasePendings" Nullable="false" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="stpGetExpenseRecord_Result">
+          <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="pendingAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="paidAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="stpGetLoanRecord_Result">
+          <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="pendingAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="paidAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="customerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="customerNo" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="stpGetPurchasePendingRecord_Result">
+          <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="pendingAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="paidAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="supplierName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="supplierNo" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="stpGetPurchaseRecord_Result">
+          <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="pendingAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="paidAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="stpGetSaleRecord_Result">
+          <Property Type="String" Name="vchNo" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="pendingAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="paidAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="vchType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="200" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1234,6 +1325,19 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
                 <ScalarProperty Name="contact" ColumnName="contact" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="cus_id" ColumnName="cus_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDetailInvoices">
+            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblDetailInvoice">
+              <MappingFragment StoreEntitySet="tblDetailInvoice">
+                <ScalarProperty Name="purchasePrice" ColumnName="purchasePrice" />
+                <ScalarProperty Name="voucherNo" ColumnName="voucherNo" />
+                <ScalarProperty Name="sellPrice" ColumnName="sellPrice" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="detailInvoice_id" ColumnName="detailInvoice_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1438,9 +1542,12 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="stpGetCustomerByAccountTypeID1" FunctionName="abuhamzapetstoreModel.Store.stpGetCustomerByAccountTypeID">
+          <FunctionImportMapping FunctionImportName="stpOpenAccountWithMapping" FunctionName="abuhamzapetstoreModel.Store.stpOpenAccountWithMapping" />
+          <FunctionImportMapping FunctionImportName="stpUpdateAdvance" FunctionName="abuhamzapetstoreModel.Store.stpUpdateAdvance" />
+          <FunctionImportMapping FunctionImportName="stpUseAdvance" FunctionName="abuhamzapetstoreModel.Store.stpUseAdvance" />
+          <FunctionImportMapping FunctionImportName="stpGetCustomerByAccountTypeID" FunctionName="abuhamzapetstoreModel.Store.stpGetCustomerByAccountTypeID">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetCustomerByAccountTypeID1_Result">
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetCustomerByAccountTypeID">
                 <ScalarProperty Name="cus_id" ColumnName="cus_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="contact" ColumnName="contact" />
@@ -1448,22 +1555,6 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="stpOpenAccountWithMapping1" FunctionName="abuhamzapetstoreModel.Store.stpOpenAccountWithMapping" />
-          <FunctionImportMapping FunctionImportName="stpUpdateAdvance1" FunctionName="abuhamzapetstoreModel.Store.stpUpdateAdvance" />
-          <FunctionImportMapping FunctionImportName="stpUseAdvance1" FunctionName="abuhamzapetstoreModel.Store.stpUseAdvance" />
-          <EntitySetMapping Name="tblDetailInvoices">
-            <EntityTypeMapping TypeName="abuhamzapetstoreModel.tblDetailInvoice">
-              <MappingFragment StoreEntitySet="tblDetailInvoice">
-                <ScalarProperty Name="purchasePrice" ColumnName="purchasePrice" />
-                <ScalarProperty Name="voucherNo" ColumnName="voucherNo" />
-                <ScalarProperty Name="sellPrice" ColumnName="sellPrice" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="barcode" ColumnName="barcode" />
-                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
-                <ScalarProperty Name="detailInvoice_id" ColumnName="detailInvoice_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="stpGetAccountBalance" FunctionName="abuhamzapetstoreModel.Store.stpGetAccountBalance" />
           <FunctionImportMapping FunctionImportName="stpGetDashboardData" FunctionName="abuhamzapetstoreModel.Store.stpGetDashboardData">
             <ResultMapping>
@@ -1471,7 +1562,6 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
                 <ScalarProperty Name="CashInDrawer" ColumnName="CashInDrawer" />
                 <ScalarProperty Name="PettyCash" ColumnName="PettyCash" />
                 <ScalarProperty Name="Expenses" ColumnName="Expenses" />
-                <ScalarProperty Name="Profit" ColumnName="Profit" />
                 <ScalarProperty Name="Purchases" ColumnName="Purchases" />
                 <ScalarProperty Name="TotalPurchase" ColumnName="TotalPurchase" />
                 <ScalarProperty Name="TotalSale" ColumnName="TotalSale" />
@@ -1481,6 +1571,108 @@ warning 6013: The table/view 'abuhamzapetstore.dbo.tblAcc_Maping' does not have 
                 <ScalarProperty Name="PurchasePendings" ColumnName="PurchasePendings" />
                 <ScalarProperty Name="TotalSuppliers" ColumnName="TotalSuppliers" />
                 <ScalarProperty Name="TotalCustomers" ColumnName="TotalCustomers" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stpGetAdvanceRecord" FunctionName="abuhamzapetstoreModel.Store.stpGetAdvanceRecord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetAdvanceRecord_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="cus_No" ColumnName="cus_No" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="cus_Name" ColumnName="cus_Name" />
+                <ScalarProperty Name="voucherNo" ColumnName="voucherNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stpGetDailySummary" FunctionName="abuhamzapetstoreModel.Store.stpGetDailySummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetDailySummary_Result">
+                <ScalarProperty Name="CashInDrawer" ColumnName="CashInDrawer" />
+                <ScalarProperty Name="PettyCash" ColumnName="PettyCash" />
+                <ScalarProperty Name="TotalExpenses" ColumnName="TotalExpenses" />
+                <ScalarProperty Name="Profit" ColumnName="Profit" />
+                <ScalarProperty Name="TotalPurchase" ColumnName="TotalPurchase" />
+                <ScalarProperty Name="TotalSale" ColumnName="TotalSale" />
+                <ScalarProperty Name="TotalLoans" ColumnName="TotalLoans" />
+                <ScalarProperty Name="TotalAdvances" ColumnName="TotalAdvances" />
+                <ScalarProperty Name="TotalPurchasePendings" ColumnName="TotalPurchasePendings" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stpGetExpenseRecord" FunctionName="abuhamzapetstoreModel.Store.stpGetExpenseRecord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetExpenseRecord_Result">
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="vchType" ColumnName="vchType" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stpGetLoanRecord" FunctionName="abuhamzapetstoreModel.Store.stpGetLoanRecord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetLoanRecord_Result">
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="vchType" ColumnName="vchType" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="customerNo" ColumnName="customerNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stpGetPurchasePendingRecord" FunctionName="abuhamzapetstoreModel.Store.stpGetPurchasePendingRecord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetPurchasePendingRecord_Result">
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="vchType" ColumnName="vchType" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="supplierNo" ColumnName="supplierNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stpGetPurchaseRecord" FunctionName="abuhamzapetstoreModel.Store.stpGetPurchaseRecord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetPurchaseRecord_Result">
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="vchType" ColumnName="vchType" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="stpGetSaleRecord" FunctionName="abuhamzapetstoreModel.Store.stpGetSaleRecord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="abuhamzapetstoreModel.stpGetSaleRecord_Result">
+                <ScalarProperty Name="vchNo" ColumnName="vchNo" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="pendingAmount" ColumnName="pendingAmount" />
+                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="vchType" ColumnName="vchType" />
+                <ScalarProperty Name="description" ColumnName="description" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

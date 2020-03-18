@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblAdvance" Width="1.5" PointX="5.75" PointY="7.75" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblCategory" Width="1.5" PointX="7.75" PointY="7.75" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblCustomer" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailInvoice" Width="1.5" PointX="2.75" PointY="9.75" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailOrder" Width="1.5" PointX="3" PointY="6.125" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailTransaction" Width="1.5" PointX="8" PointY="1.25" />
         <EntityTypeShape EntityType="abuhamzapetstoreModel.tblEmployee" Width="1.5" PointX="9.75" PointY="4.75" />
@@ -29,7 +30,6 @@
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblDetailOrder_tblPurchaseOrder2" />
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblDetailTransaction_tblTransaction2" />
         <AssociationConnector Association="abuhamzapetstoreModel.FK_tblInvoice_tblUsers" />
-        <EntityTypeShape EntityType="abuhamzapetstoreModel.tblDetailInvoice" Width="1.5" PointX="0.75" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

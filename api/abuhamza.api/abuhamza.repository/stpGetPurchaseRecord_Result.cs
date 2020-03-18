@@ -11,11 +11,15 @@ namespace abuhamza.repository
 {
     using System;
     
-    public partial class stpGetCustomerByAccountTypeID1_Result
+    public partial class stpGetPurchaseRecord_Result
     {
-        public int cus_id { get; set; }
-        public string name { get; set; }
-        public string contact { get; set; }
+        public string vchNo { get; set; }
         public Nullable<System.DateTime> date { get; set; }
+        public Nullable<decimal> pendingAmount { get; set; }
+        public Nullable<decimal> paidAmount { get; set; }
+        public Nullable<decimal> totalAmount { get; set; }
+        public string status { get; set; }
+        public string vchType { get; set; }
+        public string description { get; set; }
     }
 }

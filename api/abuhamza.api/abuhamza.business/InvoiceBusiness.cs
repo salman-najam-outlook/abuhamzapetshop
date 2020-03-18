@@ -103,7 +103,7 @@ namespace abuhamza.business
                     foreach (SingleProductDomainModel singleDetail in singleProductList)
                     {
                         result = db.stpSaleDetail(lastSaleOrderId, singleDetail.quantity, singleDetail.barcode,
-                            singleDetail.sellPrice, strVchNo, singleDetail.purchasePrice);
+                            singleDetail.sellPrice, strVchNo,singleDetail.purchasePrice);
                     }
 
                     if (saleOrder.isAdvanceVisible == true)

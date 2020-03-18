@@ -13,7 +13,7 @@ using abuhamza_api.Models;
 
 namespace abuhamza_api.Controllers
 {
-
+    [Authorize]
     public class VouchersController : ApiController
     {
         IVoucherBusiness voucherBusiness;

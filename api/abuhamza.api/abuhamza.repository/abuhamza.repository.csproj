@@ -99,6 +99,9 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="stpGetAdvanceRecord_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="stpGetAdvances_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
@@ -111,13 +114,19 @@
     <Compile Include="stpGetCustomerByAccountTypeID.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="stpGetCustomerByAccountTypeID1_Result.cs">
+    <Compile Include="stpGetDailySummary_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="stpGetDashboardData_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="stpGetExpenseRecord_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="stpGetFromAccounts_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetLoanRecord_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="stpGetPendingAdvanceVouchers_Result.cs">
@@ -127,6 +136,15 @@
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="stpGetPendingVouchersByVoucherType_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetPurchasePendingRecord_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetPurchaseRecord_Result.cs">
+      <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="stpGetSaleRecord_Result.cs">
       <DependentUpon>AbuHamzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SubCategoryRepository.cs" />
@@ -212,7 +230,9 @@
     <None Include="AbuHamzaEntities.edmx.diagram">
       <DependentUpon>AbuHamzaEntities.edmx</DependentUpon>
     </None>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

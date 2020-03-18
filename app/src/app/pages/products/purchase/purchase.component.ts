@@ -174,7 +174,6 @@ export class PurchaseComponent implements OnInit {
 
   onAdd() {
     this.singleProduct = new SingleProduct();
-    this.selectedSupplier = 0;
     this.singleProduct.pro_id = this.purchaseProductForm.controls.pro_id.value;
     this.singleProduct.barcode = this.purchaseProductForm.controls.barcode.value;
     this.singleProduct.productName = this.purchaseProductForm.controls.productName.value;

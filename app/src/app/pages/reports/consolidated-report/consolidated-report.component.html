@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-12">
+        <nb-card>
+          <nb-tabset fullWidth>
+            <nb-tab tabTitle="Daily Report">
+                <div class="accordion-container col-md-12 col-lg-12 col-xxxl-12">
+                    <nb-accordion multi>
+                      <nb-accordion-item>
+                        <nb-accordion-item-header>
+                          Sales
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <ng2-smart-table [settings]="saleRecordListSetting" [source]="saleRecordListSource"></ng2-smart-table>
+                        </nb-accordion-item-body>
+                      </nb-accordion-item>
+                
+                      <nb-accordion-item>
+                        <nb-accordion-item-header>
+                          Purchases
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                          <ng2-smart-table [settings]="purchaseRecordListSetting" [source]="purchaseRecordListSource"></ng2-smart-table>
+                        </nb-accordion-item-body>
+                      </nb-accordion-item>
+                
+                      <nb-accordion-item>
+                        <nb-accordion-item-header>
+                          Advances
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                          <ng2-smart-table [settings]="advanceRecordListSettings" [source]="advanceRecordListSource"></ng2-smart-table>
+                        </nb-accordion-item-body>
+                      </nb-accordion-item>
+
+                      <nb-accordion-item>
+                        <nb-accordion-item-header>
+                          Expanses
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                          <ng2-smart-table [settings]="expenseRecordListSettings" [source]="expenseRecordListSource"></ng2-smart-table>
+                        </nb-accordion-item-body>
+                      </nb-accordion-item>
+
+                      <nb-accordion-item>
+                        <nb-accordion-item-header>
+                          Loans
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                          <ng2-smart-table [settings]="loanRecordListSettings" [source]="loanRecordListSource"></ng2-smart-table>
+                        </nb-accordion-item-body>
+                      </nb-accordion-item>
+
+                      <nb-accordion-item>
+                        <nb-accordion-item-header>
+                          Pending Purchases
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                          <ng2-smart-table [settings]="purchasePendingListSettings" [source]="purchasePendingListSource"></ng2-smart-table>
+                        </nb-accordion-item-body>
+                      </nb-accordion-item>
+
+                    </nb-accordion>
+                  </div>
+            </nb-tab>
+            <nb-tab tabTitle="Custom Report">
+              <p>Tab 2</p>
+            </nb-tab>
+          </nb-tabset>
+        </nb-card>
+      </div>
+</div>

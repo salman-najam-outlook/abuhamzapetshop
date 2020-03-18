@@ -11,7 +11,7 @@ using abuhamza_api.Models;
 
 namespace abuhamza_api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AccountsController : ApiController
     {
         IAccountBusiness accountBusiness;

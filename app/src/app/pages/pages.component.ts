@@ -34,6 +34,12 @@ export class PagesComponent implements OnInit {
         hidden: this.user.userRoll === 'emp' ? true : false,
       },
       {
+        title: 'Reports',
+        icon: 'layout-outline',
+        link: '/pages/reports/consolidated-report',
+        hidden: this.user.userRoll === 'emp' ? true : false,
+      },
+      {
         title: 'Products',
         icon: 'layout-outline',
         hidden: false,

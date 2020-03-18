@@ -96,10 +96,16 @@ export class ProductService {
   }
 
   getSavedCategories(mainCategoryId: number, categoryId: number, subCategoryId: number): Observable<any> {
+    const headers =  new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+    });
+    // tslint:disable-next-line: max-line-length
     const response1 = this.httpClient.get('http://localhost:51110/api/categories/GetAllCategoriesByMainCategoryId/' + mainCategoryId);
+    // tslint:disable-next-line: max-line-length
     const response2 = this.httpClient.get('http://localhost:51110/api/SubCategories/GetSubCategoriesByCategoryId/' + categoryId);
+    // tslint:disable-next-line: max-line-length
     const response3 = this.httpClient.get('http://localhost:51110/api/ForthSubCategories/GetForthSubCategoriesbySubCategoryid/' + subCategoryId);
-    return forkJoin([response1, response2, response3]);
+    return forkJoin([response1, response2, response3,  { headers }]);
   }
 
   addPurchaseOrder(purchaseOrder: PurchaseOrder): Observable<any> {
