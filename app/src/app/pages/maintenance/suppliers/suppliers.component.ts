@@ -76,11 +76,14 @@ export class SuppliersComponent implements OnInit {
       },
       error => {
         if (error.status === 401) {
-          this.showToast('danger', 'Session Time Out!', 'Your session has been expired. Please re-login!');
           localStorage.removeItem('access_token');
           localStorage.removeItem('expires');
           localStorage.removeItem('user');
-          this.router.navigate(['auth']);
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
         } else {
           this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
         }
@@ -99,12 +102,34 @@ export class SuppliersComponent implements OnInit {
               this.source.load(response);
             },
             error => {
-              this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast('danger', 'Error!', 'An error occured while fetching all Suppliers.');
+              }
             },
           );
         },
         error => {
-          this.showToast('danger', 'Error!', 'Unable to delete the targeted Supplier.');
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast('danger', 'Error!', 'Unable to delete the targeted Supplier.');
+          }
         },
       );
     } else {

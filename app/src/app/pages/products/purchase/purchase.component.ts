@@ -14,6 +14,7 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 import { User } from '../../../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-purchase',
@@ -81,6 +82,7 @@ export class PurchaseComponent implements OnInit {
     private productService: ProductService,
     private maintenanceService: MaintenanceService,
     private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -104,11 +106,22 @@ export class PurchaseComponent implements OnInit {
         this.suppliers = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Suppliers.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Suppliers.',
+          );
+        }
       },
     );
     this.maintenanceService.GetFromAccounts().subscribe(
@@ -116,11 +129,22 @@ export class PurchaseComponent implements OnInit {
         this.fromAccounts = response;
       },
       error => {
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
         this.showToast(
           'danger',
           'Error!',
           'An error occured while fetching FromAccounts.',
         );
+        }
       },
     );
   }
@@ -264,11 +288,22 @@ export class PurchaseComponent implements OnInit {
         );
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while entering Purchase.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while entering Purchase.',
+          );
+        }
       },
     );
   }

@@ -14,6 +14,7 @@ import {
   NbToastrService,
   NbComponentStatus,
 } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-add-edit',
@@ -88,6 +89,7 @@ export class AddEditComponent implements OnInit {
     private maintenanceService: MaintenanceService,
     private productService: ProductService,
     private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -96,11 +98,22 @@ export class AddEditComponent implements OnInit {
         this.mainCategories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Main Categories.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Main Categories.',
+          );
+        }
       },
     );
     this.maintenanceService.getAllCategories().subscribe(
@@ -108,11 +121,22 @@ export class AddEditComponent implements OnInit {
         this.categories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Categories.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Categories.',
+          );
+        }
       },
     );
     this.maintenanceService.getAllSubCategories().subscribe(
@@ -120,11 +144,22 @@ export class AddEditComponent implements OnInit {
         this.subCategories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Sub Categories.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Sub Categories.',
+          );
+        }
       },
     );
     this.maintenanceService.getAllForthSubCategories().subscribe(
@@ -132,11 +167,22 @@ export class AddEditComponent implements OnInit {
         this.fourthCategories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Fourth Categories.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Fourth Categories.',
+          );
+        }
       },
     );
     this.productService.getAllProducts().subscribe(
@@ -144,11 +190,22 @@ export class AddEditComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Products list.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Products list.',
+          );
+        }
       },
     );
 
@@ -182,20 +239,42 @@ export class AddEditComponent implements OnInit {
               this.source.load(response);
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while fetching all products!',
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching all products!',
+                );
+              }
             },
           );
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while deleting product!',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while deleting product!',
+            );
+          }
         },
       );
     } else {
@@ -219,11 +298,22 @@ export class AddEditComponent implements OnInit {
         this.categories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Main categories.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Main categories.',
+          );
+        }
       },
     );
   }
@@ -238,11 +328,22 @@ export class AddEditComponent implements OnInit {
         this.subCategories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Sub categories.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Sub categories.',
+          );
+        }
       },
     );
   }
@@ -257,11 +358,22 @@ export class AddEditComponent implements OnInit {
           this.fourthCategories = response;
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while fetching Fourth categories.',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching Fourth categories.',
+            );
+          }
         },
       );
   }
@@ -271,7 +383,6 @@ export class AddEditComponent implements OnInit {
     if (!this.validateForm(isValid)) {
       return;
     }
-
     this.productToAdd = new Product();
     this.productToAdd.pro_id = this.productAddEditForm.controls.productId.value;
     this.productToAdd.barcode = this.productAddEditForm.controls.barcode.value;
@@ -308,16 +419,38 @@ export class AddEditComponent implements OnInit {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              'danger',
-              'Error!',
-              'An error occured while fetching records.',
-            );
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching records.',
+              );
+            }
           },
         );
       },
       error => {
-        this.showToast('danger', 'Error!', 'Unable to add new Product.');
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast('danger', 'Error!', 'Unable to add new Product.');
+        }
       },
     );
   }
@@ -364,21 +497,37 @@ export class AddEditComponent implements OnInit {
               this.selectedSubCategoryId = this.productAddEditForm.controls.subCategoryId.value;
               this.selectedFourthCategoryId = this.productAddEditForm.controls.fourthCategoryId.value;
             },
-            err => {
-              // this.showToast(
-              //   'danger',
-              //   'Error!',
-              //   'An error occured while fetching records.',
-              // );
+            error => {
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              }
             },
           );
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching records.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching records.',
+          );
+        }
       },
     );
   }
@@ -405,11 +554,22 @@ export class AddEditComponent implements OnInit {
         this.mainCategories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching Main Categories.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Main Categories.',
+          );
+        }
       },
     );
   }

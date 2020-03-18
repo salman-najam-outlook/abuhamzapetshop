@@ -15,6 +15,7 @@ import { Product } from '../../../models/product.model';
 import { Customer } from '../../../models/customer.model';
 import { CustomersAddComponent } from './customers-add-model/customers-add-model.component';
 import { MaintenanceService } from '../../../services/maintenance.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-sales',
@@ -100,6 +101,7 @@ export class SalesComponent implements OnInit {
     private dialogService: NbDialogService,
     private maintenanceService: MaintenanceService,
     private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -212,11 +214,22 @@ export class SalesComponent implements OnInit {
           }
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while fetching voucher details!',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching voucher details!',
+            );
+          }
         },
       );
     }
@@ -319,11 +332,22 @@ export class SalesComponent implements OnInit {
               this.source.load(this.singleProductList);
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while submitting Sale!',
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while submitting Sale!',
+                );
+              }
             },
           );
         });
@@ -361,11 +385,22 @@ export class SalesComponent implements OnInit {
           this.source.load(this.singleProductList);
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while submitting Sale!',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while submitting Sale!',
+            );
+          }
         },
       );
     }

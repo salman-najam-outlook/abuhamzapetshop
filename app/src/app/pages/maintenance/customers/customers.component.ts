@@ -9,6 +9,7 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-customers',
@@ -32,6 +33,7 @@ export class CustomersComponent implements OnInit {
     private maintenanceService: MaintenanceService,
     private toastrService: NbToastrService,
     private datePipe: DatePipe,
+    private router: Router,
   ) {}
 
   settings = {
@@ -92,20 +94,42 @@ export class CustomersComponent implements OnInit {
               this.source.load(response);
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while fetching all Customers.',
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching all Customers.',
+                );
+              }
             },
           );
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'Unable to delete the targeted Customer.',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'Unable to delete the targeted Customer.',
+            );
+          }
         },
       );
     } else {
@@ -132,20 +156,42 @@ export class CustomersComponent implements OnInit {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              'danger',
-              'Error!',
-              'An error occured while fetching all Customers.',
-            );
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching all Customers.',
+              );
+            }
           },
         );
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while adding new Customers',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while adding new Customers',
+          );
+        }
       },
     );
   }
@@ -169,20 +215,42 @@ export class CustomersComponent implements OnInit {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              'danger',
-              'Error!',
-              'An error occured while fetching all Customers.',
-            );
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching all Customers.',
+              );
+            }
           },
         );
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while updating targeted Customer.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while updating targeted Customer.',
+          );
+        }
       },
     );
   }
@@ -197,11 +265,22 @@ export class CustomersComponent implements OnInit {
           this.source.load(response);
         },
         (error) => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while fetching Customers.',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching Customers.',
+            );
+          }
         },
       )
     }
@@ -213,11 +292,22 @@ export class CustomersComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching all Customers.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching all Customers.',
+          );
+        }
       },
     );
   }

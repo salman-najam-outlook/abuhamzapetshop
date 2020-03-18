@@ -15,6 +15,7 @@ import {
   NbGlobalPosition,
   NbGlobalPhysicalPosition,
 } from '@nebular/theme';
+import { Router } from '@angular/router';
 @Component({
   selector: 'ngx-categories',
   templateUrl: 'categories.component.html',
@@ -34,6 +35,7 @@ export class CategoriesComponent implements OnInit {
     private maintenanceService: MaintenanceService,
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
+    private router: Router,
   ) {
     this.selectedMainCategory.name = 'None';
     this.selectedCategory.name = 'None';
@@ -56,11 +58,22 @@ export class CategoriesComponent implements OnInit {
         this.mainCategories = response;
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while fetching main-categories!'
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching main-categories!',
+          );
+        }
       },
     );
   }
@@ -80,11 +93,22 @@ export class CategoriesComponent implements OnInit {
           this.categories = response;
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while fetching first sub-categories!'
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching first sub-categories!',
+            );
+          }
         },
       );
   }
@@ -111,11 +135,22 @@ export class CategoriesComponent implements OnInit {
             this.mainCategories = response;
           },
           error => {
-            this.showToast(
-              'danger',
-              'Error!',
-              'An error occured while fetching main-categories!'
-            );
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching main-categories!',
+              );
+            }
           },
         );
       });
@@ -124,26 +159,37 @@ export class CategoriesComponent implements OnInit {
   onDeleteMainCategory(category: MainCategory) {
     this.maintenanceService.deleteMainCategory(category.mainCat_id).subscribe(
       response => {
-        if (response == 'Deleted') {
+        if (response === 'Deleted') {
           this.showToast(
             'success',
             'Success!',
-            'Targeted main-category has been deleted successfully!'
+            'Targeted main-category has been deleted successfully!',
           );
         } else {
           this.showToast(
             'danger',
             'Error!',
-            'Targeted main-category cannot delete!'
+            'Targeted main-category cannot delete!',
           );
         }
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while deleting main-category!'
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while deleting main-category!',
+          );
+        }
       },
     );
   }
@@ -160,11 +206,22 @@ export class CategoriesComponent implements OnInit {
           this.subCategories = response;
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while fetching first sub-categories!'
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching first sub-categories!',
+            );
+          }
         },
       );
   }
@@ -193,11 +250,22 @@ export class CategoriesComponent implements OnInit {
               this.categories = response;
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while fetching first sub-categories!'
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching first sub-categories!',
+                );
+              }
             },
           );
       });
@@ -206,26 +274,37 @@ export class CategoriesComponent implements OnInit {
   onDeleteCategory(category: Category) {
     this.maintenanceService.deleteCategory(category.cat_id).subscribe(
       response => {
-        if (response == 'Deleted') {
+        if (response === 'Deleted') {
           this.showToast(
             'success',
             'Success!',
-            'Targeted first sub-category has been deleted successfully!'
+            'Targeted first sub-category has been deleted successfully!',
           );
         } else {
           this.showToast(
             'danger',
             'Error!',
-            'Targeted first sub-category cannot delete!'
+            'Targeted first sub-category cannot delete!',
           );
         }
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while deleting first sub-category!'
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while deleting first sub-category!',
+          );
+        }
       },
     );
   }
@@ -240,11 +319,22 @@ export class CategoriesComponent implements OnInit {
           this.subSubCategories = response;
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while fetching second sub-categories!'
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching second sub-categories!',
+            );
+          }
         },
       );
   }
@@ -277,11 +367,22 @@ export class CategoriesComponent implements OnInit {
               this.subCategories = response;
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while fetching second sub-categories!'
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching second sub-categories!',
+                );
+              }
             },
           );
       });
@@ -290,26 +391,37 @@ export class CategoriesComponent implements OnInit {
   onDeleteSubCategory(subCategory: SubCategory) {
     this.maintenanceService.deleteSubCategory(subCategory.subCat_id).subscribe(
       response => {
-        if (response == 'Deleted') {
+        if (response === 'Deleted') {
           this.showToast(
             'success',
             'Success!',
-            'Targeted second sub-category has been deleted successfully!'
+            'Targeted second sub-category has been deleted successfully!',
           );
         } else {
           this.showToast(
             'danger',
             'Error!',
-            'Targeted second sub-category cannot delete!'
+            'Targeted second sub-category cannot delete!',
           );
         }
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while deleting second sub-category!'
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while deleting second sub-category!',
+          );
+        }
       },
     );
   }
@@ -340,11 +452,22 @@ export class CategoriesComponent implements OnInit {
               this.subSubCategories = response;
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while fetching third sub-categories!'
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching third sub-categories!',
+                );
+              }
             },
           );
       });
@@ -355,26 +478,37 @@ export class CategoriesComponent implements OnInit {
       .deleteForthSubCategory(fourthSubCategory.fsubCat_id)
       .subscribe(
         response => {
-          if (response == 'deleted') {
+          if (response === 'deleted') {
             this.showToast(
               'success',
               'Success!',
-              'Targeted third sub-category has been deleted successfully!'
+              'Targeted third sub-category has been deleted successfully!',
             );
           } else {
             this.showToast(
               'danger',
               'Error!',
-              'Targeted third sub-category cannot delete!'
+              'Targeted third sub-category cannot delete!',
             );
           }
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while deleting third sub-category!'
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while deleting third sub-category!',
+            );
+          }
         },
       );
   }

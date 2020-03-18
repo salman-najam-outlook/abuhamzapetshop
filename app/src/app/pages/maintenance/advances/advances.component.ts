@@ -39,7 +39,7 @@ export class AdvancesComponent implements OnInit {
     private maintenanceService: MaintenanceService,
     private toastrService: NbToastrService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
   ) {}
 
   settings = {
@@ -133,11 +133,22 @@ export class AdvancesComponent implements OnInit {
               this.source.load(response);
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while fetching all Advances.',
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching all Advances.',
+                );
+              }
             },
           );
         },
@@ -177,35 +188,44 @@ export class AdvancesComponent implements OnInit {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              'danger',
-              'Error!',
-              'An error occured while fetching all Advances.',
-            );
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching all Advances.',
+              );
+            }
           },
         );
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while adding new Advances',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while adding new Advances',
+          );
+        }
       },
     );
-
-    // this.maintenanceService.addUpdateCustomer(this.customer).subscribe(
-    //   response => {
-
-    //   },
-    //   error => {
-    //     this.showToast(
-    //       "danger",
-    //       "Error!",
-    //       "An error occured while creating Customer."
-    //     );
-    //   }
-    // );
   }
 
   onConfirmEdit(event): void {
@@ -227,20 +247,42 @@ export class AdvancesComponent implements OnInit {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              'danger',
-              'Error!',
-              'An error occured while fetching all Advances.',
-            );
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching all Advances.',
+              );
+            }
           },
         );
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while updating targeted Advance.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while updating targeted Advance.',
+          );
+        }
       },
     );
   }
@@ -264,11 +306,22 @@ export class AdvancesComponent implements OnInit {
         this.advanceForm.reset();
       },
       (error) => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while updating targeted advance.',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while updating targeted advance.',
+          );
+        }
         this.advanceForm.reset();
       },
     );

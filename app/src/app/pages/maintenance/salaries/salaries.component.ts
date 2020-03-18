@@ -1,24 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { LocalDataSource } from "ng2-smart-table";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { Salary } from "../../../models/salary.model";
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { Salary } from '../../../models/salary.model';
 import {
   NbToastrService,
   NbComponentStatus,
   NbGlobalPosition,
-  NbGlobalPhysicalPosition
-} from "@nebular/theme";
+  NbGlobalPhysicalPosition,
+} from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "ngx-smart-table",
-  templateUrl: "./salaries.component.html",
-  styleUrls: ["./salaries.component.scss"]
+  selector: 'ngx-smart-table',
+  templateUrl: './salaries.component.html',
+  styleUrls: ['./salaries.component.scss'],
 })
 export class SalariesComponent implements OnInit {
   salary: Salary = new Salary();
   constructor(
     private maintenanceService: MaintenanceService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   // Toaster Setting Starts
@@ -35,36 +37,36 @@ export class SalariesComponent implements OnInit {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true
+      confirmDelete: true,
     },
     columns: {
       sal_id: {
-        title: "ID",
-        type: "number"
+        title: 'ID',
+        type: 'number',
       },
       date: {
-        title: "Date",
-        type: "date"
+        title: 'Date',
+        type: 'date',
       },
       amount: {
-        title: "Amount",
-        type: "number"
+        title: 'Amount',
+        type: 'number',
       },
       emp_id: {
-        title: "Emp Id",
-        type: "number"
-      }
-    }
+        title: 'Emp Id',
+        type: 'number',
+      },
+    },
   };
 
   source: LocalDataSource = new LocalDataSource();
@@ -75,45 +77,79 @@ export class SalariesComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching all Employee salaries!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching all Employee salaries!',
+          );
+        }
+      },
     );
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm("Are you sure you want to delete?")) {
+    if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
       this.maintenanceService.deleteSalary(event.data.sal_id).subscribe(
         response => {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted Employee salary has been deleted successfully!"
+            'success',
+            'Success!',
+            'Targeted Employee salary has been deleted successfully!',
           );
           this.maintenanceService.getAllSalaries().subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
             response => {
               this.source.load(response);
             },
             error => {
-              this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching all Employee salaries!"
-              );
-            }
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching all Employee salaries!',
+                );
+              }
+            },
           );
         },
         error => {
-          this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while deleting Employee salary"
-          );
-        }
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while deleting Employee salary',
+            );
+          }
+        },
       );
     } else {
       event.confirm.reject();
@@ -129,30 +165,53 @@ export class SalariesComponent implements OnInit {
     this.maintenanceService.addUpdateSalary(this.salary).subscribe(
       response => {
         this.showToast(
-          "success",
-          "Success!",
-          "New Employee salary has been added successfully!"
+          'success',
+          'Success!',
+          'New Employee salary has been added successfully!',
         );
         this.maintenanceService.getAllSalaries().subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
           response => {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching all Employee salaries!"
-            );
-          }
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching all Employee salaries!',
+              );
+            }
+          },
         );
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while creating salary!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while creating salary!',
+          );
+        }
+      },
     );
   }
 
@@ -164,21 +223,33 @@ export class SalariesComponent implements OnInit {
     this.salary.emp_id = event.newData.emp_id;
     this.maintenanceService.addUpdateSalary(this.salary).subscribe(response => {
       this.maintenanceService.getAllSalaries().subscribe(
+        // tslint:disable-next-line: no-shadowed-variable
         response => {
           this.showToast(
-            "success",
-            "Success!",
-            "Employee salary has been updated successfully!"
+            'success',
+            'Success!',
+            'Employee salary has been updated successfully!',
           );
           this.source.load(response);
         },
         error => {
-          this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while updating Employee salary!"
-          );
-        }
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while updating Employee salary!',
+            );
+          }
+        },
       );
     });
   }
@@ -190,9 +261,9 @@ export class SalariesComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 }

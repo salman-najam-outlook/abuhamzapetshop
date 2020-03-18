@@ -1,24 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { LocalDataSource } from "ng2-smart-table";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { Employee } from "../../../models/employee.model";
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { Employee } from '../../../models/employee.model';
 import {
   NbToastrService,
   NbComponentStatus,
   NbGlobalPosition,
-  NbGlobalPhysicalPosition
-} from "@nebular/theme";
+  NbGlobalPhysicalPosition,
+} from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "ngx-smart-table",
-  templateUrl: "./employees.component.html",
-  styleUrls: ["./employees.component.scss"]
+  selector: 'ngx-smart-table',
+  templateUrl: './employees.component.html',
+  styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
   employee: Employee = new Employee();
   constructor(
     private maintenanceService: MaintenanceService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   // Toaster Setting Starts
@@ -35,41 +37,41 @@ export class EmployeesComponent implements OnInit {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true
+      confirmDelete: true,
     },
     columns: {
       name: {
-        title: "Name",
-        type: "string"
+        title: 'Name',
+        type: 'string',
       },
       NIC: {
-        title: "NIC",
-        type: "string"
+        title: 'NIC',
+        type: 'string',
       },
       address: {
-        title: "Address",
-        type: "string",
-        width: "25%"
+        title: 'Address',
+        type: 'string',
+        width: '25%',
       },
       salary: {
-        title: "Salary",
-        type: "number"
+        title: 'Salary',
+        type: 'number',
       },
       contact: {
-        title: "Contact",
-        type: "number"
-      }
-    }
+        title: 'Contact',
+        type: 'number',
+      },
+    },
   };
 
   source: LocalDataSource = new LocalDataSource();
@@ -80,45 +82,79 @@ export class EmployeesComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching all Employees!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching all Employees!',
+          );
+        }
+      },
     );
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm("Are you sure you want to delete?")) {
+    if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
       this.maintenanceService.deleteEmployee(event.data.emp_id).subscribe(
         response => {
           this.showToast(
-            "success",
-            "Success!",
-            "Targeted Employee has been deleted successfully!"
+            'success',
+            'Success!',
+            'Targeted Employee has been deleted successfully!',
           );
           this.maintenanceService.getAllEmployees().subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
             response => {
               this.source.load(response);
             },
             error => {
-              this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching all Employess!"
-              );
-            }
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching all Employess!',
+                );
+              }
+            },
           );
         },
         error => {
-          this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while deleting Employee!"
-          );
-        }
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while deleting Employee!',
+            );
+          }
+        },
       );
     } else {
       event.confirm.reject();
@@ -127,11 +163,10 @@ export class EmployeesComponent implements OnInit {
 
   onCreateConfirm(event): void {
     event.confirm.resolve();
-    if (event.newData.name == "") {
-      this.showToast("danger", "Error!", "Please enter employee name");
+    if (event.newData.name === '') {
+      this.showToast('danger', 'Error!', 'Please enter employee name');
       return;
     }
-
     this.employee.emp_id = 0;
     this.employee.name = event.newData.name;
     this.employee.NIC = event.newData.NIC;
@@ -142,37 +177,60 @@ export class EmployeesComponent implements OnInit {
     this.maintenanceService.addUpdateEmployee(this.employee).subscribe(
       response => {
         this.showToast(
-          "success",
-          "Success!",
-          "New Employee has been added successfully!"
+          'success',
+          'Success!',
+          'New Employee has been added successfully!',
         );
         this.maintenanceService.getAllEmployees().subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
           response => {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching all Employees!"
-            );
-          }
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching all Employees!',
+              );
+            }
+          },
         );
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while creating Employee!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while creating Employee!',
+          );
+        }
+      },
     );
   }
 
   onConfirmEdit(event): void {
     event.confirm.resolve();
-    if (event.newData.name == "") {
-      this.showToast("danger", "Error!", "Please enter employee name");
+    if (event.newData.name === '') {
+      this.showToast('danger', 'Error!', 'Please enter employee name');
       return;
     }
     this.employee.emp_id = event.newData.emp_id;
@@ -185,30 +243,53 @@ export class EmployeesComponent implements OnInit {
     this.maintenanceService.addUpdateEmployee(this.employee).subscribe(
       response => {
         this.showToast(
-          "success",
-          "Success!",
-          "Employee has been updated successfully!"
+          'success',
+          'Success!',
+          'Employee has been updated successfully!',
         );
         this.maintenanceService.getAllEmployees().subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
           response => {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              "danger",
-              "Error!",
-              "An error occured while fetching all Employees!"
-            );
-          }
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching all Employees!',
+              );
+            }
+          },
         );
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while updating Employee!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while updating Employee!',
+          );
+        }
+      },
     );
   }
   private showToast(type: NbComponentStatus, title: string, body: string) {
@@ -218,9 +299,9 @@ export class EmployeesComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 }

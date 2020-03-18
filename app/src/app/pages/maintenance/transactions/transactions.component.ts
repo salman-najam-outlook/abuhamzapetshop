@@ -1,19 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Account } from "../../../models/account.model";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { CashTransaction } from "../../../models/cashTransaction.model";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Account } from '../../../models/account.model';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { CashTransaction } from '../../../models/cashTransaction.model';
 import {
   NbGlobalPosition,
   NbGlobalPhysicalPosition,
   NbComponentStatus,
-  NbToastrService
-} from "@nebular/theme";
+  NbToastrService,
+} from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "ngx-transactions",
-  templateUrl: "./transactions.component.html",
-  styleUrls: ["./transactions.component.scss"]
+  selector: 'ngx-transactions',
+  templateUrl: './transactions.component.html',
+  styleUrls: ['./transactions.component.scss'],
 })
 export class TransactionsComponent implements OnInit {
   transactionsForm: FormGroup;
@@ -24,7 +25,8 @@ export class TransactionsComponent implements OnInit {
 
   constructor(
     private maintenanceService: MaintenanceService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   // Toaster Setting Starts
@@ -38,35 +40,56 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.transactionsForm = new FormGroup({
-      fromAccount: new FormControl("", Validators.required),
-      toAccount: new FormControl("", Validators.required),
-      description: new FormControl(""),
-      amount: new FormControl("", Validators.required)
+      fromAccount: new FormControl('', Validators.required),
+      toAccount: new FormControl('', Validators.required),
+      description: new FormControl(''),
+      amount: new FormControl('', Validators.required),
     });
-
     this.maintenanceService.GetToAccounts().subscribe(
       response => {
         this.toAccounts = response;
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching ToAccounts."
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching ToAccounts.',
+          );
+        }
+      },
     );
     this.maintenanceService.GetFromAccounts().subscribe(
       response => {
         this.fromAccounts = response;
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching FromAccounts."
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching FromAccounts.',
+          );
+        }
+      },
     );
   }
 
@@ -76,19 +99,29 @@ export class TransactionsComponent implements OnInit {
     this.cashTransactionModel.creditor_Account_Id = this.transactionsForm.controls.fromAccount.value;
     this.cashTransactionModel.voucherAmount = this.transactionsForm.controls.amount.value;
     this.cashTransactionModel.description = this.transactionsForm.controls.description.value;
-
     this.maintenanceService.sendAmount(this.cashTransactionModel).subscribe(
       response => {
         this.transactionsForm.reset();
-        this.showToast("success", "Success!", "Transaction has been done!");
+        this.showToast('success', 'Success!', 'Transaction has been done!');
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while transaction!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while transaction!',
+          );
+        }
+      },
     );
   }
 
@@ -103,9 +136,9 @@ export class TransactionsComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 }

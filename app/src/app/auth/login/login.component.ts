@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbAuthSocialLink } from '@nebular/auth';
 import { LoginService } from '../../services/login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../../models/user.model';
 import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastrService } from '@nebular/theme';
@@ -11,7 +11,8 @@ import { NbGlobalPosition, NbGlobalPhysicalPosition, NbComponentStatus, NbToastr
   templateUrl: './login.component.html',
 })
 export class NgxLoginComponent implements OnInit {
-  constructor(private loginService: LoginService, private router: Router, private toastrService: NbToastrService) { }
+  constructor(private loginService: LoginService, private router: Router, private toastrService: NbToastrService,
+    private route: ActivatedRoute) { }
   redirectDelay: number;
   showMessages: any;
   strategy: string;
@@ -22,6 +23,7 @@ export class NgxLoginComponent implements OnInit {
   socialLinks: NbAuthSocialLink[];
   rememberMe: boolean;
   form: FormGroup;
+  isSessionExpired: boolean;
 
   // Toaster Setting Starts
   index = 1;
@@ -36,10 +38,17 @@ export class NgxLoginComponent implements OnInit {
   login(): void { }
 
   ngOnInit() {
+    this.isSessionExpired = false;
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     });
+    this.route.queryParams.subscribe(params => {
+      this.isSessionExpired = params['isSessionExpired'];
+    });
+    if (this.isSessionExpired) {
+      this.showToast('danger', 'Session Time Out!', 'Your session has been expired. Please Re-Login!');
+    }
   }
 
   onLoggedin() {

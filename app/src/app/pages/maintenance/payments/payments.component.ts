@@ -1,21 +1,22 @@
-import { Component, OnInit } from "@angular/core";
-import { LocalDataSource } from "ng2-smart-table";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ProductService } from "../../../services/product.service";
-import { MaintenanceService } from "../../../services/maintenance.service";
-import { Supplier } from "../../../models/supplier.model";
+import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from '../../../services/product.service';
+import { MaintenanceService } from '../../../services/maintenance.service';
+import { Supplier } from '../../../models/supplier.model';
 import {
   NbGlobalPosition,
   NbGlobalPhysicalPosition,
   NbComponentStatus,
-  NbToastrService
-} from "@nebular/theme";
-import { Payment } from "../../../models/payment.model";
+  NbToastrService,
+} from '@nebular/theme';
+import { Payment } from '../../../models/payment.model';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "ngx-payments",
-  styleUrls: ["./payments.component.scss"],
-  templateUrl: "./payments.component.html"
+  selector: 'ngx-payments',
+  styleUrls: ['./payments.component.scss'],
+  templateUrl: './payments.component.html',
 })
 export class PaymentsComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
@@ -38,57 +39,68 @@ export class PaymentsComponent implements OnInit {
     actions: {
       add: false,
       edit: false,
-      delete: false
+      delete: false,
     },
     columns: {
       SupplierName: {
-        title: "Name",
-        type: "string"
+        title: 'Name',
+        type: 'string',
       },
       vchNo: {
-        title: "Voucher Number",
-        type: "string"
+        title: 'Voucher Number',
+        type: 'string',
       },
       totalAmount: {
-        title: "Total Amount",
-        type: "number"
+        title: 'Total Amount',
+        type: 'number',
       },
       pendingAmount: {
-        title: "Amount To Be Paid",
-        type: "number"
+        title: 'Amount To Be Paid',
+        type: 'number',
       },
       paidAmount: {
-        title: "Paid Amount",
-        type: "number"
-      }
-    }
+        title: 'Paid Amount',
+        type: 'number',
+      },
+    },
   };
 
   constructor(
-    private productService: ProductService,
     private maintenanceService: MaintenanceService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.paymentForm = new FormGroup({
-      voucherNumber: new FormControl("", Validators.required),
-      remainingAmount: new FormControl("", Validators.required),
-      amountToBePaid: new FormControl("", Validators.required),
-      supplier: new FormControl(""),
-      voucher: new FormControl("")
+      voucherNumber: new FormControl('', Validators.required),
+      remainingAmount: new FormControl('', Validators.required),
+      amountToBePaid: new FormControl('', Validators.required),
+      supplier: new FormControl(''),
+      voucher: new FormControl(''),
     });
     this.maintenanceService.getAllSuppliers().subscribe(
       response => {
         this.suppliers = response;
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching Suppliers."
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching Suppliers.',
+          );
+        }
+      },
     );
   }
 
@@ -104,55 +116,99 @@ export class PaymentsComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while fetching pending vouchers!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while fetching pending vouchers!',
+          );
+        }
+      },
     );
   }
 
   onVoucherSelect(event) {
     this.selectedVrType = +event;
-    if (this.selectedVrType == 1) {
+    if (this.selectedVrType === 1) {
       this.maintenanceService.getAllPendingVouchers().subscribe(
         response => {
           this.source.load(response);
         },
         error => {
-          this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching pending vouchers!"
-          );
-        }
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching pending vouchers!',
+            );
+          }
+        },
       );
-    } else if (this.selectedVrType == 2) {
+    } else if (this.selectedVrType === 2) {
       this.maintenanceService.getPendingVouchersOfSale().subscribe(
         response => {
           this.source.load(response);
         },
         error => {
-          this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching pending vouchers!"
-          );
-        }
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching pending vouchers!',
+            );
+          }
+        },
       );
-    } else if (this.selectedVrType == 3) {
+    } else if (this.selectedVrType === 3) {
       this.maintenanceService.getPendingVouchersOfAdvance().subscribe(
         response => {
           this.source.load(response);
         },
         error => {
-          this.showToast(
-            "danger",
-            "Error!",
-            "An error occured while fetching pending vouchers!"
-          );
-        }
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching pending vouchers!',
+            );
+          }
+        },
       );
     }
   }
@@ -166,39 +222,62 @@ export class PaymentsComponent implements OnInit {
       response => {
         this.paymentForm.reset();
         this.showToast(
-          "success",
-          "Success!",
-          "Payment has been updated against selected supplier !"
+          'success',
+          'Success!',
+          'Payment has been updated against selected supplier !',
         );
         this.maintenanceService
           .getPendingVouchersBySupplierID(this.selectedSupplier)
           .subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
             response => {
               this.source.load(response);
             },
             error => {
-              this.showToast(
-                "danger",
-                "Error!",
-                "An error occured while fetching pending vouchers!"
-              );
-            }
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching pending vouchers!',
+                );
+              }
+            },
           );
       },
       error => {
-        this.showToast(
-          "danger",
-          "Error!",
-          "An error occured while updating payment against select supplier!"
-        );
-      }
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while updating payment against select supplier!',
+          );
+        }
+      },
     );
   }
 
   onRowSelect(event) {
     this.paymentForm.controls.voucherNumber.setValue(event.data.vchNo);
     this.paymentForm.controls.remainingAmount.setValue(
-      event.data.pendingAmount
+      event.data.pendingAmount,
     );
   }
 
@@ -209,9 +288,9 @@ export class PaymentsComponent implements OnInit {
       duration: this.duration,
       hasIcon: this.hasIcon,
       position: this.position,
-      preventDuplicates: this.preventDuplicates
+      preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `${title}` : "";
+    const titleContent = title ? `${title}` : '';
     this.toastrService.show(body, `${titleContent}`, config);
   }
 }

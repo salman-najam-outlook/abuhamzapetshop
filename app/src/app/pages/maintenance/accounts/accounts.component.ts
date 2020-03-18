@@ -50,11 +50,14 @@ export class AccountsComponent implements OnInit {
       },
       error => {
         if (error.status === 401) {
-          this.showToast('danger', 'Session Time Out!', 'Your session has been expired. Please re-login!');
           localStorage.removeItem('access_token');
           localStorage.removeItem('expires');
           localStorage.removeItem('user');
-          this.router.navigate(['auth']);
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
         } else {
           this.showToast(
             'danger',

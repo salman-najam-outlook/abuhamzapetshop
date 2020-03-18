@@ -8,6 +8,7 @@ import {
   NbGlobalPosition,
   NbGlobalPhysicalPosition,
 } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -70,13 +71,14 @@ export class UsersComponent implements OnInit {
       contact: {
         title: 'Contact',
         type: 'number',
-      }
+      },
     },
   };
 
   constructor(
     private maintenanceService: MaintenanceService,
     private toastrService: NbToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -85,15 +87,22 @@ export class UsersComponent implements OnInit {
         this.source.load(response);
       },
       error => {
-        if(error.status === 401) {
-          console.log(error);
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
           this.showToast(
             'danger',
             'Error!',
             'An error occured while fetching all Users!',
           );
         }
-        console.log(error);
         },
     );
   }
@@ -114,20 +123,42 @@ export class UsersComponent implements OnInit {
               this.source.load(response);
             },
             error => {
-              this.showToast(
-                'danger',
-                'Error!',
-                'An error occured while fetching all Users!',
-              );
+              if (error.status === 401) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('expires');
+                localStorage.removeItem('user');
+                this.router.navigate(['auth'], {
+                  queryParams: {
+                    isSessionExpired: true,
+                  },
+                });
+              } else {
+                this.showToast(
+                  'danger',
+                  'Error!',
+                  'An error occured while fetching all Users!',
+                );
+              }
             },
           );
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while deleting User!',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while deleting User!',
+            );
+          }
         },
       );
     } else {
@@ -150,11 +181,22 @@ export class UsersComponent implements OnInit {
           this.source.load(response);
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while fetching User!',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching User!',
+            );
+          }
         },
       );
       return;
@@ -180,20 +222,42 @@ export class UsersComponent implements OnInit {
             this.source.load(response);
           },
           error => {
-            this.showToast(
-              'danger',
-              'Error!',
-              'An error occured while fetching User!',
-            );
+            if (error.status === 401) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth'], {
+                queryParams: {
+                  isSessionExpired: true,
+                },
+              });
+            } else {
+              this.showToast(
+                'danger',
+                'Error!',
+                'An error occured while fetching User!',
+              );
+            }
           },
         );
       },
       error => {
-        this.showToast(
-          'danger',
-          'Error!',
-          'An error occured while adding a new User!',
-        );
+        if (error.status === 401) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expires');
+          localStorage.removeItem('user');
+          this.router.navigate(['auth'], {
+            queryParams: {
+              isSessionExpired: true,
+            },
+          });
+        } else {
+          this.showToast(
+            'danger',
+            'Error!',
+            'An error occured while adding a new User!',
+          );
+        }
       },
     );
   }
@@ -226,11 +290,22 @@ export class UsersComponent implements OnInit {
           );
         },
         error => {
-          this.showToast(
-            'danger',
-            'Error!',
-            'An error occured while updating User!',
-          );
+          if (error.status === 401) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('user');
+            this.router.navigate(['auth'], {
+              queryParams: {
+                isSessionExpired: true,
+              },
+            });
+          } else {
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while updating User!',
+            );
+          }
         },
       );
     });
