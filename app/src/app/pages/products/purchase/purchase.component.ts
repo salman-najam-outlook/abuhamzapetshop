@@ -99,7 +99,6 @@ export class PurchaseComponent implements OnInit {
       paidAmount: new FormControl(''),
       fromAccount: new FormControl(''),
       supplier: new FormControl('', Validators.required),
-
     });
     this.maintenanceService.getAllSuppliers().subscribe(
       response => {
@@ -204,10 +203,14 @@ export class PurchaseComponent implements OnInit {
 
   onClear() {
     this.purchaseProductForm.reset();
-    this.purchaseProductForm.controls.supplier.setValue(this.selectedSupplier);
-    const total = this.single.map(this.amount).reduce(this.sum);
-    this.purchaseProductForm.controls.totalAmount.setValue(total);
-    this.source.load(this.single);
+    this.purchaseProductForm.controls.barcode.setValue('');
+    this.purchaseProductForm.controls.productName.setValue('');
+    this.purchaseProductForm.controls.supplier.setValue('');
+    this.purchaseProductForm.controls.totalCost.setValue('');
+    this.purchaseProductForm.controls.quantity.setValue('');
+    this.purchaseProductForm.controls.purchasePrice.setValue('');
+    this.purchaseProductForm.controls.paidAmount.setValue('');
+    this.purchaseProductForm.controls.fromAccount.setValue('');
   }
 
   getProductByBarcode(barcode: string) {

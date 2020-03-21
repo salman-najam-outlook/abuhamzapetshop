@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { SalesComponent } from './sales/sales.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { ExpiredComponent } from './expired/expired.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     AddEditComponent,
     PurchaseComponent,
     SalesComponent,
+    ExpiredComponent,
   ],
 })
 export class ProductsModule { }

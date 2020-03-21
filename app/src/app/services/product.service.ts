@@ -4,9 +4,10 @@ import { Observable, forkJoin } from 'rxjs';
 import { Product } from '../models/product.model';
 import { PurchaseOrder } from '../models/purchaseOrder.model';
 import { SaleOrder } from '../models/saleOrder.model';
+import { Expired } from '../models/expired.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   constructor(private httpClient: HttpClient) { }
@@ -133,4 +134,18 @@ export class ProductService {
       },
     );
   }
+
+  // Expired Starts
+  addExpiredProduct(expiredProduct: Expired): Observable<boolean> {
+    return this.httpClient.post<boolean>(
+      'http://localhost:51110/api/invoices/ExpireProduct',
+      expiredProduct,
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        }),
+      },
+    );
+  }
+
 }

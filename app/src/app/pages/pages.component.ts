@@ -50,6 +50,10 @@ export class PagesComponent implements OnInit {
             hidden: this.user.userRoll === 'emp' ? true : false,
           },
           {
+            title: 'Expired',
+            link: '/pages/products/expired',
+          },
+          {
             title: 'Purchase',
             link: '/pages/products/purchase',
             hidden: false,

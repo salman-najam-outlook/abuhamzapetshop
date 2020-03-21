@@ -6,6 +6,7 @@ import { PurchaseComponent } from './purchase/purchase.component';
 import { SalesComponent } from './sales/sales.component';
 import { AdminGuard } from '../../guards/admin-guard.service';
 import { UserGuard } from '../../guards/user-guard.service';
+import { ExpiredComponent } from './expired/expired.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'sales',
         component: SalesComponent, canActivate: [UserGuard],
+      },
+      {
+        path: 'expired',
+        component: ExpiredComponent, canActivate: [AdminGuard],
       },
       { path: '', redirectTo: '/sales', pathMatch: 'full' },
       { path: '**', redirectTo: '' },

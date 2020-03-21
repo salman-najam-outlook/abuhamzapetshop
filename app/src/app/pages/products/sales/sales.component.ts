@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 })
 export class SalesComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
+  editedSource: SingleProduct[] = [];
   singleProductList: SingleProduct[] = [];
   singleProduct: SingleProduct;
   saleOrderForm: FormGroup;
@@ -263,8 +264,18 @@ export class SalesComponent implements OnInit {
 
   onConfirmEdit(event): void {
     event.confirm.resolve();
-    this.showUpdatedItem(event);
-    const total = this.singleProductList.map(this.amount).reduce(this.sum);
+    event.newData.totalAmount = event.newData.sellPrice * event.newData.quantity;
+    const updateItem = this.singleProductList.find(this.findIndexToUpdate, event.newData.barcode);
+    const index = this.singleProductList.indexOf(updateItem);
+    this.singleProductList[index] = event.newData;
+    this.editedSource = this.singleProductList;
+    this.subTotal = this.singleProductList.map(this.amount).reduce(this.sum);
+    this.grandTotal = this.subTotal;
+    this.remainingCash = 0;
+    // this.discount = 0;
+    // const total = this.singleProductList.map(this.amount).reduce(this.sum);
+    // this.saleOrderForm.controls.totalAmount.setValue(this.subTotal);
+    this.source.load(this.editedSource);
     this.discount = +this.discount;
     this.grandTotal = this.subTotal - this.discount;
     if (this.grandTotal > 0) {
@@ -277,7 +288,6 @@ export class SalesComponent implements OnInit {
         this.remainingVoucherAmount = 0;
       }
     }
-    this.saleOrderForm.controls.totalAmount.setValue(total);
   }
 
   onClick() {

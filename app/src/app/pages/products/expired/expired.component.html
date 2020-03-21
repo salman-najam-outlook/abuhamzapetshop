@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-sm-12">
+        <nb-card>
+            <nb-card-body>
+                <form [formGroup]="expiredForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="barcode" class="label">Barcode</label>
+                                <input type="text" nbInput fullWidth #barcode placeholder="Barcode" formControlName="barcode"
+                                (blur)="getProductByBarcode(barcode.value)">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="voucherno" class="label">Quantity</label>
+                            <input type="number" nbInput fullWidth placeholder="Qualtity" formControlName="quantity">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea nbInput fullWidth placeholder="Description" formControlName="desc"></textarea>
+                    </div>
+                    <button nbButton status="primary" hero type="submit" (click)="onSubmit()"
+                        [disabled]="expiredForm.invalid">Submit</button>
+                    <button nbButton status="danger" hero (click)="onClear()">Clear</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

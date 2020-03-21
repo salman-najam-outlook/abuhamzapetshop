@@ -42,6 +42,7 @@ export class AccountsComponent implements OnInit {
     this.account.balance = this.accountForm.controls.accountBalance.value;
     this.maintenanceService.addUpdateAccount(this.account).subscribe(
       response => {
+        this.accountForm.reset();
         this.showToast(
             'success',
             'Success!',

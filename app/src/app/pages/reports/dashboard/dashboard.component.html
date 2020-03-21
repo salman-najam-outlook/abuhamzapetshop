@@ -9,6 +9,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
             <div
                 style="height: 130px; border-radius: 5px; background-color: #F2C438; margin-right: 30px; margin-top: 15px;">
@@ -18,25 +19,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-            <div
-                style="height: 130px; border-radius: 5px; background-color: #F25749; margin-right: 30px; margin-top: 15px;">
-                <div style="padding: 20px">
-                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Expenses</div>
-                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.expenses }}/-</div>
-                </div>
-            </div>
-        </div>
+    </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-            <div
-                style="height: 130px; border-radius: 5px; background-color: #34A6BF; margin-right: 30px; margin-top: 15px;">
-                <div style="padding: 20px">
-                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Purchases</div>
-                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.purchases }}/-</div>
-                </div>
-            </div>
-        </div>
+    <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
             <div
                 style="height: 130px; border-radius: 5px; background-color: #977EF2; margin-right: 30px; margin-top: 15px;">
@@ -48,10 +33,31 @@
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
             <div
-                style="height: 130px; border-radius: 5px; background-color: #2955D9; margin-right: 30px; margin-top: 15px;">
+                style="height: 130px; border-radius: 5px; background-color: #34A6BF; margin-right: 30px; margin-top: 15px;">
                 <div style="padding: 20px">
-                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Loans</div>
-                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.loans }}/-</div>
+                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Purchases</div>
+                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.purchases }}/-</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+            <div
+                style="height: 130px; border-radius: 5px; background-color: #F25C05; margin-right: 30px; margin-top: 15px;">
+                <div style="padding: 20px">
+                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Purchase Pendings</div>
+                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.purchasePendings }}/-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+            <div
+                style="height: 130px; border-radius: 5px; background-color: #F25749; margin-right: 30px; margin-top: 15px;">
+                <div style="padding: 20px">
+                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Expenses</div>
+                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.expenses }}/-</div>
                 </div>
             </div>
         </div>
@@ -65,33 +71,41 @@
                 </div>
             </div>
         </div>
+
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
             <div
-                style="height: 130px; border-radius: 5px; background-color: #F25C05; margin-right: 30px; margin-top: 15px;">
+                style="height: 130px; border-radius: 5px; background-color: #2955D9; margin-right: 30px; margin-top: 15px;">
                 <div style="padding: 20px">
-                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Purchase Pendings</div>
-                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.purchasePendings }}/-</div>
+                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Loans</div>
+                    <div class="h4" style="color: white; float: right">Pkr.{{ dashboardData?.loans }}/-</div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-            <div
+            <a routerLink="/pages/maintenance/suppliers">
+                <div
                 style="height: 130px; border-radius: 5px; background-color: #8BBF56; margin-right: 30px; margin-top: 15px;">
                 <div style="padding: 20px">
                     <div class="h3" style="color: white; border-bottom: 1px solid wheat">Suppliers</div>
                     <div class="h4" style="color: white; float: right">{{ dashboardData?.totalSuppliers }}</div>
                 </div>
             </div>
+            </a>
         </div>
 
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-            <div
-                style="height: 130px; border-radius: 5px; background-color: #9A7565; margin-right: 30px; margin-top: 15px;">
-                <div style="padding: 20px">
-                    <div class="h3" style="color: white; border-bottom: 1px solid wheat">Customers</div>
-                    <div class="h4" style="color: white; float: right">{{ dashboardData?.totalCustomers }}</div>
+            <a routerLink="/pages/maintenance/customers">
+                <div
+                    style="height: 130px; border-radius: 5px; background-color: #9A7565; margin-right: 30px; margin-top: 15px;">
+                    <div style="padding: 20px">
+                        <div class="h3" style="color: white; border-bottom: 1px solid wheat">Customers</div>
+                        <div class="h4" style="color: white; float: right">{{ dashboardData?.totalCustomers }}</div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>

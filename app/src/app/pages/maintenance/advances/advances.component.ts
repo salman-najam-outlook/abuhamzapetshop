@@ -298,6 +298,25 @@ export class AdvancesComponent implements OnInit {
     this.manageAdvance.amount = this.advanceForm.controls.amount.value;
     this.maintenanceService.manageAdvance(this.manageAdvance).subscribe(
       (response) => {
+        this.maintenanceService.getAllAdvances().subscribe(
+          response => {
+            this.source.load(response);
+          },
+          error => {
+            if (error.status === 401) {
+              this.showToast('danger', 'Session Time Out!', 'Your session has been expired. Please re-login!');
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('expires');
+              localStorage.removeItem('user');
+              this.router.navigate(['auth']);
+            }
+            this.showToast(
+              'danger',
+              'Error!',
+              'An error occured while fetching all Advances.',
+            );
+          },
+        );
         this.showToast(
           'success',
           'Success!',
